@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatCPT</title>
+
+    <link media="all" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/master.css">
+    <script defer src="js/chat.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1 class="text-center">The Good & Evil Chat</h1>
+    </header>
+
+    <main class="container bg-dark-transparent">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button"
+                    role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button"
+                    role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                <div class="row">
+
+                    <div class="col-sm">
+                        <div id="message-good"></div>
+                    </div>
+                    <div class="col-sm">
+
+                        <div class="message-content">
+                            <div class="row">
+                                <h2 class="text-center col-6">Goodness</h2>
+                                <h2 class="text-center col-6">Evilness</h2>
+                            </div>
+                        </div>
+
+                        <textarea id="message-input" accesskey="m" placeholder="Ask something." tabindex="0"
+                            title="(Alt-M) Place cursor here."></textarea>
+
+                        <div class="message-buttons align-bottom row">
+                            <button id="message-good-button" accesskey="g" class="btn btn-primary btn-sm col-3 m-2 ripple"
+                                title="(Alt-G) Ask Goodness.">Ask Goodness</button>
+                            <button id="message-evil-button" accesskey="v" class="btn btn-danger btn-sm col-3 m-2 ripple"
+                                title="(Alt-V) Ask Evilness.">Ask Evilness</button>
+                            <button id="message-both-button" accesskey="b" class="btn btn-primary btn-sm col-3 m-2 ripple"
+                                title="(Alt-B) Ask Both.">Ask Both</button>
+
+                        </div>
+                        <div class="message-buttons align-bottom row">
+                            <button id="message-clear-input-button" accesskey="i"
+                                class="btn btn-secondary btn-sm col-3 m-2 ripple"
+                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
+                            <button id="message-clear-history-button" accesskey="h"
+                                class="btn btn-secondary btn-sm col-3 m-2 ripple" title="(Alt-H) Clear all history/chat.">Clear
+                                History</button>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm">
+                        <div id="message-evil"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                <label for="mood-evil">Evilness</label>
+                <textarea id="mood-evil" class="form-control"
+                    rows="3">You are a stereotypical female 'Karen', overly annoyed with everything and everyone, just spewing insults, trying to trigger the user and have a very dark sarcastic humor.</textarea>
+                <label for="mood-good">Goodness</label>
+                <textarea id="mood-good" class="form-control"
+                    rows="3">You are a loving, caring, kind and helpful female goddess, always trying to be positive and supportive and have a good sense of humor.</textarea>
+
+            </div>
+
+            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+
+                <div class="row">
+                    <label for="gpt-model" class="col-2">Model</label>
+                    <input type="text" class="col-1" id="gpt-model" size="5" value="gpt-4">
+                    <span class="col-9">The model used to generate responses.</span>
+                </div>
+                <div class="row">
+                    <label for="gpt-maxtoken" min="1" class="col-2">Max Tokens</label>
+                    <input type="number" step=100 class="col-1" id="gpt-max-tokens" size="5" value="150">
+                    <span class="col-9">Allows limiting the length of the generated response.</span>
+                </div>
+                <div class="row">
+                    <label for="gpt-temperature" class="col-2">Temperature</label>
+                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-temperature" size="3"
+                        value=".5">
+                    <span class="col-9">Influences the response randomness. 0.8 equals answers are more diverse, while
+                        0.2, makes responses more focused and deterministic.</span>
+                </div>
+                <div class="row">
+                    <label for="gpt-top-p" class="col-2">Top P</label>
+                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-top-p" size="3" value=".6">
+                    <span class="col-9">Controls the diversity and quality of the responses.</span>
+                </div>
+                <div class="row">
+                    <label for="gpt-frequency-penalty" class="col-2">Frequency Penalty</label>
+                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-frequency-penalty" size="3"
+                        value=".6">
+                    <span class="col-9">Allows control of the model's tendency to generate repetitive responses. 1.0,
+                        encourage to explore more diverse and novel responses, while 0.2, make the model more likely to
+                        repeat information.</span>
+                </div>
+                <div class="row">
+                    <label for="gpt-presence-penalty" class="col-2">Presence Penalty</label>
+                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-presence-penalty" size="3"
+                        value=".6">
+                    <span class="col-9">Allows influencing the model's avoidance of specific topics. 1.0, makes the
+                        model more likely to avoid mentioning particular topics provided in the user messages, 0.2, make
+                        the model less concerned about preventing those topics.</span>
+
+                </div>
+            </div>
+
+            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+
+                <div class="row">
+                    <pre><div id="message-log" class="col-12"></div></pre>
+                </div>
+                <div class="col text-end">
+                    <button id="message-log-copy-button" accesskey="c" class="ripple btn btn-secondary btn-sm m-2"
+                        title="(Alt-C) Copy to clipboard.">Copy to clipboard</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </main>
+    <footer>
+        <p class="text-center">&copy; 2025 ChatCPT. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
