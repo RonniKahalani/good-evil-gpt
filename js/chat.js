@@ -9,7 +9,7 @@ let apiKey = MSG_YOUR_API_KEY;
 
 if (localStorage.getItem(LOCAL_ITEM_API_KEY) === null) {
     if (apiKey === null || apiKey === "" || apiKey === MSG_YOUR_API_KEY) {
-        apiKey = prompt("Please enter a valid API key", "");
+        apiKey = prompt("Please enter a valid ChatGPT API key.", "");
     }
     localStorage.setItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
 }
