@@ -7,9 +7,6 @@ const MSG_YOUR_API_KEY = "your-api-key"
 
 let apiKey = MSG_YOUR_API_KEY;
 
-
-//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
-
 if (localStorage.getItem(LOCAL_ITEM_API_KEY) === null) {
     if (apiKey === null || apiKey === "" || apiKey === MSG_YOUR_API_KEY) {
         apiKey = prompt("Please enter a valid API key", "");
