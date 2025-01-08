@@ -1,3 +1,16 @@
+/*
+::backdrop {
+    background-image: linear-gradient(
+      45deg,
+      magenta,
+      rebeccapurple,
+      dodgerblue,
+      green
+    );
+    opacity: 0.75;
+  }
+  */
+
 
 .ripple {
     position: relative;
@@ -28,6 +41,11 @@
     transition: 0s;
   }
 
+.main-container {
+    min-height: 800px;
+    min-width: 90%;
+}
+
 .message-content {
     width: 512px; 
     height: 512px;
@@ -35,7 +53,7 @@
     background-repeat:  no-repeat;
     background-position: fixed; 
     background-image: url('../img/good-evil.png');
-    opacity: 0.7;
+    opacity: 0.6;
     margin: 0px;
     padding: 0px;
 }
@@ -46,7 +64,7 @@
 }
 .bg-dark-transparent {
     background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0.99;
+    opacity: 0.90;
     border-radius: 10px;
 }
 
@@ -61,13 +79,13 @@
     height: 100px;
 }
 
-/* #message-history {
+#message-history {
     width: 100%;
     height: 300px;
     padding: 10px;
     margin-bottom: 10px;
 }
- */
+ 
 
 .hr-evil {
     border: 1px solid darkred;
@@ -90,16 +108,17 @@
     margin-bottom: 10px;
 }
 
-.message-time {
-    font-family: 'Barlow-Regular', 'Franklin Gothic Medium';
+.info-sm {
     font-size: .8em;
     color: #888;
 }
 
-.message-waitsec {
-    font-family: 'Barlow-Regular', 'Franklin Gothic Medium';
-    font-size: .8em;
-    color: #888;
+#btn-ask-good {
+    background-color: darkblue;
+}
+
+#btn-ask-evil {
+    background-color: darkred;
 }
 
 .btn-primary {
@@ -126,13 +145,25 @@
     padding: 10px;
 }
 
+.bg-good-evil {
+    
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        right bottom,
+        color-stop(0.5, darkblue),
+        color-stop(0.51, darkred)
+    );
+    color:white;
+}
+
 h2 {
     font-size: 1.5em;
     color: #cfcfcf;
     background-color: #000;
 }
 body {
-    font-family: 'Barlow-Regular', 'Franklin Gothic Medium', Arial, sans-serif;
+    font-family: Tahoma, Arial, sans-serif;
     font-size: 1em;
     background-color: #000;
     color: #cfcfcf;
@@ -140,8 +171,45 @@ body {
     padding: 0;
 
     background-image: url('../img/heaven-hell.png');
-    background-size: fill;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: fixed; 
+    background-position: center center; 
 
 }
+
+#message-good {
+    height:600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: lightgray darkblue;
+    border: 1px solid darkblue;
+}
+
+#message-evil {
+    height:600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: lightgray darkred;
+    border: 1px solid darkred;
+}
+ 
+
+ #message-evil::-webkit-scrollbar {
+    width: 12px;            /* Width of the scrollbar */
+  }
+  
+ #message-evil::-webkit-scrollbar-track {
+    background: #f1f1f1;    /* Background color of the track */
+  }
+  
+ #message-evil::-webkit-scrollbar-thumb {
+    background-color: red;  /* Color of the scrollbar thumb */
+    border-radius: 6px;     /* Rounded corners for the scrollbar thumb */
+    border: 3px solid #f1f1f1; /* Add a border to separate thumb from track */
+  }
+  
+ #message-evil::-webkit-scrollbar-thumb:hover {
+    background-color: darkred; /* Hover color for the scrollbar thumb */
+  }
+  
+
