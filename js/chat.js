@@ -178,14 +178,14 @@ function createMessageUI( messageId, request, response) {
     const timestamp = Intl.DateTimeFormat(currentBrowserLocale, { dateStyle: 'short', timeStyle: 'short' }).format(request.time);
 
     const htmlMessage = 
-   `<div class="bg-dark-transparent m-0 p-2" onclick="speakMessage('${messageId}')">
+   `<div class="message bg-dark-transparent" onclick="speakMessage('${messageId}')">
         <div id="${messageId}-request" class="message-${request.role}">${replaceNewlines(request.content)}</div>
         <div id="${messageId}-response" class="message-assistant mood-${request.mood}">${ response ? replaceNewlines(response.content) : spinner}</div>
         <div class="row">
             <span class="col-6 info-sm">${timestamp}</span>
             <span id="${messageId}-response-waitsec" class="col-6 text-end info-sm"></span>
         </div>
-    </div><hr class="hr-${request.mood}">`;
+    </div>`;
 
     return htmlMessage;
 }

@@ -46,91 +46,100 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
+
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  
+                <div class="row bg-dark-transparent">
+
+                    <div class="col-1 text-center info-sm">
+                        <div>Tokens</div>
+                        <div id="good-tokens" class="col-sm">0</div>
+                    </div>
+
+                    <div class="col-1 text-center info-sm">
+                        <div>Messages</div>
+                        <div id="good-message-count">0</div>
+                    </div>
+
+                    <div class="col-sm text-center info-sm">
+                        <div>Total tokens</div>
+                        <div id="total-tokens">0</div>
+                    </div>
+
+                    <div class="col-1 text-center info-sm">
+                        <div>Tokens</div>
+                        <div id="evil-tokens">0</div>
+                    </div>
+
+                    <div class="col-1 text-center info-sm">
+                        <div>Messages</div>
+                        <div id="evil-message-count">0</div>
+                    </div>
+                </div>
 
                 <div class="row">
 
-                    <div class="col-sm bg-dark-transparent">
+                    <div class="col-4">
                         <div id="message-good"></div>
                     </div>
 
-                    <div class="col-sm message-content m-1">
-                        <div class="row mx-2" style="background-color: #000;">
-
-                            <div class="col-sm text-center info-sm">
-                                <div>Tokens</div>
-                                <div id="good-tokens" class="col-sm">0</div>
-                            </div>
-
-                            <div class="col-sm text-center info-sm">
-                                <div>Messages</div>
-                                <div id="good-message-count">0</div>
-                            </div>
-
-                            <div class="col-sm text-center info-sm">
-                                <div>Total tokens</div>
-                                <div id="total-tokens">0</div>
-                            </div>
-
-                            <div class="col-sm text-center info-sm">
-                                <div>Tokens</div>
-                                <div id="evil-tokens">0</div>
-                            </div>
-
-                            <div class="col-sm text-center info-sm">
-                                <div>Messages</div>
-                                <div id="evil-message-count">0</div>
-                            </div>
-                        </div>
-                        <div class="row mx-2">
+                    <div class="col-4 message-content">
+                        <div class="row">
                             <span class="text-center col-6 mood-good">Goodness</span>
                             <span class="text-center col-6 mood-evil">Evilness</span>
                         </div>
-                            <div style="margin-top:377px;background-color:#000">
-                     
 
-                        <textarea id="message-input" class="mt-2" accesskey="m" placeholder="Ask something."
-                            tabindex="0" title="(Alt-M) Place cursor here."></textarea>
-
-
-                        <div class="message-buttons row mx-2">
-                            <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 m-1 ripple"
-                                title="(Alt-G) Ask Goodness.">Ask
-                                Goodness</button>
-                            <button id="btn-ask-both" accesskey="b"
-                                class="btn btn-secondary bg-good-evil btn-sm col-4 m-1 ripple"
-                                title="(Alt-B) Ask Both.">Ask Both</button>
-                            <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 m-1 ripple"
-                                title="(Alt-V) Ask Evilness.">Ask
-                                Evilness</button>
-
-                            <button id="btn-clear-input" accesskey="i"
-                                class="btn btn-dark btn-sm col-4 m-1 ripple"
-                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
-
-                            <div class="col-4"></div>
-                            <button id="btn-clear-history" accesskey="h"
-                                class="btn btn-dark btn-sm col-4 m-1 ripple"
-                                title="(Alt-H) Clear all history/chat.">Clear
-                                History</button>
-
-                        </div>
                     </div>
-                    </div>
-                    <div class="col-sm bg-dark-transparent">
+
+                    <div class="col-4">
                         <div id="message-evil"></div>
                     </div>
                 </div>
 
+                <div class="row text-center">
+                    <div class="col-4 m-0"></div>
+
+                    <div class="row col-4 text-center">
+                    
+                        <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask something."
+                            tabindex="0" title="(Alt-M) Place cursor here."></textarea>
+
+                            <div class="row col-12">
+                        
+                                <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 ripple"
+                                    title="(Alt-G) Ask Goodness.">Ask
+                                    Goodness</button>
+                                <button id="btn-ask-both" accesskey="b"
+                                    class="btn btn-secondary bg-good-evil btn-sm col-4 ripple" title="(Alt-B) Ask Both.">Ask
+                                    Both</button>
+                                <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 ripple"
+                                    title="(Alt-V) Ask Evilness.">Ask
+                                    Evilness</button>
+        
+                                <button id="btn-clear-input" accesskey="i" class="btn btn-dark btn-sm col-4 ripple"
+                                    title="(Alt-I) Clear the message/intput field.">Clear Input</button>
+        
+                                <div class="col-4"></div>
+        
+                                <button id="btn-clear-history" accesskey="h" class="btn btn-dark btn-sm col-4 ripple"
+                                    title="(Alt-H) Clear all history/chat.">Clear
+                                    History</button>      
+                            </div>
+                    </div>
+
+                    <div class="col-4"></div>
+
+                </div>
             </div>
+
             <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                 <label for="mood-evil">Evilness</label>
                 <textarea id="mood-evil" class="form-control"
-                    rows="3">You are a stereotypical female 'Karen', overly annoyed with everything and everyone, just spewing insults, trying to trigger the user and have a very dark sarcastic humor.</textarea>
+                    rows="3">You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and spewing dark sarcastic humor.</textarea>
                 <label for="mood-good">Goodness</label>
                 <textarea id="mood-good" class="form-control"
-                    rows="3">You are a loving, caring, kind and helpful female goddess, always trying to be positive and supportive and have a good sense of humor.</textarea>
+                    rows="3">You are a good, loving, caring, kind and helpful female pragmatic goddess, always empathic, positive and supportive and have a good sense of humor.</textarea>
                 <button id="btn-open-voice-settings" class="btn btn-primary btn-sm">Show the dialog</button>
 
             </div>
