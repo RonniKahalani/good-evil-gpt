@@ -45,90 +45,80 @@
         </ul>
 
         <!-- Tab panes -->
-        <div class="tab-content bg-dark-transparent">
+        <div class="tab-content">
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                 <div class="row">
 
                     <div class="col-sm bg-dark-transparent">
                         <div id="message-good"></div>
+                    </div>
 
-                        <div class="row text-center">
+                    <div class="col-sm message-content m-1">
+                        <div class="row mx-2" style="background-color: #000;">
 
-                            <div class="col-sm info-sm">
+                            <div class="col-sm text-center info-sm">
                                 <div>Tokens</div>
                                 <div id="good-tokens" class="col-sm">0</div>
                             </div>
 
-                            <div class="col-sm info-sm">
+                            <div class="col-sm text-center info-sm">
                                 <div>Messages</div>
                                 <div id="good-message-count">0</div>
                             </div>
 
-                        </div>
-
-                    </div>
-                    <div class="col-sm m-0 p-0 bg-dark-transparent">
-
-                        <div class="message-content">
-                            <div class="row">
-                                <h2 class="text-center col-6">Goodness</h2>
-                                <h2 class="text-center col-6">Evilness</h2>
+                            <div class="col-sm text-center info-sm">
+                                <div>Total tokens</div>
+                                <div id="total-tokens">0</div>
                             </div>
-                        </div>
 
-                        <div class="mx-2">
-                            <div class="message-buttons align-bottom row">
-                                <button id="btn-clear-input" accesskey="i"
-                                    class="btn btn-secondary btn-sm col-sm m-2 ripple"
-                                    title="(Alt-I) Clear the message/intput field.">Clear Input</button>
-
-                                <div class="col-sm m-2 text-center info-sm">
-                                    <div>Total tokens</div>
-                                    <div id="total-tokens">0</div>
-                                </div>
-
-                                <button id="btn-clear-history" accesskey="h"
-                                    class="btn btn-secondary btn-sm col-sm m-2 ripple"
-                                    title="(Alt-H) Clear all history/chat.">Clear
-                                    History</button>
-
-                            </div>
-                            <textarea id="message-input" class="form-control" accesskey="m" placeholder="Ask something." tabindex="0"
-                                title="(Alt-M) Place cursor here."></textarea>
-
-
-                            <div class="message-buttons align-bottom row">
-                                <button id="btn-ask-good" accesskey="g"
-                                    class="btn btn-secondary btn-sm col-sm m-2 ripple" title="(Alt-G) Ask Goodness.">Ask
-                                    Goodness</button>
-                                <button id="btn-ask-both" accesskey="b"
-                                    class="btn btn-secondary bg-good-evil btn-sm col-sm m-2 ripple"
-                                    title="(Alt-B) Ask Both.">Ask Both</button>
-                                <button id="btn-ask-evil" accesskey="v"
-                                    class="btn btn-secondary btn-sm col-sm m-2 ripple" title="(Alt-V) Ask Evilness.">Ask
-                                    Evilness</button>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-sm bg-dark-transparent">
-                        <div id="message-evil"></div>
-
-                        <div class="row text-center">
-
-                            <div class="col-sm info-sm">
+                            <div class="col-sm text-center info-sm">
                                 <div>Tokens</div>
                                 <div id="evil-tokens">0</div>
                             </div>
 
-                            <div class="col-sm info-sm">
+                            <div class="col-sm text-center info-sm">
                                 <div>Messages</div>
                                 <div id="evil-message-count">0</div>
                             </div>
+                        </div>
+                        <div class="row mx-2">
+                            <span class="text-center col-6 mood-good">Goodness</span>
+                            <span class="text-center col-6 mood-evil">Evilness</span>
+                        </div>
+                            <div style="margin-top:377px;background-color:#000">
+                     
+
+                        <textarea id="message-input" class="mt-2" accesskey="m" placeholder="Ask something."
+                            tabindex="0" title="(Alt-M) Place cursor here."></textarea>
+
+
+                        <div class="message-buttons row mx-2">
+                            <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 m-1 ripple"
+                                title="(Alt-G) Ask Goodness.">Ask
+                                Goodness</button>
+                            <button id="btn-ask-both" accesskey="b"
+                                class="btn btn-secondary bg-good-evil btn-sm col-4 m-1 ripple"
+                                title="(Alt-B) Ask Both.">Ask Both</button>
+                            <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 m-1 ripple"
+                                title="(Alt-V) Ask Evilness.">Ask
+                                Evilness</button>
+
+                            <button id="btn-clear-input" accesskey="i"
+                                class="btn btn-dark btn-sm col-4 m-1 ripple"
+                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
+
+                            <div class="col-4"></div>
+                            <button id="btn-clear-history" accesskey="h"
+                                class="btn btn-dark btn-sm col-4 m-1 ripple"
+                                title="(Alt-H) Clear all history/chat.">Clear
+                                History</button>
 
                         </div>
+                    </div>
+                    </div>
+                    <div class="col-sm bg-dark-transparent">
+                        <div id="message-evil"></div>
                     </div>
                 </div>
 
@@ -141,7 +131,7 @@
                 <label for="mood-good">Goodness</label>
                 <textarea id="mood-good" class="form-control"
                     rows="3">You are a loving, caring, kind and helpful female goddess, always trying to be positive and supportive and have a good sense of humor.</textarea>
-                    <button id="btn-open-voice-settings" class="btn btn-primary btn-sm">Show the dialog</button>
+                <button id="btn-open-voice-settings" class="btn btn-primary btn-sm">Show the dialog</button>
 
             </div>
 

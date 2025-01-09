@@ -116,6 +116,7 @@ function chatGood() {
  */
 function clearInput() {
     txtMessageInput.value = "";
+    txtMessageInput.focus();
 }
 
 /**
@@ -123,6 +124,7 @@ function clearInput() {
  */
 function clearMessageHistory() {
 
+    txtMessageInput.focus();
     if(messageLog.length === 0) {
         alert("No chat history found.");
         return
