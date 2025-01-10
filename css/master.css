@@ -11,6 +11,53 @@
   }
   */
 
+.icon {
+    cursor:pointer;
+}
+
+.message-spinner {
+    width: 15px;
+    height: 15px;
+}
+
+.block {
+	position: relative;
+	margin: 300px auto 0;
+	width: 500px;
+	height: 250px;
+	background: linear-gradient(0deg, #000, #272727);
+}
+
+.block:before, .block:after {
+	content: '';
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	background: linear-gradient(45deg, hsl(0, 0%, 0%), #3d0101, hsl(27, 92%, 49%),#ffff00, #49010175, #300202, 
+		#800101, hsl(0, 0%, 0%),#ffff00, #000000);
+	background-size: 400%;
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	z-index: -1;
+	animation: steam 40s linear infinite;
+}
+
+@keyframes steam {
+	0% {
+		background-position: 0 0;
+	}
+	50% {
+		background-position: 400% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+.block:after {
+	filter: blur(50px);
+}
+
 
 .ripple {
     position: relative;
@@ -53,7 +100,7 @@
     background-repeat:  no-repeat;
     background-position: center center; 
     background-image: url('../img/good-evil.png');
-    opacity: 1;
+    opacity: 1.2;
     margin: 0px;
     padding: 0px;
 }
@@ -169,7 +216,7 @@ body {
 }
 
 #message-good {
-    margin-bottom: 5px;
+    margin: 0px 2px 5px 2px;
     padding: 2px;
     height:500px;
     overflow-y: auto;
@@ -178,9 +225,8 @@ body {
 }
 
 #message-evil {
-    margin: 5px;
+    margin: 0px 2px 5px 2px;
     padding: 2px;
-
     height:500px;
     overflow-y: auto;
     overflow-x: hidden;

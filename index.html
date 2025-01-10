@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
         integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
     <link rel="stylesheet" href="css/master.css">
+    <script defer src="js/clipboard.js"></script>
     <script defer src="js/speech.js"></script>
     <script defer src="js/chat.js"></script>
 
@@ -19,7 +20,7 @@
 
 <body>
     <header>
-        <h1 class="text-center">The Good & Evil Chat <i class="bi bi-alarm"></i></h1>
+        <h1 class="text-center">The Good & Evil Chat</h1>
     </header>
 
     <main class="container main-container">
@@ -51,44 +52,49 @@
   
                 <div class="row bg-dark-transparent">
 
-                    <div class="col-1 text-center info-sm">
+                    <div class="col-1 text-center">
                         <div>Tokens</div>
                         <div id="good-tokens" class="col-sm">0</div>
                     </div>
 
-                    <div class="col-1 text-center info-sm">
+                    <div class="col-1 text-center">
                         <div>Messages</div>
                         <div id="good-message-count">0</div>
                     </div>
 
-                    <div class="col-sm text-center info-sm">
+                    <div class="col-sm text-center">
                         <div>Total tokens</div>
                         <div id="total-tokens">0</div>
                     </div>
 
-                    <div class="col-1 text-center info-sm">
+                    <div class="col-1 text-center">
                         <div>Tokens</div>
                         <div id="evil-tokens">0</div>
                     </div>
 
-                    <div class="col-1 text-center info-sm">
+                    <div class="col-1 text-center">
                         <div>Messages</div>
                         <div id="evil-message-count">0</div>
                     </div>
                 </div>
-
                 <div class="row">
 
                     <div class="col-4">
                         <div id="message-good"></div>
                     </div>
 
-                    <div class="col-4 message-content">
-                        <div class="row">
-                            <span class="text-center col-6 mood-good">Goodness</span>
-                            <span class="text-center col-6 mood-evil">Evilness</span>
-                        </div>
+                    <div class="col-4 message-content block">
 
+                        <div class="row text-center m-2">
+                            <div class="col-4 m-2"></div>
+                            <div class="row col-4 m-0" style="width: 512px;">
+                                <span class="text-center mood-good col-6" style="float:left;font-size: 1.5em;">Goodness</span>
+                                <span class="text-center mood-evil col-6" style="float:right;font-size: 1.5em;">Evilness</span>
+            
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+        
                     </div>
 
                     <div class="col-4">
@@ -100,7 +106,7 @@
                     <div class="col-4 m-0"></div>
 
                     <div class="row col-4 text-center">
-                    
+                        
                         <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask something."
                             tabindex="0" title="(Alt-M) Place cursor here."></textarea>
 
@@ -132,15 +138,22 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane bg-dark-transparent" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                 <label for="mood-evil">Evilness</label>
                 <textarea id="mood-evil" class="form-control"
                     rows="3">You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and spewing dark sarcastic humor.</textarea>
+                
                 <label for="mood-good">Goodness</label>
                 <textarea id="mood-good" class="form-control"
                     rows="3">You are a good, loving, caring, kind and helpful female pragmatic goddess, always empathic, positive and supportive and have a good sense of humor.</textarea>
-                <button id="btn-open-voice-settings" class="btn btn-primary btn-sm">Show the dialog</button>
+               
+                    <button id="btn-open-voice-settings" class="btn btn-primary btn-sm">Open voice dialog</button>
+
+                <label class="form-label" for="evil-speech-pitch">Pitch</label>
+                <div data-mdb-range-init class="range">
+                  <input type="range" class="form-range" min="0" max="1" step=".01" id="evil-speech-pitch" />
+                </div>
 
             </div>
 
