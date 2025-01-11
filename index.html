@@ -20,7 +20,7 @@
 
 <body>
     <header>
-        <h1 class="text-center">The Good & Evil Chat</h1>
+        <h1 class="text-center">The GoodEvil Chat</h1>
     </header>
 
     <main class="container main-container">
@@ -49,8 +49,8 @@
         <div class="tab-content">
 
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-  
-                <div class="row bg-dark-transparent">
+
+                <div class="row bg-dark-transparent p-2">
 
                     <div class="col-1 text-center">
                         <div>Tokens</div>
@@ -77,87 +77,99 @@
                         <div id="evil-message-count">0</div>
                     </div>
                 </div>
+
                 <div class="row">
 
-                    <div class="col-4">
+                    <div class="col-sm">
                         <div id="message-good"></div>
                     </div>
 
-                    <div class="col-4 message-content block">
+                    <div class="message-content block">
 
                         <div class="row text-center m-2">
                             <div class="col-4 m-2"></div>
                             <div class="row col-4 m-0" style="width: 512px;">
-                                <span class="text-center mood-good col-6" style="float:left;font-size: 1.5em;">Goodness</span>
-                                <span class="text-center mood-evil col-6" style="float:right;font-size: 1.5em;">Evilness</span>
-            
+                                <span class="text-center mood-good col-6"
+                                    style="float:left;font-size: 1.5em;">Goodness</span>
+                                <span class="text-center mood-evil col-6"
+                                    style="float:right;font-size: 1.5em;">Evilness</span>
+
                             </div>
                             <div class="col-4"></div>
                         </div>
-        
+
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-sm">
                         <div id="message-evil"></div>
                     </div>
                 </div>
 
                 <div class="row text-center">
-                    <div class="col-4 m-0"></div>
+                    <div class="col-sm m-0"></div>
 
-                    <div class="row col-4 text-center">
-                        
-                        <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask something."
+                    <div class="row text-center p-0" style="width: 512px;">
+
+                        <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask me anything..."
                             tabindex="0" title="(Alt-M) Place cursor here."></textarea>
 
-                            <div class="row col-12">
-                        
+                        <div class="row col-12 m-0 p-0">
+
+                            <div class="row m-0">
                                 <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 ripple"
                                     title="(Alt-G) Ask Goodness.">Ask
                                     Goodness</button>
                                 <button id="btn-ask-both" accesskey="b"
-                                    class="btn btn-secondary bg-good-evil btn-sm col-4 ripple" title="(Alt-B) Ask Both.">Ask
+                                    class="btn btn-secondary bg-good-evil btn-sm col-4 ripple"
+                                    title="(Alt-B) Ask Both.">Ask
                                     Both</button>
                                 <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 ripple"
                                     title="(Alt-V) Ask Evilness.">Ask
                                     Evilness</button>
-        
+                            </div>
+
+                            <div class="row m-0">
                                 <button id="btn-clear-input" accesskey="i" class="btn btn-dark btn-sm col-4 ripple"
                                     title="(Alt-I) Clear the message/intput field.">Clear Input</button>
-        
-                                <div class="col-4"></div>
-        
+
+                                <button id="btn-open-voice-settings" accesskey="o"
+                                    class="btn btn-dark btn-sm col-4 ripple"
+                                    title="(Alt-O) Open voice settings.">Voices</button>
+
                                 <button id="btn-clear-history" accesskey="h" class="btn btn-dark btn-sm col-4 ripple"
                                     title="(Alt-H) Clear all history/chat.">Clear
-                                    History</button>      
+                                    History</button>
                             </div>
+                        </div>
                     </div>
 
-                    <div class="col-4"></div>
+                    <div class="col-sm"></div>
 
                 </div>
             </div>
 
             <div class="tab-pane bg-dark-transparent" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-                <label for="mood-evil">Evilness</label>
-                <textarea id="mood-evil" class="form-control"
-                    rows="3">You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and spewing dark sarcastic humor.</textarea>
-                
-                <label for="mood-good">Goodness</label>
-                <textarea id="mood-good" class="form-control"
-                    rows="3">You are a good, loving, caring, kind and helpful female pragmatic goddess, always empathic, positive and supportive and have a good sense of humor.</textarea>
-               
-                    <button id="btn-open-voice-settings" class="btn btn-primary btn-sm">Open voice dialog</button>
+                <section class="m-2 p-2">
+                    <legend>Evilness</legend>
+                    <label for="mood-evil">Personality mood (evil)</label>
+                    <textarea id="mood-evil" class="form-control"
+                        rows="3">If asked about your name, answer is Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have dark sarcastic humor.</textarea>
 
-                <label class="form-label" for="evil-speech-pitch">Pitch</label>
-                <div data-mdb-range-init class="range">
-                  <input type="range" class="form-range" min="0" max="1" step=".01" id="evil-speech-pitch" />
-                </div>
+                </section>
+                <hr>
+                <section class="m-2 p-2">
+                    <legend>Goodness</legend>
+                    <label for="mood-good">Personality mood (good)</label>
+                    <textarea id="mood-good" class="form-control"
+                        rows="3">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive and supportive and have a great sense of humor.</textarea>
+
+
+                </section>
 
             </div>
 
-            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="tab-pane bg-dark-transparent" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 
                 <div class="row m-2">
                     <label for="gpt-model" class="col-2">Model</label>
@@ -199,13 +211,13 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+            <div class="tab-pane bg-dark-transparent" id="messages" role="tabpanel" aria-labelledby="messages-tab">
 
                 <div class="row">
                     <pre><div id="message-log" class="col-12"></div></pre>
                 </div>
                 <div class="col text-end">
-                    <button id="btn-copy-history" accesskey="c" class="ripple btn btn-secondary btn-sm m-2"
+                    <button id="btn-copy-history" accesskey="c" class="ripple btn btn-primary btn-sm m-2"
                         title="(Alt-C) Copy to clipboard.">Copy to clipboard</button>
                 </div>
             </div>
@@ -213,21 +225,88 @@
         </div>
 
         <dialog id="dialog-voice-settings" class="dialog">
-
-            <p>This modal dialog has a groovy backdrop!</p>
+            <h2>Voice Settings</h2>
 
             <div class="row">
-                <div class="col-sm">
-                    <label for="select-good-voice">Goodness</label>
-                    <select id="select-good-voice" class="form-control"></select>
+                <div class="col-6">
+
+                    <h4>Goodness</h4>
+
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <button id="btn-test-good-voice" class="btn btn-primary btn-sm col-2 ripple" title="Test this voice.">Test</button>
+                        <button id="btn-cancel-good-voice" class="btn btn-secondary btn-sm col-2 ripple" title="Cancel/stop current speaking voice.">Cancel</button>
+                    </div>
+
+                    <label for="select-good-voice">System voice</label>
+                    <select id="select-good-voice" value="-1" class="form-control"></select>
+
+                    <label class="form-label" for="input-good-voice-rate">Rate</label>
+                    <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
+                            id="input-good-voice-rate" />
+                    </div>
+
+                    <label class="form-label" for="input-good-voice-pitch">Pitch</label>
+                    <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
+                            id="input-good-voice-pitch" />
+                    </div>
+
+                    <label class="form-label" for="input-good-voice-volume">Volume</label>
+                    <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
+                            id="input-good-voice-volume" />
+                    </div>
                 </div>
 
-                <div class="col-sm">
-                    <label for="select-evil-voice">Evilness</label>
-                    <select id="select-evil-voice" class="form-control"></select>
+                <div class="col-6">
+                    <h4>Evilness</h4>
+                    
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <button id="btn-test-evil-voice" class="btn btn-primary btn-sm col-2 ripple" title="Test this voice.">Test</button>
+                        <button id="btn-cancel-evil-voice" class="btn btn-secondary btn-sm col-2 ripple" title="Cancel/stop current speaking voice.">Cancel</button>
+                    </div>
+
+                    <label for="select-evil-voice">System voice</label>
+                    <select id="select-evil-voice" value="-1" class="form-control"></select>
+
+                    <label class="form-label" for="input-evil-voice-rate">Rate</label>
+                    <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
+                            id="input-evil-voice-rate" />
+                    </div>
+
+                    <label class="form-label" for="input-evil-voice-pitch">Pitch</label>
+                    <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
+                            id="input-evil-voice-pitch" />
+                    </div>
+                    <label class="form-label" for="input-evil-voice-volume">Volume</label>
+                    <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
+                            id="input-evil-voice-volume" />
+                    </div>
+
+
                 </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="chk-auto-voice">
+                            <label class="form-check-label" for="chk-auto-voice">
+                                Automatically use voices on new messages
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4"></div>
+                    <button id="btn-close-voice-settings" class="btn btn-primary btn-sm col-2 ripple">Close &
+                        Save</button>
+                </div>
+
             </div>
-            <button id="btn-close-voice-settings" class="btn btn-primary btn-sm">Close</button>
 
         </dialog>
 

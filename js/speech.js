@@ -1,13 +1,18 @@
 
-function speak(text, voice) {
+function speak(text, voice, volume, rate, pitch) {
 
     const speech = new SpeechSynthesisUtterance();
     speech.lang = "en_US";
     speech.text = text;
-    speech.volume = 1;
-    speech.rate = 1;
-    speech.pitch = 1;
+    speech.volume = volume ? volume : 1;
+    speech.rate = rate ? rate : 1;
+    speech.pitch = pitch ? pitch : 1;
     speech.voice = voice;
+
+    if(isSpeaking) {
+      //  cancelSpeaking();
+    }
+    
     window.speechSynthesis.speak(speech);
 }
 
@@ -15,6 +20,6 @@ function isSpeaking() {
     return window.speechSynthesis.speaking;
 }
 
-function cancel() {
+function cancelSpeaking() {
     window.speechSynthesis.cancel();
 }
