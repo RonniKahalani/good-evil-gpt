@@ -48,7 +48,7 @@ btnAskBoth.addEventListener("click", chatBoth);
 btnAskEvil.addEventListener("click", chatEvil);
 btnAskGood.addEventListener("click", chatGood);
 btnClearInput.addEventListener("click", () => clearInput());
-btnClearHistory.addEventListener("click", () => clearMessageHistory());
+btnClearHistory.addEventListener("click", () => clearMessageLog());
 btnCopyHistory.addEventListener("click", () => copyTextToClipboard(txtMessageLog.innerHTML));
 btnOpenVoiceSettings.addEventListener("click", () => openVoiceSettingsDialog());
 btnCloseVoiceSettings.addEventListener("click", () => closeVoiceSettingsDialog());
@@ -91,12 +91,19 @@ let systemVoices = [];
 let goodVoiceIndex = -1;
 let evilVoiceIndex = -1;
 
-
+/**
+ * Cancels current voices.
+ */
 function cancelVoice() {
     cancelSpeaking();
 }
 
-function getMoodVoiceSettings(mood) {
+/**
+ * Gets the voice settings for a given mood.
+ * @param {*} mood 
+ * @returns 
+ */
+function getVoiceSettingsByMood(mood) {
     return {
         pitch: parseFloat((mood == Personality.GOOD) ? inputGoodVoicePitch.value : inputEvilVoicePitch.value),
         rate: parseFloat((mood == Personality.GOOD) ? inputGoodVoiceRate.value : inputEvilVoiceRate.value),
@@ -107,21 +114,30 @@ function getMoodVoiceSettings(mood) {
     };
 }
 
-
+/**
+ * Tests a voice.
+ * @param {*} mood 
+ */
 function testVoice(mood) {
-    const voiceSettings = getMoodVoiceSettings(mood);
+    const voiceSettings = getVoiceSettingsByMood(mood);
     speak(voiceSettings.text, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch);
 }
 
+/**
+ * Opens the voice settings dialog.
+ */
 function openVoiceSettingsDialog() {
     populateSystemVoices();
     dialogVoiceSettings.showModal();
 }
 
+/**
+ * Closes the voice settings dialog and saves the changes.
+ */
 function closeVoiceSettingsDialog() {
 
-    const goodVoiceSettings = getMoodVoiceSettings(Personality.GOOD);
-    const evilVoiceSettings = getMoodVoiceSettings(Personality.EVIL);
+    const goodVoiceSettings = getVoiceSettingsByMood(Personality.GOOD);
+    const evilVoiceSettings = getVoiceSettingsByMood(Personality.EVIL);
     goodVoiceIndex = goodVoiceSettings.voiceIndex;
     evilVoiceIndex = evilVoiceSettings.voiceIndex;
 
@@ -173,9 +189,9 @@ function clearInput() {
 }
 
 /**
- * Clears the chat history.
+ * Clears the message log.
  */
-function clearMessageHistory() {
+function clearMessageLog() {
 
     txtMessageInput.focus();
     if (messageLog.length === 0) {
@@ -190,20 +206,24 @@ function clearMessageHistory() {
     messageLog.length = 0;
     gptLog.length = 0;
 
-    messageLog.innerHTML = "";
-    txtMessageLog.innerHTML = "";
-    messageGood.innerHTML = "";
-    messageEvil.innerHTML = "";
-    totalTokens.innerHTML = 0;
-    goodTokens.innerHTML = 0;
-    evilTokens.innerHTML = 0;
-    goodMessageCount.innerHTML = 0;
-    evilMessageCount.innerHTML = 0;
+    messageLog.textContent = "";
+    txtMessageLog.textContent = "";
+    messageGood.textContent = "";
+    messageEvil.textContent = "";
+    totalTokens.textContent = 0;
+    goodTokens.textContent = 0;
+    evilTokens.textContent = 0;
+    goodMessageCount.textContent = 0;
+    evilMessageCount.textContent = 0;
 
     localStorage.setItem(LOCAL_ITEM_MESSAGE_LOG, JSON.stringify(messageLog));
     localStorage.setItem(LOCAL_ITEM_GPT_LOG, JSON.stringify(gptLog));
 }
 
+/**
+ * Copies a message to the clipboard.
+ * @param {*} messageId 
+ */
 function copyMessageToClipboard(messageId) {
     const request = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_USER)[0];
     const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
@@ -228,21 +248,34 @@ function addToChatUI(messageId, request, response) {
     target.innerHTML = htmlMessage + target.innerHTML;
 }
 
+/**
+ * Formats a date, using a given format.
+ * @param {*} datetime 
+ * @param {*} format 
+ * @returns 
+ */
 function formatDateTime(datetime, format) {
     const currentBrowserLocale = navigator.language || navigator.userLanguage;
     return Intl.DateTimeFormat(currentBrowserLocale, format).format(datetime);
 }
 
+/**
+ * Creates a HTML UI presentation of a message.
+ * @param {*} messageId 
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ */
 function createMessageUI(messageId, request, response) {
     const timestamp = formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "");
 
     const htmlMessage =
         `<div class="message bg-dark-transparent">
         <div id="${messageId}-request" class="message-${request.role}">
-        <span style="float: right">
-        <i class="bi bi-copy icon mx-1" title="Copy message to clipboard." onclick="copyMessageToClipboard('${messageId}');"></i>
-        <i title="Speak the message out loud." onclick="speakMessage('${messageId}');" class="bi bi-play-circle-fill icon mx-1"></i>
-        </span>${replaceNewlines(request.content)}
+            <span style="float: right">
+                <i class="bi bi-copy icon mx-1" title="Copy message to clipboard." onclick="copyMessageToClipboard('${messageId}');"></i>
+                <i title="Speak the message out loud." onclick="speakMessage('${messageId}');" class="bi bi-play-circle-fill icon mx-1"></i>
+            </span>${replaceNewlines(request.content)}
         </div>
         <div id="${messageId}-response" class="message-assistant mood-${request.mood}">
         ${response ? replaceNewlines(response.content) : spinner}
@@ -251,13 +284,15 @@ function createMessageUI(messageId, request, response) {
             <span class="col-4 info-sm">${timestamp}</span>
             <span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>
             <span class="col-4 text-end info-sm">Time: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>
-
         </div>
     </div>`;
 
     return htmlMessage;
 }
 
+/**
+ * Updates token counts.
+ */
 function updateTokenCount() {
     const goodTokenTotals = gptLog.filter((log) => log.mood === Personality.GOOD).map((log) => log.response.usage.total_tokens);
     const evilTokenTotals = gptLog.filter((log) => log.mood === Personality.EVIL).map((log) => log.response.usage.total_tokens);
@@ -265,25 +300,39 @@ function updateTokenCount() {
     const goodCount = goodTokenTotals.length > 0 ? goodTokenTotals.reduce((num, sum) => sum + num, 0) : 0;
     const evilCount = evilTokenTotals.length > 0 ? evilTokenTotals.reduce((num, sum) => sum + num, 0) : 0;
 
-    goodTokens.innerHTML = goodCount;
-    evilTokens.innerHTML = evilCount;
-    totalTokens.innerHTML = goodCount + evilCount;
+    goodTokens.textContent = goodCount;
+    evilTokens.textContent = evilCount;
+    totalTokens.textContent = goodCount + evilCount;
 }
 
+/**
+ * Updates message counts.
+ */
 function updateMessageCount() {
 
     const goodCount = messageLog.filter((message) => message.mood === Personality.GOOD).length;
     const evilCount = messageLog.filter((message) => message.mood === Personality.EVIL).length;
 
-    goodMessageCount.innerHTML = (goodCount > 0) ? goodCount / 2 : 0;
-    evilMessageCount.innerHTML = (evilCount > 0) ? evilCount / 2 : 0;
+    goodMessageCount.textContent = (goodCount > 0) ? goodCount / 2 : 0;
+    evilMessageCount.textContent = (evilCount > 0) ? evilCount / 2 : 0;
 }
 
+/**
+ * Updates the UI.
+ */
 function updateUI() {
     updateMessageCount();
     updateTokenCount();
 }
 
+/**
+ * Creates a new chat message.
+ * @param {*} messageId 
+ * @param {*} role 
+ * @param {*} content 
+ * @param {*} mood 
+ * @returns 
+ */
 function createMessage(messageId, role, content, mood) {
     const userName = "John Doe";
     const name = (role === GPT_CHAT_ROLE_ASSISTANT) ? (mood === Personality.GOOD) ? "Goodness" : "Evilness" : userName;
@@ -321,8 +370,8 @@ function chat(mood) {
             localStorage.setItem(LOCAL_ITEM_GPT_LOG, JSON.stringify(gptLog));
 
             document.querySelector("#" + messageId + "-response").innerHTML = replaceNewlines(reply);
-            document.querySelector("#" + messageId + "-response-waitsec").innerHTML = parseFloat(message.waitTimeSec).toFixed(1);
-            document.querySelector("#" + messageId + "-response-tokens").innerHTML = parseInt(message.tokens);
+            document.querySelector("#" + messageId + "-response-waitsec").textContent = parseFloat(message.waitTimeSec).toFixed(1);
+            document.querySelector("#" + messageId + "-response-tokens").textContent = parseInt(message.tokens);
 
             const messagesAsStrings = JSON.stringify(messageLog, null, 2);
             localStorage.setItem(LOCAL_ITEM_MESSAGE_LOG, messagesAsStrings);
@@ -330,14 +379,13 @@ function chat(mood) {
 
             updateUI();
 
-            if(chkAutoVoice.checked) {
+            if (chkAutoVoice.checked) {
                 speakMessage(messageId);
             }
 
         }).catch((error) => {
             console.error("Failed to get response from ChatGPT:", error);
         });
-
     }
 }
 
@@ -354,10 +402,10 @@ async function chatWithGPT(request) {
         "Authorization": `Bearer ${atob(localStorage.getItem(LOCAL_ITEM_API_KEY))}`,
     };
 
-    const messages = messageLog.map((message) => { return { role: message.role, content: message.content} });
+    const messages = messageLog.map((message) => { return { role: message.role, content: message.content } });
 
     messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: (request.mood === Personality.EVIL) ? moodEvil.value : moodGood.value });
-    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content});
+    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content });
 
     const data = {
         model: gptModel.value,
@@ -402,6 +450,9 @@ function handleApiKey() {
     }
 }
 
+/**
+ * Loads local storage data.
+ */
 function loadLocalStorage() {
     const localMessageLog = localStorage.getItem(LOCAL_ITEM_MESSAGE_LOG);
     messageLog = localMessageLog ? JSON.parse(localMessageLog) : [];
@@ -411,7 +462,7 @@ function loadLocalStorage() {
     gptLog = localGptLog ? JSON.parse(localGptLog) : [];
 
     const localVoices = JSON.parse(localStorage.getItem(LOCAL_ITEM_VOICES));
-    
+
     goodVoiceIndex = localVoices ? localVoices.good.voiceIndex : -1;
     selectGoodVoice.value = goodVoiceIndex;
     inputGoodVoicePitch.value = localVoices ? localVoices.good.pitch : 1;
@@ -427,6 +478,11 @@ function loadLocalStorage() {
     chkAutoVoice.checked = localStorage.getItem(LOCAL_ITEM_AUTO_VOICE);
 }
 
+/**
+ * Speaks out the message.
+ * @param {*} messageId 
+ * @returns 
+ */
 function speakMessage(messageId) {
 
     populateSystemVoices();
@@ -438,26 +494,33 @@ function speakMessage(messageId) {
         return;
     }
 
-    const response = messageLog.filter(m => m.messageId === messageId && m.role === "assistant")[0];
-    const content = response.content;
-
-    const voiceSettings = getMoodVoiceSettings(response.mood);
-    speak(content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch);
+    const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
+    const voiceSettings = getVoiceSettingsByMood(response.mood);
+    speak(response.content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch);
 }
 
+/**
+ * Adds voice options to a voice select.
+ * @param {*} select 
+ */
+function populateSelectVoices(select) {
+    select.add(new Option("Select voice", "-1", true));
+
+    let index = 0;
+    systemVoices.forEach(voice => {
+        select.add(new Option(voice.name, index++, false));
+    });
+}
+
+/**
+ * Adds voice options to the voice selects.
+ */
 function populateSystemVoices() {
 
     systemVoices = speechSynthesis.getVoices();
 
-    let index = 0
-
-    selectGoodVoice.add(new Option("Select voice", "-1", true))
-    selectEvilVoice.add(new Option("Select voice", "-1", true))
-
-    systemVoices.forEach(voice => {
-        selectGoodVoice.add(new Option(voice.name, index, false));
-        selectEvilVoice.add(new Option(voice.name, index++, false));
-    });
+    populateSelectVoices(selectGoodVoice);
+    populateSelectVoices(selectEvilVoice);
 
     selectGoodVoice.value = goodVoiceIndex;
     selectEvilVoice.value = evilVoiceIndex;
@@ -481,5 +544,4 @@ if (simulate) {
     messageLog.push(request);
     messageLog.push(response);
     addToChatUI(messageId, request, response);
-
 }
