@@ -1,7 +1,17 @@
 
-function speak(text, voice, volume, rate, pitch) {
+function speak(text, voice, volume, rate, pitch, name) {
 
     const speech = new SpeechSynthesisUtterance();
+
+    speech.name = name;
+
+    speech.onstart = (e) => {
+        console.log("Voice start" + e)
+    };
+    speech.onend = (e) => {
+        console.log("Voice end" + e)
+    };
+
     speech.lang = "en_US";
     speech.text = text;
     speech.volume = volume ? volume : 1;

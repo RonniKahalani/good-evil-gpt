@@ -1,3 +1,12 @@
+/**
+ * This script handle the chat UI an
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    if(getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
+        openAutoVoiceDialog();
+    }
+});
+
 const DEFAULT_YOUR_API_KEY = "your-api-key";
 
 const GPT_CHAT_URL = "https://api.openai.com/v1/chat/completions";
@@ -10,71 +19,76 @@ const LOCAL_ITEM_MESSAGE_LOG = "message-log";
 const LOCAL_ITEM_GPT_LOG = "gpt-log";
 const LOCAL_ITEM_VOICES = "voices";
 const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
+
 let apiKey = DEFAULT_YOUR_API_KEY;
 
-const dialogVoiceSettings = document.querySelector("#dialog-voice-settings");
+const dialogVoiceSettings = qs("#dialog-voice-settings");
+const dialogAutoVoice = qs("#dialog-auto-voice");
 
-const selectGoodVoice = document.querySelector("#select-good-voice");
-const selectEvilVoice = document.querySelector("#select-evil-voice");
+const selectGoodVoice = qs("#select-good-voice");
+const selectEvilVoice = qs("#select-evil-voice");
 
-const inputGoodVoicePitch = document.querySelector("#input-good-voice-pitch");
-const inputGoodVoiceRate = document.querySelector("#input-good-voice-rate");
-const inputGoodVoiceVolume = document.querySelector("#input-good-voice-volume");
+const inputGoodVoicePitch = qs("#input-good-voice-pitch");
+const inputGoodVoiceRate = qs("#input-good-voice-rate");
+const inputGoodVoiceVolume = qs("#input-good-voice-volume");
 
-const inputEvilVoicePitch = document.querySelector("#input-evil-voice-pitch");
-const inputEvilVoiceRate = document.querySelector("#input-evil-voice-rate");
-const inputEvilVoiceVolume = document.querySelector("#input-evil-voice-volume");
+const inputEvilVoicePitch = qs("#input-evil-voice-pitch");
+const inputEvilVoiceRate = qs("#input-evil-voice-rate");
+const inputEvilVoiceVolume = qs("#input-evil-voice-volume");
 
-const txtMessageInput = document.querySelector("#message-input");
-const txtMessageLog = document.querySelector("#message-log");
+const txtMessageInput = qs("#message-input");
+const txtMessageLog = qs("#message-log");
 
-const chkAutoVoice = document.querySelector("#chk-auto-voice");
+const chkAutoVoice = qs("#chk-auto-voice");
 
-const btnAskBoth = document.querySelector("#btn-ask-both");
-const btnAskEvil = document.querySelector("#btn-ask-evil");
-const btnAskGood = document.querySelector("#btn-ask-good");
-const btnClearInput = document.querySelector("#btn-clear-input");
-const btnClearHistory = document.querySelector("#btn-clear-history");
-const btnCopyHistory = document.querySelector("#btn-copy-history");
-const btnOpenVoiceSettings = document.querySelector("#btn-open-voice-settings");
-const btnCloseVoiceSettings = document.querySelector("#btn-close-voice-settings");
-const btnTestGoodVoice = document.querySelector("#btn-test-good-voice");
-const btnTestEvilVoice = document.querySelector("#btn-test-evil-voice");
-const btnCancelGoodVoice = document.querySelector("#btn-cancel-good-voice");
-const btnCancelEvilVoice = document.querySelector("#btn-cancel-evil-voice");
+const btnAskBoth = qs("#btn-ask-both");
+const btnAskEvil = qs("#btn-ask-evil");
+const btnAskGood = qs("#btn-ask-good");
+const btnClearInput = qs("#btn-clear-input");
+const btnClearHistory = qs("#btn-clear-history");
+const btnCopyHistory = qs("#btn-copy-history");
+const btnOpenVoiceSettings = qs("#btn-open-voice-settings");
+const btnCloseVoiceSettings = qs("#btn-close-voice-settings");
+const btnTestGoodVoice = qs("#btn-test-good-voice");
+const btnTestEvilVoice = qs("#btn-test-evil-voice");
+const btnCancelGoodVoice = qs("#btn-cancel-good-voice");
+const btnCancelEvilVoice = qs("#btn-cancel-evil-voice");
+const btnUseAutoVoice = qs("#btn-use-auto-voice");
+const btnIgnoreAutoVoice = qs("#btn-ignore-auto-voice");
 
+btnAskBoth.onclick = () => chatBoth();
+btnAskEvil.onclick = () => chatEvil();
+btnAskGood.onclick = () => chatGood();
+btnClearInput.onclick = () => clearInput();
+btnClearHistory.onclick = () => clearMessageLog();
+btnCopyHistory.onclick = () => copyTextToClipboard(txtMessageLog.innerHTML);
+btnOpenVoiceSettings.onclick = () => openVoiceSettingsDialog();
+btnCloseVoiceSettings.onclick = () => closeVoiceSettingsDialog();
+btnTestGoodVoice.onclick = () => testVoice(Personality.GOOD);
+btnTestEvilVoice.onclick = () => testVoice(Personality.EVIL);
+btnCancelGoodVoice.onclick = () => cancelVoice();
+btnCancelEvilVoice.onclick = () => cancelVoice();
+btnUseAutoVoice.onclick = () => enableAutoVoices();
+btnIgnoreAutoVoice.onclick = () => ignoreAutoVoices();
+chkAutoVoice.onclick = () => setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
 
-btnAskBoth.addEventListener("click", chatBoth);
-btnAskEvil.addEventListener("click", chatEvil);
-btnAskGood.addEventListener("click", chatGood);
-btnClearInput.addEventListener("click", () => clearInput());
-btnClearHistory.addEventListener("click", () => clearMessageLog());
-btnCopyHistory.addEventListener("click", () => copyTextToClipboard(txtMessageLog.innerHTML));
-btnOpenVoiceSettings.addEventListener("click", () => openVoiceSettingsDialog());
-btnCloseVoiceSettings.addEventListener("click", () => closeVoiceSettingsDialog());
-btnTestGoodVoice.addEventListener("click", () => testVoice(Personality.GOOD));
-btnTestEvilVoice.addEventListener("click", () => testVoice(Personality.EVIL));
-btnCancelGoodVoice.addEventListener("click", () => cancelVoice());
-btnCancelEvilVoice.addEventListener("click", () => cancelVoice());
-chkAutoVoice.addEventListener("click", () => localStorage.setItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked));
+const messageGood = qs("#message-good");
+const messageEvil = qs("#message-evil");
+const moodEvil = qs("#mood-evil");
+const moodGood = qs("#mood-good");
+const goodMessageCount = qs("#good-message-count");
+const evilMessageCount = qs("#evil-message-count");
 
-const messageGood = document.querySelector("#message-good");
-const messageEvil = document.querySelector("#message-evil");
-const moodEvil = document.querySelector("#mood-evil");
-const moodGood = document.querySelector("#mood-good");
-const goodMessageCount = document.querySelector("#good-message-count");
-const evilMessageCount = document.querySelector("#evil-message-count");
+const goodTokens = qs("#good-tokens");
+const evilTokens = qs("#evil-tokens");
+const totalTokens = qs("#total-tokens");
 
-const goodTokens = document.querySelector("#good-tokens");
-const evilTokens = document.querySelector("#evil-tokens");
-const totalTokens = document.querySelector("#total-tokens");
-
-const gptModel = document.querySelector("#gpt-model");
-const gptMaxTokens = document.querySelector("#gpt-max-tokens");
-const gptTemperature = document.querySelector("#gpt-temperature");
-const gptTopP = document.querySelector("#gpt-top-p");
-const gptFrequencyPenalty = document.querySelector("#gpt-frequency-penalty");
-const gptPresencePenalty = document.querySelector("#gpt-presence-penalty");
+const gptModel = qs("#gpt-model");
+const gptMaxTokens = qs("#gpt-max-tokens");
+const gptTemperature = qs("#gpt-temperature");
+const gptTopP = qs("#gpt-top-p");
+const gptFrequencyPenalty = qs("#gpt-frequency-penalty");
+const gptPresencePenalty = qs("#gpt-presence-penalty");
 
 const spinner = `<div class="spinner-border message-spinner" role="status"></div>`;
 
@@ -91,11 +105,40 @@ let systemVoices = [];
 let goodVoiceIndex = -1;
 let evilVoiceIndex = -1;
 
+function qs(key) {
+    return document.querySelector(key);
+}
 /**
  * Cancels current voices.
  */
 function cancelVoice() {
     cancelSpeaking();
+}
+
+function enableAutoVoices() {
+    populateSystemVoices();
+    chkAutoVoice.checked = true;
+    closeAutoVoiceDialog();
+    setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
+
+    const mood = Personality.EVIL;
+    const settings = getVoiceSettingsByMood(mood);
+    speak("hi, and welcome.", systemVoices[settings.voiceIndex], settings.volume, settings.rate, settings.pitch, getPersonalityName(mood));
+}
+
+function ignoreAutoVoices() {
+    populateSystemVoices();
+    chkAutoVoice.checked = false;
+    closeAutoVoiceDialog();
+    setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
+}
+
+function openAutoVoiceDialog() {
+    dialogAutoVoice.showModal();
+}
+
+function closeAutoVoiceDialog() {
+    dialogAutoVoice.close();
 }
 
 /**
@@ -104,14 +147,33 @@ function cancelVoice() {
  * @returns 
  */
 function getVoiceSettingsByMood(mood) {
-    return {
-        pitch: parseFloat((mood == Personality.GOOD) ? inputGoodVoicePitch.value : inputEvilVoicePitch.value),
-        rate: parseFloat((mood == Personality.GOOD) ? inputGoodVoiceRate.value : inputEvilVoiceRate.value),
-        volume: parseFloat((mood == Personality.GOOD) ? inputGoodVoiceVolume.value : inputEvilVoiceVolume.value),
-        text: (mood == Personality.GOOD) ? moodGood.value : moodEvil.value,
-        voiceIndex: parseInt((mood == Personality.GOOD) ? selectGoodVoice.value : selectEvilVoice.value),
-        voiceName: (mood == Personality.GOOD) ? selectGoodVoice.options[selectGoodVoice.selectedIndex].text : selectEvilVoice.options[selectEvilVoice.selectedIndex].text
+
+    if(systemVoices.length === 0) {
+        populateSystemVoices();
+    }
+
+    const isGood = (mood == Personality.GOOD);
+    const voiceSelector = isGood ? selectGoodVoice : selectEvilVoice;
+
+    let voiceName = "";
+    if( voiceSelector.selectedIndex !== -1) {
+        voiceName = voiceSelector.options[voiceSelector.selectedIndex].text;
+    }
+
+    const settings = {
+        pitch: parseFloat(isGood ? inputGoodVoicePitch.value : inputEvilVoicePitch.value),
+        rate: parseFloat(isGood ? inputGoodVoiceRate.value : inputEvilVoiceRate.value),
+        volume: parseFloat(isGood ? inputGoodVoiceVolume.value : inputEvilVoiceVolume.value),
+        text: isGood ? moodGood.value : moodEvil.value,
+        voiceIndex: parseInt(isGood ? selectGoodVoice.value : selectEvilVoice.value),
+        voiceName: voiceName
     };
+
+    return settings;
+}
+
+function getPersonalityName(mood) {
+    return (mood === Personality.GOOD) ? "Goodness" : "Evilness"
 }
 
 /**
@@ -120,7 +182,7 @@ function getVoiceSettingsByMood(mood) {
  */
 function testVoice(mood) {
     const voiceSettings = getVoiceSettingsByMood(mood);
-    speak(voiceSettings.text, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch);
+    speak(voiceSettings.text, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch, getPersonalityName(mood));
 }
 
 /**
@@ -145,7 +207,7 @@ function closeVoiceSettingsDialog() {
     voiceSelection.good = goodVoiceSettings;
     voiceSelection.evil = evilVoiceSettings;
 
-    localStorage.setItem(LOCAL_ITEM_VOICES, JSON.stringify(voiceSelection));
+    setLocalItemAsJson(LOCAL_ITEM_VOICES, voiceSelection);
     dialogVoiceSettings.close();
 }
 
@@ -216,8 +278,8 @@ function clearMessageLog() {
     goodMessageCount.textContent = 0;
     evilMessageCount.textContent = 0;
 
-    localStorage.setItem(LOCAL_ITEM_MESSAGE_LOG, JSON.stringify(messageLog));
-    localStorage.setItem(LOCAL_ITEM_GPT_LOG, JSON.stringify(gptLog));
+    setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
+    setLocalItemAsJson(LOCAL_ITEM_GPT_LOG, gptLog);
 }
 
 /**
@@ -367,14 +429,15 @@ function chat(mood) {
             messageLog.push(message);
 
             gptLog.push({ response: response, message: message, mood: request.mood });
-            localStorage.setItem(LOCAL_ITEM_GPT_LOG, JSON.stringify(gptLog));
+            setLocalItemAsJson(LOCAL_ITEM_GPT_LOG, gptLog);
 
-            document.querySelector("#" + messageId + "-response").innerHTML = replaceNewlines(reply);
-            document.querySelector("#" + messageId + "-response-waitsec").textContent = parseFloat(message.waitTimeSec).toFixed(1);
-            document.querySelector("#" + messageId + "-response-tokens").textContent = parseInt(message.tokens);
+            const id = "#" + messageId;
+            document.querySelector(id + "-response").innerHTML = replaceNewlines(reply);
+            document.querySelector(id + "-response-waitsec").textContent = parseFloat(message.waitTimeSec).toFixed(1);
+            document.querySelector(id + "-response-tokens").textContent = parseInt(message.tokens);
 
             const messagesAsStrings = JSON.stringify(messageLog, null, 2);
-            localStorage.setItem(LOCAL_ITEM_MESSAGE_LOG, messagesAsStrings);
+            setLocalItem(LOCAL_ITEM_MESSAGE_LOG, messagesAsStrings);
             txtMessageLog.innerHTML = messagesAsStrings;
 
             updateUI();
@@ -399,7 +462,7 @@ async function chatWithGPT(request) {
 
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${atob(localStorage.getItem(LOCAL_ITEM_API_KEY))}`,
+        "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`,
     };
 
     const messages = messageLog.map((message) => { return { role: message.role, content: message.content } });
@@ -439,29 +502,66 @@ async function chatWithGPT(request) {
  * Checks if an API key is stored in local storage, and prompts the user to enter one if it is not.
  */
 function handleApiKey() {
-    apiKey = localStorage.getItem(LOCAL_ITEM_API_KEY);
+    apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
     if (apiKey === null || apiKey === "" || apiKey === DEFAULT_YOUR_API_KEY) {
-        apiKey = prompt("Please enter a valid ChatGPT API key.", "");
+        apiKey = prompt("Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.", "");
         if (apiKey === null || apiKey === "") {
             alert("You need to provide a valid ChatGPT API key to use this page.");
         } else {
-            localStorage.setItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
+            setLocalItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
         }
     }
+}
+
+/**
+ * Sets an item valuefrom the local storage.
+ * @param {*} key
+ * @returns 
+ */
+function setLocalItem(key, value) {
+    return localStorage.setItem(key, value);
+}
+
+/**
+ * Sets the json version string of an item value.
+ * @param {*} key 
+ * @param {*} value
+ * @returns 
+ */
+function setLocalItemAsJson(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+/**
+ * Returns an item from the local storage.
+ * @param {*} key 
+ * @returns 
+ */
+function getLocalItem(key) {
+    return localStorage.getItem(key);
+}
+
+/**
+ * Returns the json version of an item value.
+ * @param {*} key 
+ * @returns 
+ */
+function getLocalItemAsJson(key) {
+    return JSON.parse(localStorage.getItem(key));
 }
 
 /**
  * Loads local storage data.
  */
 function loadLocalStorage() {
-    const localMessageLog = localStorage.getItem(LOCAL_ITEM_MESSAGE_LOG);
+    const localMessageLog = getLocalItem(LOCAL_ITEM_MESSAGE_LOG);
     messageLog = localMessageLog ? JSON.parse(localMessageLog) : [];
     txtMessageLog.innerHTML = JSON.stringify(messageLog, null, 2);
 
-    const localGptLog = localStorage.getItem(LOCAL_ITEM_GPT_LOG);
+    const localGptLog = getLocalItem(LOCAL_ITEM_GPT_LOG);
     gptLog = localGptLog ? JSON.parse(localGptLog) : [];
 
-    const localVoices = JSON.parse(localStorage.getItem(LOCAL_ITEM_VOICES));
+    const localVoices = getLocalItemAsJson(LOCAL_ITEM_VOICES);
 
     goodVoiceIndex = localVoices ? localVoices.good.voiceIndex : -1;
     selectGoodVoice.value = goodVoiceIndex;
@@ -475,7 +575,7 @@ function loadLocalStorage() {
     inputEvilVoiceRate.value = localVoices ? localVoices.evil.rate : 1;
     inputEvilVoiceVolume.value = localVoices ? localVoices.evil.volume : 1;
 
-    chkAutoVoice.checked = localStorage.getItem(LOCAL_ITEM_AUTO_VOICE);
+    chkAutoVoice.checked = getLocalItem(LOCAL_ITEM_AUTO_VOICE);
 }
 
 /**
@@ -487,7 +587,7 @@ function speakMessage(messageId) {
 
     populateSystemVoices();
 
-    const localVoices = JSON.parse(localStorage.getItem(LOCAL_ITEM_VOICES));
+    const localVoices = getLocalItemAsJson(LOCAL_ITEM_VOICES);
 
     if (localVoices === null) {
         alert("Please configure the voices on the Profile tab.");
@@ -496,7 +596,7 @@ function speakMessage(messageId) {
 
     const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
     const voiceSettings = getVoiceSettingsByMood(response.mood);
-    speak(response.content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch);
+    speak(response.content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch, getPersonalityName(mood));
 }
 
 /**
@@ -504,7 +604,7 @@ function speakMessage(messageId) {
  * @param {*} select 
  */
 function populateSelectVoices(select) {
-    select.add(new Option("Select voice", "-1", true));
+    //select.add(new Option("Select voice", "-1", true));
 
     let index = 0;
     systemVoices.forEach(voice => {

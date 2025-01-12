@@ -19,11 +19,23 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="text-center">The GoodEvil Chat</h1>
-    </header>
-
     <main class="container main-container">
+
+        <div class="row m-2 p-2 bg-dark-transparent">
+            
+            <div class="col-6">The GoodEvil Chat</div>
+            <div class="col-6 text-end">
+        <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm col-2 ripple"
+            title="(Alt-O) Open voice settings." style="width:130px;margin-right:2px;">Voices</button>
+
+        <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm col-2 ripple"
+            title="(Alt-H) Clear message log." style="width:130px;margin-right:2px;">Clear
+            log</button>
+
+            <button id="btn-copy-history" accesskey="c" class="ripple btn btn-primary btn-sm"
+            title="(Alt-C) Copy message log to clipboard." style="width:130px;margin-right:2px;">Copy messages</button>
+
+        </div>
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs bg-dark-transparent" id="myTab" role="tablist">
@@ -43,8 +55,9 @@
                 <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button"
                     role="tab" aria-controls="settings" aria-selected="false">Settings</button>
             </li>
-        </ul>
 
+        </ul>
+    </div>
         <!-- Tab panes -->
         <div class="tab-content">
 
@@ -84,7 +97,7 @@
                         <div id="message-good"></div>
                     </div>
 
-                    <div class="message-content block">
+                    <div class="good-evil-content block">
 
                         <div class="row text-center m-2">
                             <div class="col-4 m-2"></div>
@@ -97,7 +110,6 @@
                             </div>
                             <div class="col-4"></div>
                         </div>
-
                     </div>
 
                     <div class="col-sm">
@@ -110,6 +122,11 @@
 
                     <div class="row text-center p-0" style="width: 512px;">
 
+                        <div class="row" style="float:right;">
+                            <div class="col-9"></div>
+                            <button id="btn-clear-input" accesskey="i" class="btn btn-dark btn-sm col-sm ripple"
+                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
+                        </div>
                         <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask me anything..."
                             tabindex="0" title="(Alt-M) Place cursor here."></textarea>
 
@@ -126,19 +143,6 @@
                                 <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 ripple"
                                     title="(Alt-V) Ask Evilness.">Ask
                                     Evilness</button>
-                            </div>
-
-                            <div class="row m-0">
-                                <button id="btn-clear-input" accesskey="i" class="btn btn-dark btn-sm col-4 ripple"
-                                    title="(Alt-I) Clear the message/intput field.">Clear Input</button>
-
-                                <button id="btn-open-voice-settings" accesskey="o"
-                                    class="btn btn-dark btn-sm col-4 ripple"
-                                    title="(Alt-O) Open voice settings.">Voices</button>
-
-                                <button id="btn-clear-history" accesskey="h" class="btn btn-dark btn-sm col-4 ripple"
-                                    title="(Alt-H) Clear all history/chat.">Clear
-                                    History</button>
                             </div>
                         </div>
                     </div>
@@ -216,10 +220,6 @@
                 <div class="row">
                     <pre><div id="message-log" class="col-12"></div></pre>
                 </div>
-                <div class="col text-end">
-                    <button id="btn-copy-history" accesskey="c" class="ripple btn btn-primary btn-sm m-2"
-                        title="(Alt-C) Copy to clipboard.">Copy to clipboard</button>
-                </div>
             </div>
 
         </div>
@@ -234,8 +234,10 @@
 
                     <div class="row">
                         <div class="col-8"></div>
-                        <button id="btn-test-good-voice" class="btn btn-primary btn-sm col-2 ripple" title="Test this voice.">Test</button>
-                        <button id="btn-cancel-good-voice" class="btn btn-secondary btn-sm col-2 ripple" title="Cancel/stop current speaking voice.">Cancel</button>
+                        <button id="btn-test-good-voice" class="btn btn-primary btn-sm col-2 ripple"
+                            title="Test this voice.">Test</button>
+                        <button id="btn-cancel-good-voice" class="btn btn-secondary btn-sm col-2 ripple"
+                            title="Cancel/stop current speaking voice.">Cancel</button>
                     </div>
 
                     <label for="select-good-voice">System voice</label>
@@ -262,15 +264,17 @@
 
                 <div class="col-6">
                     <h4>Evilness</h4>
-                    
+
                     <div class="row">
                         <div class="col-8"></div>
-                        <button id="btn-test-evil-voice" class="btn btn-primary btn-sm col-2 ripple" title="Test this voice.">Test</button>
-                        <button id="btn-cancel-evil-voice" class="btn btn-secondary btn-sm col-2 ripple" title="Cancel/stop current speaking voice.">Cancel</button>
+                        <button id="btn-test-evil-voice" class="btn btn-primary btn-sm col-2 ripple"
+                            title="Test this voice.">Test</button>
+                        <button id="btn-cancel-evil-voice" class="btn btn-secondary btn-sm col-2 ripple"
+                            title="Cancel/stop current speaking voice.">Cancel</button>
                     </div>
 
                     <label for="select-evil-voice">System voice</label>
-                    <select id="select-evil-voice" value="-1" class="form-control"></select>
+                    <select id="select-evil-voice" class="form-control"></select>
 
                     <label class="form-label" for="input-evil-voice-rate">Rate</label>
                     <div data-mdb-range-init class="range">
@@ -308,6 +312,20 @@
 
             </div>
 
+        </dialog>
+
+        <dialog id="dialog-auto-voice" class="dialog">
+            <h2>Using system voices</h2>
+            <div class="row mb-3">
+                <p class="">Enable the system voices feature to verbalize the messages and user experiences.</p>
+                <p>The feature can be disabled in the voice settings dialog.</p>
+            </div>
+            <div class="row m-2">
+                <button id="btn-use-auto-voice" class="btn btn-success btn-sm col-sm ripple"
+                    onclick="enableAutoVoices()">Cool, use it</button>
+                <div class="col-sm"></div>
+                <button id="btn-ignore-auto-voice" class="btn btn-danger btn-sm col-sm ripple">Don't need it</button>
+            </div>
         </dialog>
 
     </main>

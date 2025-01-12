@@ -27,7 +27,7 @@
 	position: absolute;
 	left: -2px;
 	top: -2px;
-	background: linear-gradient(45deg, hsl(0, 0%, 0%), #3d0101, hsl(27, 92%, 49%),#ffff00, #49010175, #300202, 
+	background: linear-gradient(45deg, hsl(0, 0%, 0%), #3d0101, hsl(27, 92%, 49%),#742602, #49010175, #c70606, 
 		#800101, hsl(0, 0%, 0%),#ffff00, #000000);
 	background-size: 400%;
 	width: calc(100% + 4px);
@@ -87,7 +87,7 @@
     min-width: 90%;
 }
 
-.message-content {
+.good-evil-content {
     width: 512px; 
     height:512px;
     background-size: cover;
