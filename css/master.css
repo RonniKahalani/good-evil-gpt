@@ -9,7 +9,7 @@
     bottom: 0;
     right: 0;
   }
-  
+
 .icon {
     cursor:pointer;
 }
@@ -32,13 +32,13 @@
 	position: absolute;
 	left: -2px;
 	top: -2px;
-	background: linear-gradient(45deg, hsl(0, 0%, 0%), #3d0101, hsl(27, 92%, 49%),#742602, #49010175, #c70606, 
-		#800101, hsl(0, 0%, 0%),#ffff00, #000000);
+	background: linear-gradient(45deg, hsl(0, 94%, 45%), #3d0101, hsl(27, 92%, 49%),#742602, #49010175, #c70606, 
+		#800101, hsl(0, 0%, 0%),#ec4706, #000000);
 	background-size: 400%;
 	width: calc(100% + 4px);
 	height: calc(100% + 4px);
 	z-index: -1;
-	animation: steam 40s linear infinite;
+	animation: steam 30s linear infinite;
 }
 
 @keyframes steam {
@@ -110,7 +110,7 @@
 }
 .bg-dark-transparent {
     background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0.90;
+    opacity: 0.95;
     border-radius: 10px;
 }
 

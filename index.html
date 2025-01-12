@@ -96,7 +96,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row pt-2">
 
                     <div class="col-sm">
                         <div id="message-good"></div>
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-4"></div>
                         </div>
-                        <div class="bottom-right">                            
+                        <div class="bottom-right p-2">                            
                             <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
                                 title="(Alt-I) Clear the message/intput field.">Clear Input</button>
                         </div>
@@ -133,7 +133,7 @@
                     <div class="row text-center p-0" style="width: 512px;">
 
                         <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask me anything..."
-                            tabindex="0" title="(Alt-M) Place cursor here."></textarea>
+                            tabindex="0" rows="5" title="(Alt-M) Place cursor here."></textarea>
 
                         <div class="row col-12 m-0 p-0">
 
@@ -333,9 +333,13 @@
             </div>
         </dialog>
 
+
+        <div id="speaking-now" class="row bg-dark-transparent bottom-right m-2" style="display:none;">
+            <span id="speaking-now-name" class="col-sm"></span>
+        </div>
     </main>
     <footer>
-        <p class="text-center">&copy; 2025 ChatCPT. All rights reserved.</p>
+
     </footer>
 </body>
 

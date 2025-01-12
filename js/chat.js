@@ -128,6 +128,7 @@ function updateMuteButton() {
         btnMuteVoices.classList.remove("btn-success");
         btnMuteVoices.classList.add("btn-danger");
         btnMuteVoices.textContent = "Unmute";
+        cancelVoice();
     } else {
         btnMuteVoices.classList.remove("btn-danger");
         btnMuteVoices.classList.add("btn-success");
@@ -357,10 +358,7 @@ function formatDateTime(datetime, format) {
  * @returns 
  */
 function createMessageUI(messageId, request, response) {
-    const timestamp = formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "");
-
-    const htmlMessage =
-        `<div class="message bg-dark-transparent">
+    return `<div class="message bg-dark-transparent">
         <div id="${messageId}-request" class="message-${request.role}">
             <span style="float: right">
                 <i class="bi bi-copy icon mx-1" title="Copy message to clipboard." onclick="copyMessageToClipboard('${messageId}');"></i>
@@ -371,13 +369,13 @@ function createMessageUI(messageId, request, response) {
         ${response ? replaceNewlines(response.content) : spinner}
         </div>
         <div class="row">
-            <span class="col-4 info-sm">${timestamp}</span>
+            <span class="col-4 info-sm">${
+                formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
+            }</span>
             <span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>
             <span class="col-4 text-end info-sm">Time: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>
         </div>
     </div>`;
-
-    return htmlMessage;
 }
 
 /**
@@ -408,12 +406,20 @@ function updateMessageCount() {
 }
 
 /**
+ * Updates the message log on he page.
+ */
+function updateMessageLog() {
+    txtMessageLog.innerHTML = JSON.stringify(messageLog, null, 2);
+}
+
+/**
  * Updates the UI.
  */
 function updateUI() {
     updateMessageCount();
     updateTokenCount();
     updateMuteVoicesChanged();
+    updateMessageLog();
 }
 
 /**
@@ -430,6 +436,28 @@ function createMessage(messageId, role, content, mood) {
     return { name: name, role: role, content: content, created: new Date().getTime(), mood: mood, messageId: messageId };
 }
 
+function handleGptResponse( request, gptResponse) {
+    
+    const reply = gptResponse.choices[0].message.content;
+    const timestamp = new Date().getTime();
+    const waitTimeSec = (timestamp - request.created) / 1000;
+
+    const response = createMessage(request.messageId, GPT_CHAT_ROLE_ASSISTANT, reply, request.mood);
+    
+    response.waitTimeSec = waitTimeSec;
+    response.tokens = gptResponse.usage.total_tokens;
+    response.gpt = gptResponse;
+
+    return response;
+}
+
+function updateResponseUI( response) {
+    const id = "#" + response.messageId;
+    qs(`${id}-response`).innerHTML = replaceNewlines(response.content);
+    qs(`${id}-response-waitsec`).textContent = parseFloat(response.waitTimeSec).toFixed(1);
+    qs(`${id}-response-tokens`).textContent = parseInt(response.tokens);    
+}
+
 /**
  * Sends a chat in a certain mood.
  * @param {*} mood 
@@ -438,39 +466,22 @@ function chat(mood) {
 
     const input = txtMessageInput.value;
     if (input) {
+
         const messageId = 'id' + (new Date()).getTime();
         const request = createMessage(messageId, GPT_CHAT_ROLE_USER, input, mood);
-        messageLog.push(request);
 
+        addToMessageLog(request);
         addToChatUI(request);
 
         chatWithGPT(request).then((gptResponse) => {
 
-            const reply = gptResponse.choices[0].message.content;
-            console.log("ChatGPT response:", reply);
-
-            const timestamp = new Date().getTime();
-            const waitTimeSec = (timestamp - request.created) / 1000;
-
-            const response = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, reply, request.mood);
-            response.waitTimeSec = waitTimeSec;
-            response.tokens = gptResponse.usage.total_tokens;
-            response.gpt = gptResponse;
-
-            messageLog.push(response);
-
-            const id = "#" + messageId;
-            document.querySelector(id + "-response").innerHTML = replaceNewlines(reply);
-            document.querySelector(id + "-response-waitsec").textContent = parseFloat(response.waitTimeSec).toFixed(1);
-            document.querySelector(id + "-response-tokens").textContent = parseInt(response.tokens);
-
-            setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
-            txtMessageLog.innerHTML = JSON.stringify(messageLog, null, 2);
-
+            const response = handleGptResponse(request, gptResponse);
+            addToMessageLog(response);
+            updateResponseUI(response);
             updateUI();
 
             if (!isVoicesMuted && chkAutoVoice.checked) {
-                speakMessage(messageId);
+                speakMessage(response.messageId);
             }
 
         }).catch((error) => {
@@ -480,22 +491,29 @@ function chat(mood) {
 }
 
 /**
- * Sends a prompt to ChatGPT and returns the response.
- * @param {*} prompt 
- * @param {*} mood 
+ * Adds a message to the message log.
+ * @param {*} entry 
+ */
+function addToMessageLog(entry) {
+    messageLog.push(entry);
+    setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
+}
+
+/**
+ * Creates a GPT request, based on the given message request.
+ * @param {*} request 
  * @returns 
  */
-async function chatWithGPT(request) {
+function createGptRequest(request) {
 
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`,
+        "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`
     };
-
-    const messages = messageLog.map((message) => { return { role: message.role, content: message.content } });
-
-    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: (request.mood === Personality.EVIL) ? moodEvil.value : moodGood.value });
-    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content });
+ 
+    const messages = messageLog.map((m) => { return { role: m.role, content: m.content }});
+    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: (request.mood === Personality.EVIL) ? moodEvil.value : moodGood.value});
+    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content});
 
     const data = {
         model: gptModel.value,
@@ -507,13 +525,22 @@ async function chatWithGPT(request) {
         presence_penalty: parseFloat(gptPresencePenalty.value)
     };
 
-    try {
-        const response = await fetch(GPT_CHAT_URL, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data),
-        });
+   return {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(data),
+    }
+}
 
+/**
+ * Sends a prompt to ChatGPT and returns the response.
+ * @param {*} request
+ * @returns 
+ */
+async function chatWithGPT(request) {
+ 
+    try {
+        const response = await fetch(GPT_CHAT_URL, createGptRequest(request));
         if (!response.ok) {
             throw new Error(`The response ChatGPT returned an error: ${response.status} - ${response.statusText}`);
         }
@@ -521,7 +548,7 @@ async function chatWithGPT(request) {
         return await response.json();
 
     } catch (error) {
-        console.error("Error communicating with ChatGPT:", error);
+        alert("Error communicating with ChatGPT:\n" + error);
     }
 }
 
@@ -631,7 +658,7 @@ function updateMuteVoicesChanged() {
 }
 
 /**
- * Speaks out the message.
+ * Speaks a message via a message id.
  * @param {*} messageId 
  * @returns 
  */
@@ -695,7 +722,7 @@ populateSystemVoices();
 
 const simulate = false;
 if (simulate) {
-    let messageId = "id" + new Date().getTime();
+    let messageId = "idgood" + new Date().getTime();
 
     let request = createMessage(messageId, GPT_CHAT_ROLE_USER, "Hi there, how are you?", Personality.GOOD);
     let response = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.GOOD, messageId);
@@ -705,4 +732,15 @@ if (simulate) {
     messageLog.push(request);
     messageLog.push(response);
     addToChatUI(request, response);
+
+    messageId = "idevil" + new Date().getTime();
+    request = createMessage(messageId, GPT_CHAT_ROLE_USER, "Hi there, how are you?", Personality.EVIL);
+    response = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.EVIL, messageId);
+    response.waitTimeSec = 1.2;
+    response.tokens = 39;
+
+    messageLog.push(request);
+    messageLog.push(response);
+    addToChatUI(request, response);
+
 }
