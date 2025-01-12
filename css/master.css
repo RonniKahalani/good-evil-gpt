@@ -4,7 +4,12 @@
     opacity: 0.75;
 }
 
-
+.bottom-right{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  
 .icon {
     cursor:pointer;
 }

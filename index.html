@@ -22,42 +22,47 @@
     <main class="container main-container">
 
         <div class="row m-2 p-2 bg-dark-transparent">
-            
+
             <div class="col-6">The GoodEvil Chat</div>
+
             <div class="col-6 text-end">
-        <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm col-2 ripple"
-            title="(Alt-O) Open voice settings." style="width:130px;margin-right:2px;">Voices</button>
+                <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm col-2 ripple"
+                    title="(Alt-O) Open voice settings." style="width:130px;margin-right:2px;">Voices</button>
 
-        <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm col-2 ripple"
-            title="(Alt-H) Clear message log." style="width:130px;margin-right:2px;">Clear
-            log</button>
+                <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm col-2 ripple"
+                    title="(Alt-H) Clear message log." style="width:130px;margin-right:2px;">Clear
+                    log</button>
 
-            <button id="btn-copy-history" accesskey="c" class="ripple btn btn-primary btn-sm"
-            title="(Alt-C) Copy message log to clipboard." style="width:130px;margin-right:2px;">Copy messages</button>
+                <button id="btn-copy-history" accesskey="c" class="ripple btn btn-primary btn-sm"
+                    title="(Alt-C) Copy message log to clipboard." style="width:130px;margin-right:2px;">Copy
+                    messages</button>
+                    
+                <button id="btn-mute-voices" accesskey="u" class="ripple btn btn-success btn-sm"
+                    title="(Alt-U) Mute/unmute all voices." style="width:130px;margin-right:2px;">Mute</button>
 
+            </div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs bg-dark-transparent" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                        type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                        type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
+                        type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings"
+                        type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+                </li>
+
+            </ul>
         </div>
-
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs bg-dark-transparent" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                    role="tab" aria-controls="home" aria-selected="true">Home</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button"
-                    role="tab" aria-controls="messages" aria-selected="false">Messages</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button"
-                    role="tab" aria-controls="settings" aria-selected="false">Settings</button>
-            </li>
-
-        </ul>
-    </div>
         <!-- Tab panes -->
         <div class="tab-content">
 
@@ -101,6 +106,7 @@
 
                         <div class="row text-center m-2">
                             <div class="col-4 m-2"></div>
+
                             <div class="row col-4 m-0" style="width: 512px;">
                                 <span class="text-center mood-good col-6"
                                     style="float:left;font-size: 1.5em;">Goodness</span>
@@ -109,6 +115,10 @@
 
                             </div>
                             <div class="col-4"></div>
+                        </div>
+                        <div class="bottom-right">                            
+                            <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
+                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
                         </div>
                     </div>
 
@@ -122,11 +132,6 @@
 
                     <div class="row text-center p-0" style="width: 512px;">
 
-                        <div class="row" style="float:right;">
-                            <div class="col-9"></div>
-                            <button id="btn-clear-input" accesskey="i" class="btn btn-dark btn-sm col-sm ripple"
-                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
-                        </div>
                         <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask me anything..."
                             tabindex="0" title="(Alt-M) Place cursor here."></textarea>
 

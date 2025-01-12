@@ -2,7 +2,7 @@
  * This script handle the chat UI an
  */
 document.addEventListener("DOMContentLoaded", () => {
-    if(getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
+    if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
         openAutoVoiceDialog();
     }
 });
@@ -16,9 +16,9 @@ const GPT_CHAT_ROLE_USER = "user";
 
 const LOCAL_ITEM_API_KEY = "api-key";
 const LOCAL_ITEM_MESSAGE_LOG = "message-log";
-const LOCAL_ITEM_GPT_LOG = "gpt-log";
 const LOCAL_ITEM_VOICES = "voices";
 const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
+const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 
 let apiKey = DEFAULT_YOUR_API_KEY;
 
@@ -55,6 +55,7 @@ const btnCancelGoodVoice = qs("#btn-cancel-good-voice");
 const btnCancelEvilVoice = qs("#btn-cancel-evil-voice");
 const btnUseAutoVoice = qs("#btn-use-auto-voice");
 const btnIgnoreAutoVoice = qs("#btn-ignore-auto-voice");
+const btnMuteVoices = qs("#btn-mute-voices");
 
 btnAskBoth.onclick = () => chatBoth();
 btnAskEvil.onclick = () => chatEvil();
@@ -70,6 +71,7 @@ btnCancelGoodVoice.onclick = () => cancelVoice();
 btnCancelEvilVoice.onclick = () => cancelVoice();
 btnUseAutoVoice.onclick = () => enableAutoVoices();
 btnIgnoreAutoVoice.onclick = () => ignoreAutoVoices();
+btnMuteVoices.onclick = () => toggleVoiceMuting();
 chkAutoVoice.onclick = () => setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
 
 const messageGood = qs("#message-good");
@@ -100,14 +102,39 @@ const Personality = {
 const shortDateTimeFormat = { dateStyle: 'short', timeStyle: 'short' };
 
 let messageLog = [];
-let gptLog = [];
 let systemVoices = [];
 let goodVoiceIndex = -1;
 let evilVoiceIndex = -1;
+let isVoicesMuted = false;
 
 function qs(key) {
     return document.querySelector(key);
 }
+
+/**
+ * Mutes/unmutes all voices.
+ */
+function toggleVoiceMuting() {
+    isVoicesMuted = !isVoicesMuted;
+    updateMuteButton()
+    setLocalItem(LOCAL_ITEM_MUTE_VOICES, isVoicesMuted);
+}
+
+/**
+ * Udates the mute buttons color and text.
+ */
+function updateMuteButton() {
+    if (isVoicesMuted) {
+        btnMuteVoices.classList.remove("btn-success");
+        btnMuteVoices.classList.add("btn-danger");
+        btnMuteVoices.textContent = "Unmute";
+    } else {
+        btnMuteVoices.classList.remove("btn-danger");
+        btnMuteVoices.classList.add("btn-success");
+        btnMuteVoices.textContent = "Mute";
+    }
+}
+
 /**
  * Cancels current voices.
  */
@@ -123,7 +150,10 @@ function enableAutoVoices() {
 
     const mood = Personality.EVIL;
     const settings = getVoiceSettingsByMood(mood);
-    speak("hi, and welcome.", systemVoices[settings.voiceIndex], settings.volume, settings.rate, settings.pitch, getPersonalityName(mood));
+
+    if (!isVoicesMuted) {
+        speak("hi, and welcome.", systemVoices[settings.voiceIndex], settings.volume, settings.rate, settings.pitch, getPersonalityName(mood));
+    }
 }
 
 function ignoreAutoVoices() {
@@ -148,7 +178,7 @@ function closeAutoVoiceDialog() {
  */
 function getVoiceSettingsByMood(mood) {
 
-    if(systemVoices.length === 0) {
+    if (systemVoices.length === 0) {
         populateSystemVoices();
     }
 
@@ -156,7 +186,7 @@ function getVoiceSettingsByMood(mood) {
     const voiceSelector = isGood ? selectGoodVoice : selectEvilVoice;
 
     let voiceName = "";
-    if( voiceSelector.selectedIndex !== -1) {
+    if (voiceSelector.selectedIndex !== -1) {
         voiceName = voiceSelector.options[voiceSelector.selectedIndex].text;
     }
 
@@ -266,7 +296,6 @@ function clearMessageLog() {
     }
 
     messageLog.length = 0;
-    gptLog.length = 0;
 
     messageLog.textContent = "";
     txtMessageLog.textContent = "";
@@ -279,7 +308,6 @@ function clearMessageLog() {
     evilMessageCount.textContent = 0;
 
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
-    setLocalItemAsJson(LOCAL_ITEM_GPT_LOG, gptLog);
 }
 
 /**
@@ -304,8 +332,8 @@ function copyMessageToClipboard(messageId) {
  * @param {*} messageId 
  * @param {*} request 
  */
-function addToChatUI(messageId, request, response) {
-    const htmlMessage = createMessageUI(messageId, request, response);
+function addToChatUI(request, response) {
+    const htmlMessage = createMessageUI(request.messageId, request, response);
     const target = (request.mood === Personality.GOOD) ? messageGood : messageEvil;
     target.innerHTML = htmlMessage + target.innerHTML;
 }
@@ -356,8 +384,8 @@ function createMessageUI(messageId, request, response) {
  * Updates token counts.
  */
 function updateTokenCount() {
-    const goodTokenTotals = gptLog.filter((log) => log.mood === Personality.GOOD).map((log) => log.response.usage.total_tokens);
-    const evilTokenTotals = gptLog.filter((log) => log.mood === Personality.EVIL).map((log) => log.response.usage.total_tokens);
+    const goodTokenTotals = messageLog.filter((log) => log.role === GPT_CHAT_ROLE_ASSISTANT && log.mood === Personality.GOOD).map((log) => log.tokens);
+    const evilTokenTotals = messageLog.filter((log) => log.role === GPT_CHAT_ROLE_ASSISTANT && log.mood === Personality.EVIL).map((log) => log.tokens);
 
     const goodCount = goodTokenTotals.length > 0 ? goodTokenTotals.reduce((num, sum) => sum + num, 0) : 0;
     const evilCount = evilTokenTotals.length > 0 ? evilTokenTotals.reduce((num, sum) => sum + num, 0) : 0;
@@ -385,6 +413,7 @@ function updateMessageCount() {
 function updateUI() {
     updateMessageCount();
     updateTokenCount();
+    updateMuteVoicesChanged();
 }
 
 /**
@@ -413,36 +442,34 @@ function chat(mood) {
         const request = createMessage(messageId, GPT_CHAT_ROLE_USER, input, mood);
         messageLog.push(request);
 
-        addToChatUI(messageId, request);
+        addToChatUI(request);
 
-        chatWithGPT(request).then((response) => {
+        chatWithGPT(request).then((gptResponse) => {
 
-            const reply = response.choices[0].message.content;
+            const reply = gptResponse.choices[0].message.content;
             console.log("ChatGPT response:", reply);
 
             const timestamp = new Date().getTime();
             const waitTimeSec = (timestamp - request.created) / 1000;
 
-            const message = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, reply, request.mood);
-            message.waitTimeSec = waitTimeSec;
-            message.tokens = response.usage.total_tokens;
-            messageLog.push(message);
+            const response = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, reply, request.mood);
+            response.waitTimeSec = waitTimeSec;
+            response.tokens = gptResponse.usage.total_tokens;
+            response.gpt = gptResponse;
 
-            gptLog.push({ response: response, message: message, mood: request.mood });
-            setLocalItemAsJson(LOCAL_ITEM_GPT_LOG, gptLog);
+            messageLog.push(response);
 
             const id = "#" + messageId;
             document.querySelector(id + "-response").innerHTML = replaceNewlines(reply);
-            document.querySelector(id + "-response-waitsec").textContent = parseFloat(message.waitTimeSec).toFixed(1);
-            document.querySelector(id + "-response-tokens").textContent = parseInt(message.tokens);
+            document.querySelector(id + "-response-waitsec").textContent = parseFloat(response.waitTimeSec).toFixed(1);
+            document.querySelector(id + "-response-tokens").textContent = parseInt(response.tokens);
 
-            const messagesAsStrings = JSON.stringify(messageLog, null, 2);
-            setLocalItem(LOCAL_ITEM_MESSAGE_LOG, messagesAsStrings);
-            txtMessageLog.innerHTML = messagesAsStrings;
+            setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
+            txtMessageLog.innerHTML = JSON.stringify(messageLog, null, 2);
 
             updateUI();
 
-            if (chkAutoVoice.checked) {
+            if (!isVoicesMuted && chkAutoVoice.checked) {
                 speakMessage(messageId);
             }
 
@@ -550,6 +577,14 @@ function getLocalItemAsJson(key) {
     return JSON.parse(localStorage.getItem(key));
 }
 
+function updateConversations() {
+    const requests = messageLog.filter((m) => m.role === GPT_CHAT_ROLE_USER);
+    const responses = messageLog.filter((m) => m.role === GPT_CHAT_ROLE_ASSISTANT);
+
+    for(i=0; i < requests.length; i++) {
+        addToChatUI(requests[i], responses[i]);
+    }
+}
 /**
  * Loads local storage data.
  */
@@ -557,9 +592,6 @@ function loadLocalStorage() {
     const localMessageLog = getLocalItem(LOCAL_ITEM_MESSAGE_LOG);
     messageLog = localMessageLog ? JSON.parse(localMessageLog) : [];
     txtMessageLog.innerHTML = JSON.stringify(messageLog, null, 2);
-
-    const localGptLog = getLocalItem(LOCAL_ITEM_GPT_LOG);
-    gptLog = localGptLog ? JSON.parse(localGptLog) : [];
 
     const localVoices = getLocalItemAsJson(LOCAL_ITEM_VOICES);
 
@@ -575,7 +607,27 @@ function loadLocalStorage() {
     inputEvilVoiceRate.value = localVoices ? localVoices.evil.rate : 1;
     inputEvilVoiceVolume.value = localVoices ? localVoices.evil.volume : 1;
 
-    chkAutoVoice.checked = getLocalItem(LOCAL_ITEM_AUTO_VOICE);
+    let value = getLocalItem(LOCAL_ITEM_AUTO_VOICE);
+    if (value === null) {
+        chkAutoVoice.checked = true;
+    } else {
+        chkAutoVoice.checked = JSON.parse(value);
+    }
+
+    value = getLocalItem(LOCAL_ITEM_MUTE_VOICES);
+    if (value === null) {
+        isVoicesMuted = false;
+    } else {
+        isVoicesMuted = JSON.parse(value);
+    }
+
+    updateConversations();
+    updateUI();
+}
+
+function updateMuteVoicesChanged() {
+    setLocalItem(LOCAL_ITEM_MUTE_VOICES, isVoicesMuted);
+    updateMuteButton();
 }
 
 /**
@@ -584,6 +636,15 @@ function loadLocalStorage() {
  * @returns 
  */
 function speakMessage(messageId) {
+
+    if (isVoicesMuted) {
+        if (confirm("You have voices muted.\nDo you want to unmute?")) {
+            isVoicesMuted = false;
+            updateMuteVoicesChanged();
+        } else {
+            return;
+        }
+    }
 
     populateSystemVoices();
 
@@ -643,5 +704,5 @@ if (simulate) {
 
     messageLog.push(request);
     messageLog.push(response);
-    addToChatUI(messageId, request, response);
+    addToChatUI(request, response);
 }
