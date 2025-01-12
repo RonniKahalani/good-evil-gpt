@@ -596,7 +596,7 @@ function speakMessage(messageId) {
 
     const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
     const voiceSettings = getVoiceSettingsByMood(response.mood);
-    speak(response.content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch, getPersonalityName(mood));
+    speak(response.content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch, getPersonalityName(response.mood));
 }
 
 /**
