@@ -127,12 +127,12 @@ function updateMuteButton() {
     if (isVoicesMuted) {
         btnMuteVoices.classList.remove("btn-success");
         btnMuteVoices.classList.add("btn-danger");
-        btnMuteVoices.textContent = "Unmute";
+        btnMuteVoices.textContent = "Unmute voices";
         cancelVoice();
     } else {
         btnMuteVoices.classList.remove("btn-danger");
         btnMuteVoices.classList.add("btn-success");
-        btnMuteVoices.textContent = "Mute";
+        btnMuteVoices.textContent = "Mute voices";
     }
 }
 
@@ -334,9 +334,8 @@ function copyMessageToClipboard(messageId) {
  * @param {*} request 
  */
 function addToChatUI(request, response) {
-    const htmlMessage = createMessageUI(request.messageId, request, response);
     const target = (request.mood === Personality.GOOD) ? messageGood : messageEvil;
-    target.innerHTML = htmlMessage + target.innerHTML;
+    target.innerHTML = createMessageUI(request.messageId, request, response) + target.innerHTML;
 }
 
 /**
@@ -438,7 +437,12 @@ function createMessage(messageId, role, content, mood) {
 
 function handleGptResponse( request, gptResponse) {
     
-    const reply = gptResponse.choices[0].message.content;
+    let reply = gptResponse.choices[0].message.content;
+    const finishReason = gptResponse.choices[0].finish_reason;
+
+    if(finishReason === "length") {
+        reply += "...\n\nNote: Message is trunkated because of the max. tokens " + gptMaxTokens.value + " limit.\nYou can adjust this value on the Settings page.";
+    }
     const timestamp = new Date().getTime();
     const waitTimeSec = (timestamp - request.created) / 1000;
 
