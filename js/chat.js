@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-const DEFAULT_YOUR_API_KEY = "your-api-key";
+const DEFAULT_API_KEY = "your-api-key";
 
 const GPT_CHAT_URL = "https://api.openai.com/v1/chat/completions";
 const GPT_CHAT_ROLE_ASSISTANT = "assistant";
@@ -20,7 +20,7 @@ const LOCAL_ITEM_VOICES = "voices";
 const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
 const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 
-let apiKey = DEFAULT_YOUR_API_KEY;
+let apiKey = DEFAULT_API_KEY;
 
 const dialogVoiceSettings = qs("#dialog-voice-settings");
 const dialogAutoVoice = qs("#dialog-auto-voice");
@@ -31,7 +31,6 @@ const selectEvilVoice = qs("#select-evil-voice");
 const inputGoodVoicePitch = qs("#input-good-voice-pitch");
 const inputGoodVoiceRate = qs("#input-good-voice-rate");
 const inputGoodVoiceVolume = qs("#input-good-voice-volume");
-
 const inputEvilVoicePitch = qs("#input-evil-voice-pitch");
 const inputEvilVoiceRate = qs("#input-evil-voice-rate");
 const inputEvilVoiceVolume = qs("#input-evil-voice-volume");
@@ -107,6 +106,42 @@ let goodVoiceIndex = -1;
 let evilVoiceIndex = -1;
 let isVoicesMuted = false;
 
+/**
+ * Converts a date to a 'time ago' text.
+ * // Example usage:
+ * const date = new Date("2024-12-01T12:00:00");
+ * console.log(timeAgo(date));
+ * @param {*} date 
+ * @returns 
+ */
+function timeAgo(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+
+    const intervals = [
+        { label: "year", seconds: 31536000 },
+        { label: "month", seconds: 2592000 },
+        { label: "day", seconds: 86400 },
+        { label: "hour", seconds: 3600 },
+        { label: "minute", seconds: 60 },
+        { label: "second", seconds: 1 }
+    ];
+
+    for (const interval of intervals) {
+        const count = Math.floor(seconds / interval.seconds);
+        if (count >= 1) {
+            return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
+        }
+    }
+
+    return "just now";
+}
+
+/**
+ * Works as a short version of document.querySelector(...).
+ * @param {*} key 
+ * @returns 
+ */
 function qs(key) {
     return document.querySelector(key);
 }
@@ -116,14 +151,15 @@ function qs(key) {
  */
 function toggleVoiceMuting() {
     isVoicesMuted = !isVoicesMuted;
-    updateMuteButton()
-    setLocalItem(LOCAL_ITEM_MUTE_VOICES, isVoicesMuted);
+    updateMuteVoices();
 }
 
 /**
  * Udates the mute buttons color and text.
  */
-function updateMuteButton() {
+function updateMuteVoices() {
+
+    setLocalItem(LOCAL_ITEM_MUTE_VOICES, isVoicesMuted);
     if (isVoicesMuted) {
         btnMuteVoices.classList.remove("btn-success");
         btnMuteVoices.classList.add("btn-danger");
@@ -143,17 +179,18 @@ function cancelVoice() {
     cancelSpeaking();
 }
 
-function enableAutoVoices() {
-    populateSystemVoices();
-    chkAutoVoice.checked = true;
-    closeAutoVoiceDialog();
-    setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
+function updateAutoVoices() {
 
-    const mood = Personality.EVIL;
-    const settings = getVoiceSettingsByMood(mood);
+    setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
+}
+
+function enableAutoVoices() {
+    chkAutoVoice.checked = true;
+    populateSystemVoices();
+    closeAutoVoiceDialog();
 
     if (!isVoicesMuted) {
-        speak("hi, and welcome.", systemVoices[settings.voiceIndex], settings.volume, settings.rate, settings.pitch, getPersonalityName(mood));
+        speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
     }
 }
 
@@ -192,10 +229,10 @@ function getVoiceSettingsByMood(mood) {
     }
 
     const settings = {
+        name: getPersonalityName(mood),
         pitch: parseFloat(isGood ? inputGoodVoicePitch.value : inputEvilVoicePitch.value),
         rate: parseFloat(isGood ? inputGoodVoiceRate.value : inputEvilVoiceRate.value),
         volume: parseFloat(isGood ? inputGoodVoiceVolume.value : inputEvilVoiceVolume.value),
-        text: isGood ? moodGood.value : moodEvil.value,
         voiceIndex: parseInt(isGood ? selectGoodVoice.value : selectEvilVoice.value),
         voiceName: voiceName
     };
@@ -212,8 +249,8 @@ function getPersonalityName(mood) {
  * @param {*} mood 
  */
 function testVoice(mood) {
-    const voiceSettings = getVoiceSettingsByMood(mood);
-    speak(voiceSettings.text, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch, getPersonalityName(mood));
+    const text = (mood === Personality.GOOD) ? moodGood.value : moodEvil.value;
+    speak(text, getVoiceSettingsByMood(mood));
 }
 
 /**
@@ -364,12 +401,14 @@ function createMessageUI(messageId, request, response) {
                 <i title="Speak the message out loud." onclick="speakMessage('${messageId}');" class="bi bi-play-circle-fill icon mx-1"></i>
             </span>${replaceNewlines(request.content)}
         </div>
-        <div id="${messageId}-response" class="message-assistant mood-${request.mood}">
+        <div id="${messageId}-response" class="message-assistant mood-${request.mood} p-2">
         ${response ? replaceNewlines(response.content) : spinner}
         </div>
         <div class="row">
-            <span class="col-4 info-sm">${
+            <span class="col-4 info-sm" title="${
                 formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
+            }">${
+                timeAgo(request.created)
             }</span>
             <span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>
             <span class="col-4 text-end info-sm">Time: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>
@@ -561,7 +600,7 @@ async function chatWithGPT(request) {
  */
 function handleApiKey() {
     apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
-    if (apiKey === null || apiKey === "" || apiKey === DEFAULT_YOUR_API_KEY) {
+    if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
         apiKey = prompt("Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.", "");
         if (apiKey === null || apiKey === "") {
             alert("You need to provide a valid ChatGPT API key to use this page.");
@@ -658,7 +697,7 @@ function loadLocalStorage() {
 
 function updateMuteVoicesChanged() {
     setLocalItem(LOCAL_ITEM_MUTE_VOICES, isVoicesMuted);
-    updateMuteButton();
+    updateMuteVoices();
 }
 
 /**
@@ -687,8 +726,7 @@ function speakMessage(messageId) {
     }
 
     const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
-    const voiceSettings = getVoiceSettingsByMood(response.mood);
-    speak(response.content, systemVoices[voiceSettings.voiceIndex], voiceSettings.volume, voiceSettings.rate, voiceSettings.pitch, getPersonalityName(response.mood));
+    speak(response.content, getVoiceSettingsByMood(response.mood));
 }
 
 /**

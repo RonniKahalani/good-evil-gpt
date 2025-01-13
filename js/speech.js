@@ -12,12 +12,12 @@ const removeFromArray = function (array, ...deleteElement) {
     return array;
 };
 
-function speak(text, voice, volume, rate, pitch, name) {
+function speak(text, settings) {
 
     const speech = new SpeechSynthesisUtterance();
 
     speeches.push(speech);
-    speech.name = name;
+    speech.name = settings ? settings.name : null;
 
     speech.onstart = (e) => {
         console.log("Voice start" + e)
@@ -33,10 +33,10 @@ function speak(text, voice, volume, rate, pitch, name) {
 
     speech.lang = "en_US";
     speech.text = text;
-    speech.volume = volume ? volume : 1;
-    speech.rate = rate ? rate : 1;
-    speech.pitch = pitch ? pitch : 1;
-    speech.voice = voice;
+    speech.volume = settings ? settings.volume : 1;
+    speech.rate = settings ? settings.rate : 1;
+    speech.pitch = settings ? settings.pitch : 1;
+    speech.voice = settings ? systemVoices[settings.voiceIndex] : null;
 
     if(isSpeaking) {
       //  cancelSpeaking();
