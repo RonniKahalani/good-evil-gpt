@@ -417,14 +417,23 @@ function createMessageUI(messageId, request, response) {
 }
 
 /**
+ * Finds the token totals for a given roel and mood.
+ * @param {*} role 
+ * @param {*} mood 
+ * @returns 
+ */
+function getTokenTotalsFor(role, mood) {
+    const tokenTotals = messageLog.filter((log) => log.role === role && log.mood === mood).map((log) => log.tokens);    
+    return tokenTotals.length > 0 ? tokenTotals.reduce((num, sum) => sum + num, 0) : 0;
+}
+
+
+/**
  * Updates token counts.
  */
 function updateTokenCount() {
-    const goodTokenTotals = messageLog.filter((log) => log.role === GPT_CHAT_ROLE_ASSISTANT && log.mood === Personality.GOOD).map((log) => log.tokens);
-    const evilTokenTotals = messageLog.filter((log) => log.role === GPT_CHAT_ROLE_ASSISTANT && log.mood === Personality.EVIL).map((log) => log.tokens);
-
-    const goodCount = goodTokenTotals.length > 0 ? goodTokenTotals.reduce((num, sum) => sum + num, 0) : 0;
-    const evilCount = evilTokenTotals.length > 0 ? evilTokenTotals.reduce((num, sum) => sum + num, 0) : 0;
+    const goodCount = getTokenTotalsFor(GPT_CHAT_ROLE_ASSISTANT, Personality.GOOD);
+    const evilCount = getTokenTotalsFor(GPT_CHAT_ROLE_ASSISTANT, Personality.EVIL);
 
     goodTokens.textContent = goodCount;
     evilTokens.textContent = evilCount;
@@ -432,12 +441,21 @@ function updateTokenCount() {
 }
 
 /**
+ * Finds the message count for a given mood.
+ * @param {*} mood 
+ * @returns 
+ */
+function getMessageCountFor(mood) {
+    return messageLog.filter((message) => message.mood === mood).length;
+}
+
+/**
  * Updates message counts.
  */
 function updateMessageCount() {
 
-    const goodCount = messageLog.filter((message) => message.mood === Personality.GOOD).length;
-    const evilCount = messageLog.filter((message) => message.mood === Personality.EVIL).length;
+    const goodCount = getMessageCountFor(Personality.GOOD);
+    const evilCount = getMessageCountFor(Personality.EVIL);
 
     goodMessageCount.textContent = (goodCount > 0) ? goodCount / 2 : 0;
     evilMessageCount.textContent = (evilCount > 0) ? evilCount / 2 : 0;
@@ -470,7 +488,7 @@ function updateUI() {
  */
 function createMessage(messageId, role, content, mood) {
     const userName = "John Doe";
-    const name = (role === GPT_CHAT_ROLE_ASSISTANT) ? (mood === Personality.GOOD) ? "Goodness" : "Evilness" : userName;
+    const name = (role === GPT_CHAT_ROLE_ASSISTANT) ? getPersonalityName(mood) : userName;
     return { name: name, role: role, content: content, created: new Date().getTime(), mood: mood, messageId: messageId };
 }
 
@@ -480,7 +498,7 @@ function handleGptResponse( request, gptResponse) {
     const finishReason = gptResponse.choices[0].finish_reason;
 
     if(finishReason === "length") {
-        reply += "...\n\nNote: Message is trunkated because of the max. tokens " + gptMaxTokens.value + " limit.\nYou can adjust this value on the Settings page.";
+        reply += `...\n\nNote: Message is truncated because of the max. tokens ${gptMaxTokens.value} limit.\nYou can adjust this value on the Settings page.`;
     }
     const timestamp = new Date().getTime();
     const waitTimeSec = (timestamp - request.created) / 1000;
@@ -510,7 +528,7 @@ function chat(mood) {
     const input = txtMessageInput.value;
     if (input) {
 
-        const messageId = 'id' + (new Date()).getTime();
+        const messageId = `id${(new Date()).getTime()}`;
         const request = createMessage(messageId, GPT_CHAT_ROLE_USER, input, mood);
 
         addToMessageLog(request);
@@ -542,6 +560,11 @@ function addToMessageLog(entry) {
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
 }
 
+
+function getSystemPromptByMood(mood) {
+ return (mood === Personality.EVIL) ? moodEvil.value : moodGood.value
+}
+
 /**
  * Creates a GPT request, based on the given message request.
  * @param {*} request 
@@ -555,7 +578,7 @@ function createGptRequest(request) {
     };
  
     const messages = messageLog.map((m) => { return { role: m.role, content: m.content }});
-    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: (request.mood === Personality.EVIL) ? moodEvil.value : moodGood.value});
+    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood)});
     messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content});
 
     const data = {
@@ -756,7 +779,7 @@ function populateSystemVoices() {
     selectEvilVoice.value = evilVoiceIndex;
 }
 
-// Code being run on page load.
+// Code being run when script loads.
 txtMessageInput.focus();
 handleApiKey();
 loadLocalStorage();
