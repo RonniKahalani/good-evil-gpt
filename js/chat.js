@@ -57,8 +57,8 @@ const btnIgnoreAutoVoice = qs("#btn-ignore-auto-voice");
 const btnMuteVoices = qs("#btn-mute-voices");
 
 btnAskBoth.onclick = () => chatBoth();
-btnAskEvil.onclick = () => chatEvil();
-btnAskGood.onclick = () => chatGood();
+btnAskEvil.onclick = () => chat(Personality.EVIL);
+btnAskGood.onclick = () => chat(Personality.GOOD);
 btnClearInput.onclick = () => clearInput();
 btnClearHistory.onclick = () => clearMessageLog();
 btnCopyHistory.onclick = () => copyTextToClipboard(txtMessageLog.innerHTML);
@@ -292,21 +292,7 @@ function replaceNewlines(text) {
  * Sends a chat to both personalities (Goodness and Evilness).
  */
 function chatBoth() {
-    chatEvil();
-    chatGood();
-}
-
-/**
- * Sends a chat to Evilness.
- */
-function chatEvil() {
     chat(Personality.EVIL);
-}
-
-/**
- * Sends a chat to Goodness.
- */
-function chatGood() {
     chat(Personality.GOOD);
 }
 
