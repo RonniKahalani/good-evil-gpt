@@ -391,7 +391,7 @@ function createMessageUI(messageId, request, response) {
         ${response ? replaceNewlines(response.content) : spinner}
         </div>
         <div class="row">
-            <span class="col-4 info-sm" title="${
+            <span id="@{messageId}-created" class="message-time-ago col-4 info-sm" title="${
                 formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
             }">${
                 timeAgo(request.created)
@@ -743,8 +743,6 @@ function speakMessage(messageId) {
  * @param {*} select 
  */
 function populateSelectVoices(select) {
-    //select.add(new Option("Select voice", "-1", true));
-
     let index = 0;
     systemVoices.forEach(voice => {
         select.add(new Option(voice.name, index++, false));
@@ -765,11 +763,33 @@ function populateSystemVoices() {
     selectEvilVoice.value = evilVoiceIndex;
 }
 
+function updateTimeAgo() {
+    const messages = document.querySelectorAll(".message");
+    messages.forEach( (m) => {
+        const elem = m.querySelector(".message-time-ago");
+
+        const currentTime = timeAgo(new Date(elem.title));
+        const elemTime = elem.textContent;
+
+        if(elemTime !== currentTime) {
+            elem.textContent = currentTime;
+        }
+    });
+}
+
+/**
+ * Updates the created time ago info on visual messages.
+ */
+function setMessageTimeAgoInterval() {
+    var t=setInterval(updateTimeAgo,6000);
+}
+
 // Code being run when script loads.
 txtMessageInput.focus();
 handleApiKey();
 loadLocalStorage();
 populateSystemVoices();
+setMessageTimeAgoInterval();
 
 const simulate = false;
 if (simulate) {
