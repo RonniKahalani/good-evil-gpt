@@ -1,10 +1,18 @@
 /**
- * This script handle the chat UI an
+ * This script handles the chat UI and GPT communication.
  */
 document.addEventListener("DOMContentLoaded", () => {
+
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
         openAutoVoiceDialog();
     }
+
+    txtMessageInput.focus();
+    handleApiKey();
+    loadLocalStorage();
+    populateSystemVoices();
+    setInterval(updateTimeAgo,30000);
+    // createFakeMessages();
 });
 
 const DEFAULT_API_KEY = "your-api-key";
@@ -21,6 +29,16 @@ const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
 const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 
 let apiKey = DEFAULT_API_KEY;
+
+const MSG_NO_MESSAGES_FOUND = "No messages found.";
+const MSG_CLEAR_MESSAGES_CONFIRM= "You are about to clear all the chat history.\nYou can copy the current history on the Messages pane.\n\nAre you sure you want to continue?";
+const MSG_ENTER_APIKEY = "Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.";
+const MSG_PROVIDE_APIKEY = "You need to provide a valid ChatGPT API key to use this page.";
+const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
+const MSG_CONFIGURE_VOICES = "Please configure the voices on the Profile tab.";
+
+const ERR_GPT_REQUEST = "Failed to get response from ChatGPT:";
+const ERR_GPT_COMMUNICATION = "Error communicating with ChatGPT:";
 
 const dialogVoiceSettings = qs("#dialog-voice-settings");
 const dialogAutoVoice = qs("#dialog-auto-voice");
@@ -91,6 +109,9 @@ const gptTopP = qs("#gpt-top-p");
 const gptFrequencyPenalty = qs("#gpt-frequency-penalty");
 const gptPresencePenalty = qs("#gpt-presence-penalty");
 
+const speakingNow = document.querySelector("#speaking-now");
+const speakingNowName = document.querySelector("#speaking-now-name");
+
 const spinner = `<div class="spinner-border message-spinner" role="status"></div>`;
 
 const Personality = {
@@ -105,6 +126,23 @@ let systemVoices = [];
 let goodVoiceIndex = -1;
 let evilVoiceIndex = -1;
 let isVoicesMuted = false;
+
+const speeches = [];
+
+/**
+ * Removes an entry from an array.
+ * @param {*} array 
+ * @param  {...any} deleteElement 
+ * @returns 
+ */
+const removeFromArray = function (array, ...deleteElement) {
+    for (let element of deleteElement) {
+        if (array.includes(element)) {
+            array.splice(array.indexOf(element), 1);
+        }
+    }
+    return array;
+};
 
 /**
  * Converts a date to a 'time ago' text.
@@ -151,6 +189,8 @@ function qs(key) {
  */
 function toggleVoiceMuting() {
     isVoicesMuted = !isVoicesMuted;
+    speakingNow.style.display = "none";
+    speakingNowName.textContent = "";
     updateMuteVoices();
 }
 
@@ -190,7 +230,10 @@ function enableAutoVoices() {
     closeAutoVoiceDialog();
 
     if (!isVoicesMuted) {
-        speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
+       const speech =  speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
+       speeches.push(speech);
+       speech.onstart = (e) => updateVoiceStarted(e);
+       speech.onend = (e) => updateVoiceEnded(e);   
     }
 }
 
@@ -245,12 +288,69 @@ function getPersonalityName(mood) {
 }
 
 /**
+ * Speaks out a voice.
+ * @param {*} text 
+ * @param {*} settings 
+ * @returns 
+ */
+function speak(text, settings) {
+
+    const speech = new SpeechSynthesisUtterance();
+    speech.name = settings ? settings.name : null;
+    speech.lang = "en_US";
+    speech.text = text;
+    speech.volume = settings ? settings.volume : 1;
+    speech.rate = settings ? settings.rate : 1;
+    speech.pitch = settings ? settings.pitch : 1;
+    speech.voice = settings ? systemVoices[settings.voiceIndex] : null;
+
+    window.speechSynthesis.speak(speech);
+    return speech;
+}
+
+/**
+ * Tests wether a current speech is active.
+ * @returns false if no voice is currently being spoken.
+ */
+function isSpeaking() {
+    return window.speechSynthesis.speaking;
+}
+
+function cancelSpeaking() {
+    window.speechSynthesis.cancel();
+}
+
+/**
  * Tests a voice.
  * @param {*} mood 
  */
 function testVoice(mood) {
     const text = (mood === Personality.GOOD) ? moodGood.value : moodEvil.value;
-    speak(text, getVoiceSettingsByMood(mood));
+    const speech = speak(text, getVoiceSettingsByMood(mood));
+    speeches.push(speech);
+    speech.onstart = (e) => updateVoiceStarted(e);
+    speech.onend = (e) => updateVoiceEnded(e);
+}
+
+/**
+ * Updates who is currently speaking.
+ * @param {*} e 
+ */
+function updateVoiceStarted(e) {
+    console.log("Voice start" + e)
+    speakingNowName.textContent = e.utterance.name + " is speaking...";
+    speakingNow.style.display = "block";
+}
+
+/**
+ * Clears and removes an ended speech.
+ * @param {*} e 
+ */
+function updateVoiceEnded(e) {
+    speakingNow.style.display = "none";
+    speakingNowName.textContent = "";
+    removeFromArray(speeches, e.utterance);
+    console.log("Voice end" + e)
 }
 
 /**
@@ -311,11 +411,11 @@ function clearMessageLog() {
 
     txtMessageInput.focus();
     if (messageLog.length === 0) {
-        alert("No chat history found.");
+        alert(MSG_NO_MESSAGES_FOUND);
         return
     }
 
-    if (!confirm("You are about to clear all the chat history.\nYou can copy the current history on the Messages pane.\n\nAre you sure you want to continue?")) {
+    if (!confirm(MSG_CLEAR_MESSAGES_CONFIRM)) {
         return;
     }
 
@@ -532,7 +632,7 @@ function chat(mood) {
             }
 
         }).catch((error) => {
-            console.error("Failed to get response from ChatGPT:", error);
+            console.error(ERR_GPT_REQUEST, error);
         });
     }
 }
@@ -600,7 +700,7 @@ async function chatWithGPT(request) {
         return await response.json();
 
     } catch (error) {
-        alert("Error communicating with ChatGPT:\n" + error);
+        alert(ERR_GPT_COMMUNICATION + "\n" + error);
     }
 }
 
@@ -610,9 +710,9 @@ async function chatWithGPT(request) {
 function handleApiKey() {
     apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
     if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
-        apiKey = prompt("Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.", "");
+        apiKey = prompt(MSG_ENTER_APIKEY, "");
         if (apiKey === null || apiKey === "") {
-            alert("You need to provide a valid ChatGPT API key to use this page.");
+            alert(MSG_PROVIDE_APIKEY);
         } else {
             setLocalItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
         }
@@ -717,7 +817,7 @@ function updateMuteVoicesChanged() {
 function speakMessage(messageId) {
 
     if (isVoicesMuted) {
-        if (confirm("You have voices muted.\nDo you want to unmute?")) {
+        if (confirm(MSG_UNMUTE_CONFIRM)) {
             isVoicesMuted = false;
             updateMuteVoicesChanged();
         } else {
@@ -730,12 +830,15 @@ function speakMessage(messageId) {
     const localVoices = getLocalItemAsJson(LOCAL_ITEM_VOICES);
 
     if (localVoices === null) {
-        alert("Please configure the voices on the Profile tab.");
+        alert(MSG_CONFIGURE_VOICES);
         return;
     }
 
     const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
-    speak(response.content, getVoiceSettingsByMood(response.mood));
+    const speech = speak(response.content, getVoiceSettingsByMood(response.mood));
+    speeches.push(speech);
+    speech.onstart = (e) => updateVoiceStarted(e);
+    speech.onend = (e) => updateVoiceEnded(e);
 }
 
 /**
@@ -744,6 +847,7 @@ function speakMessage(messageId) {
  */
 function populateSelectVoices(select) {
     let index = 0;
+    select.options.length = 0;
     systemVoices.forEach(voice => {
         select.add(new Option(voice.name, index++, false));
     });
@@ -781,21 +885,9 @@ function updateTimeAgo() {
 }
 
 /**
- * Updates the created time ago info on visual messages.
+ * Create fake messages.
  */
-function setMessageTimeAgoInterval() {
-    var t=setInterval(updateTimeAgo,6000);
-}
-
-// Code being run when script loads.
-txtMessageInput.focus();
-handleApiKey();
-loadLocalStorage();
-populateSystemVoices();
-setMessageTimeAgoInterval();
-
-const simulate = false;
-if (simulate) {
+function createFakeMessages() {
     let messageId = "idgood" + new Date().getTime();
 
     let request = createMessage(messageId, GPT_CHAT_ROLE_USER, "Hi there, how are you?", Personality.GOOD);
@@ -816,5 +908,4 @@ if (simulate) {
     messageLog.push(request);
     messageLog.push(response);
     addToChatUI(request, response);
-
 }

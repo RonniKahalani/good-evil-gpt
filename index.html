@@ -13,7 +13,6 @@
         integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
     <link rel="stylesheet" href="css/master.css">
     <script defer src="js/clipboard.js"></script>
-    <script defer src="js/speech.js"></script>
     <script defer src="js/chat.js"></script>
 
 </head>
@@ -21,7 +20,7 @@
 <body>
     <main class="container main-container">
 
-        <div class="info-panel row m-2 p-2 bg-dark-transparent">
+        <div class="border-low row m-2 p-2 bg-dark-transparent">
 
             <div class="col-6">The GoodEvil Chat</div>
 
@@ -31,7 +30,7 @@
 
                 <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm btn-nav col-2 ripple"
                     title="(Alt-H) Clear message log.">Clear
-                    log</button>
+                    messages</button>
 
                 <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
                     title="(Alt-C) Copy message log to clipboard.">Copy
@@ -112,7 +111,7 @@
                         <div class="row text-center m-2">
                             <div class="col-4 m-2"></div>
 
-                            <div class="row col-4 m-0" style="width: 512px;">
+                            <div class="border-low row col-4 m-0" style="width: 512px;">
                                 <span class="text-center mood-good col-6"
                                     style="float:left;font-size: 1.5em;">Goodness</span>
                                 <span class="text-center mood-evil col-6"
