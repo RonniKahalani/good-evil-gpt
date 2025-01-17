@@ -4,6 +4,11 @@
     opacity: 0.75;
 }
 
+.info-panel {
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
 .message-time-ago {
 
 }
@@ -173,12 +178,16 @@
     background-color: darkred;
     color: #fff;
     font-size: 0.875rem;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
 }
 
 .mood-good {
     background-color: darkblue;
     color: #fff;
     font-size: 0.875rem;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
 }
 
 .tab-pane {
@@ -220,6 +229,8 @@ body {
 .message {
     margin: 5px;
     padding: 5px;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
 }
 
 #message-good {

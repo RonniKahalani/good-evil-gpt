@@ -397,7 +397,7 @@ function createMessageUI(messageId, request, response) {
                 timeAgo(request.created)
             }</span>
             <span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>
-            <span class="col-4 text-end info-sm">Time: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>
+            <span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>
         </div>
     </div>`;
 }
@@ -763,6 +763,9 @@ function populateSystemVoices() {
     selectEvilVoice.value = evilVoiceIndex;
 }
 
+/**
+ * Updates all the timeago info on shown UI messages.
+ */
 function updateTimeAgo() {
     const messages = document.querySelectorAll(".message");
     messages.forEach( (m) => {
