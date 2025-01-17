@@ -219,11 +219,17 @@ function cancelVoice() {
     cancelSpeaking();
 }
 
+/**
+ * Updates auto voices.
+ */
 function updateAutoVoices() {
 
     setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
 }
 
+/**
+ * Enables auto voices.
+ */
 function enableAutoVoices() {
     chkAutoVoice.checked = true;
     populateSystemVoices();
@@ -237,6 +243,9 @@ function enableAutoVoices() {
     }
 }
 
+/**
+ * Ignores auto voices.
+ */
 function ignoreAutoVoices() {
     populateSystemVoices();
     chkAutoVoice.checked = false;
@@ -244,10 +253,16 @@ function ignoreAutoVoices() {
     setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
 }
 
+/**
+ * Opens auto voice dialog.
+ */
 function openAutoVoiceDialog() {
     dialogAutoVoice.showModal();
 }
 
+/**
+ * Closes suto voices.
+ */
 function closeAutoVoiceDialog() {
     dialogAutoVoice.close();
 }
@@ -283,6 +298,11 @@ function getVoiceSettingsByMood(mood) {
     return settings;
 }
 
+/**
+ * Returns the name for a given mood.
+ * @param {*} mood 
+ * @returns 
+ */
 function getPersonalityName(mood) {
     return (mood === Personality.GOOD) ? "Goodness" : "Evilness"
 }
@@ -316,6 +336,9 @@ function isSpeaking() {
     return window.speechSynthesis.speaking;
 }
 
+/**
+ * Cancels all current speeches.
+ */
 function cancelSpeaking() {
     window.speechSynthesis.cancel();
 }
@@ -598,6 +621,10 @@ function handleGptResponse( request, gptResponse) {
     return response;
 }
 
+/**
+ * Updates UI for a given response.
+ * @param {*} response 
+ */
 function updateResponseUI( response) {
     const id = "#" + response.messageId;
     qs(`${id}-response`).innerHTML = replaceNewlines(response.content);
@@ -646,7 +673,11 @@ function addToMessageLog(entry) {
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
 }
 
-
+/**
+ * Returns the system prompt for the given mood.
+ * @param {*} mood 
+ * @returns 
+ */
 function getSystemPromptByMood(mood) {
  return (mood === Personality.EVIL) ? moodEvil.value : moodGood.value
 }
@@ -756,6 +787,9 @@ function getLocalItemAsJson(key) {
     return JSON.parse(localStorage.getItem(key));
 }
 
+/**
+ * Updates the message UI conversations.
+ */
 function updateConversations() {
     const requests = messageLog.filter((m) => m.role === GPT_CHAT_ROLE_USER);
     const responses = messageLog.filter((m) => m.role === GPT_CHAT_ROLE_ASSISTANT);
@@ -804,6 +838,9 @@ function loadLocalStorage() {
     updateUI();
 }
 
+/**
+ * Updates the mute voices change.
+ */
 function updateMuteVoicesChanged() {
     setLocalItem(LOCAL_ITEM_MUTE_VOICES, isVoicesMuted);
     updateMuteVoices();
