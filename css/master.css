@@ -4,6 +4,17 @@
     opacity: 0.75;
 }
 
+#speaking-now {
+    text-align:center;
+    margin:300px 100px;
+    display:none;
+}
+
+#speaking-now-name {
+    font-size: 1.5em;
+    display: block;
+}
+
 .border-low {
     border-bottom: 1px solid #333333;
     border-right: 1px solid #333333;
@@ -32,6 +43,12 @@
     position: absolute;
     bottom: 0;
     right: 0;
+  }
+
+.bottom-left{
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
 .icon {

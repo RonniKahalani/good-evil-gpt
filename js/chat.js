@@ -3,6 +3,16 @@
  */
 document.addEventListener("DOMContentLoaded", () => {
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        });
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
         openAutoVoiceDialog();
     }
@@ -11,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleApiKey();
     loadLocalStorage();
     populateSystemVoices();
-    setInterval(updateTimeAgo,30000);
+    setInterval(updateTimeAgo, 30000);
     // createFakeMessages();
 });
 
@@ -31,7 +41,7 @@ const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 let apiKey = DEFAULT_API_KEY;
 
 const MSG_NO_MESSAGES_FOUND = "No messages found.";
-const MSG_CLEAR_MESSAGES_CONFIRM= "You are about to clear all the chat history.\nYou can copy the current history on the Messages pane.\n\nAre you sure you want to continue?";
+const MSG_CLEAR_MESSAGES_CONFIRM = "You are about to clear all the chat history.\nYou can copy the current history on the Messages pane.\n\nAre you sure you want to continue?";
 const MSG_ENTER_APIKEY = "Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.";
 const MSG_PROVIDE_APIKEY = "You need to provide a valid ChatGPT API key to use this page.";
 const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
@@ -236,10 +246,10 @@ function enableAutoVoices() {
     closeAutoVoiceDialog();
 
     if (!isVoicesMuted) {
-       const speech =  speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
-       speeches.push(speech);
-       speech.onstart = (e) => updateVoiceStarted(e);
-       speech.onend = (e) => updateVoiceEnded(e);   
+        const speech = speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
+        speeches.push(speech);
+        speech.onstart = (e) => updateVoiceStarted(e);
+        speech.onend = (e) => updateVoiceEnded(e);
     }
 }
 
@@ -288,6 +298,7 @@ function getVoiceSettingsByMood(mood) {
 
     const settings = {
         name: getPersonalityName(mood),
+        mood: mood,
         pitch: parseFloat(isGood ? inputGoodVoicePitch.value : inputEvilVoicePitch.value),
         rate: parseFloat(isGood ? inputGoodVoiceRate.value : inputEvilVoiceRate.value),
         volume: parseFloat(isGood ? inputGoodVoiceVolume.value : inputEvilVoiceVolume.value),
@@ -317,6 +328,7 @@ function speak(text, settings) {
 
     const speech = new SpeechSynthesisUtterance();
     speech.name = settings ? settings.name : null;
+    speech.mood = settings ? settings.mood : null;
     speech.lang = "en_US";
     speech.text = text;
     speech.volume = settings ? settings.volume : 1;
@@ -361,7 +373,7 @@ function testVoice(mood) {
  */
 function showSpeakingNow(show) {
     speakingNow.style.display = show ? "block" : "none";
- }
+}
 
 /**
  * Updates who is currently speaking.
@@ -369,10 +381,11 @@ function showSpeakingNow(show) {
  */
 function updateVoiceStarted(e) {
     console.log("Voice start" + e);
+    speakingNow.classList.remove("mood-evil", "mood-good");
+    speakingNow.classList.add( (e.utterance.mood === Personality.EVIL) ? "mood-evil" : "mood-good");
     speakingNowName.textContent = e.utterance.name + " is speaking...";
     showSpeakingNow(true);
 }
-
 
 /**
  * Clears and removes an ended speech.
@@ -472,9 +485,9 @@ function clearMessageLog() {
  * @param {*} role 
  * @returns 
  */
-function getMessageByIdAndRole(messageId, role) {   
+function getMessageByIdAndRole(messageId, role) {
     return messageLog.filter(m => m.messageId === messageId && m.role === role)[0];
-}   
+}
 
 /**
  * Returns all messages by role.
@@ -536,15 +549,13 @@ function createMessageUI(messageId, request, response) {
     const speakIcon = `<i class="bi bi-play-circle-fill icon mx-1" title="Speak the message out loud." onclick="speakMessage('${messageId}');"></i>`;
     const floatingIcons = `<span style="float: right">${copyIcon}${speakIcon}</span>`;
 
-    const createdInfo = `<span id="@{messageId}-created" class="message-time-ago col-4 info-sm" title="${
-        formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
-    }">${
-        timeAgo(request.created)
-    }</span>`;
+    const createdInfo = `<span id="@{messageId}-created" class="message-time-ago col-4 info-sm" title="${formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
+        }">${timeAgo(request.created)
+        }</span>`;
 
     const tokenInfo = `<span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>`;
     const waitTimeInfo = `<span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>`;
-    
+
     return `<div class="message bg-dark-transparent">
         <div id="${messageId}-request" class="message-${request.role}">
             ${floatingIcons}
@@ -568,7 +579,7 @@ function createMessageUI(messageId, request, response) {
  * @returns 
  */
 function getTokenTotalsFor(role, mood) {
-    const tokenTotals = messageLog.filter((log) => log.role === role && log.mood === mood).map((log) => log.tokens);    
+    const tokenTotals = messageLog.filter((log) => log.role === role && log.mood === mood).map((log) => log.tokens);
     return tokenTotals.length > 0 ? tokenTotals.reduce((num, sum) => sum + num, 0) : 0;
 }
 
@@ -637,19 +648,19 @@ function createMessage(messageId, role, content, mood) {
     return { name: name, role: role, content: content, created: new Date().getTime(), mood: mood, messageId: messageId };
 }
 
-function handleGptResponse( request, gptResponse) {
-    
+function handleGptResponse(request, gptResponse) {
+
     let reply = gptResponse.choices[0].message.content;
     const finishReason = gptResponse.choices[0].finish_reason;
 
-    if(finishReason === "length") {
+    if (finishReason === "length") {
         reply += `...\n\nNote: Message is truncated because of the max. tokens ${gptMaxTokens.value} limit.\nYou can adjust this value on the Settings page.`;
     }
     const timestamp = new Date().getTime();
     const waitTimeSec = (timestamp - request.created) / 1000;
 
     const response = createMessage(request.messageId, GPT_CHAT_ROLE_ASSISTANT, reply, request.mood);
-    
+
     response.waitTimeSec = waitTimeSec;
     response.tokens = gptResponse.usage.total_tokens;
     response.gpt = gptResponse;
@@ -661,11 +672,11 @@ function handleGptResponse( request, gptResponse) {
  * Updates UI for a given response.
  * @param {*} response 
  */
-function updateResponseUI( response) {
+function updateResponseUI(response) {
     const id = "#" + response.messageId;
     qs(`${id}-response`).innerHTML = replaceNewlines(response.content);
     qs(`${id}-response-waitsec`).textContent = parseFloat(response.waitTimeSec).toFixed(1);
-    qs(`${id}-response-tokens`).textContent = parseInt(response.tokens);    
+    qs(`${id}-response-tokens`).textContent = parseInt(response.tokens);
 }
 
 /**
@@ -715,7 +726,7 @@ function addToMessageLog(entry) {
  * @returns 
  */
 function getSystemPromptByMood(mood) {
- return (mood === Personality.EVIL) ? moodEvil.value : moodGood.value
+    return (mood === Personality.EVIL) ? moodEvil.value : moodGood.value
 }
 
 /**
@@ -729,10 +740,10 @@ function createGptRequest(request) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`
     };
- 
-    const messages = messageLog.map((m) => { return { role: m.role, content: m.content }});
-    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood)});
-    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content});
+
+    const messages = messageLog.map((m) => { return { role: m.role, content: m.content } });
+    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood) });
+    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content });
 
     const data = {
         model: gptModel.value,
@@ -744,7 +755,7 @@ function createGptRequest(request) {
         presence_penalty: parseFloat(gptPresencePenalty.value)
     };
 
-   return {
+    return {
         method: "POST",
         headers: headers,
         body: JSON.stringify(data),
@@ -757,7 +768,7 @@ function createGptRequest(request) {
  * @returns 
  */
 async function chatWithGPT(request) {
- 
+
     try {
         const response = await fetch(GPT_CHAT_URL, createGptRequest(request));
         if (!response.ok) {
@@ -830,7 +841,7 @@ function updateConversations() {
     const requests = getMessagesByRole(GPT_CHAT_ROLE_USER);
     const responses = getMessagesByRole(GPT_CHAT_ROLE_ASSISTANT);
 
-    for(i=0; i < requests.length; i++) {
+    for (i = 0; i < requests.length; i++) {
         addToChatUI(requests[i], responses[i]);
     }
 }
@@ -945,13 +956,13 @@ function populateSystemVoices() {
  */
 function updateTimeAgo() {
     const messages = document.querySelectorAll(".message");
-    messages.forEach( (m) => {
+    messages.forEach((m) => {
         const elem = m.querySelector(".message-time-ago");
 
         const currentTime = timeAgo(new Date(elem.title));
         const elemTime = elem.textContent;
 
-        if(elemTime !== currentTime) {
+        if (elemTime !== currentTime) {
             elem.textContent = currentTime;
         }
     });

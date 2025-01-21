@@ -115,11 +115,16 @@
                                 <span class="text-center mood-good col-6"
                                     style="float:left;font-size: 1.5em;">Goodness</span>
                                 <span class="text-center mood-evil col-6"
-                                    style="float:right;font-size: 1.5em;">Evilness</span>
-
-                            </div>
+                                    style="float:right;font-size: 1.5em;">Evilness</span>                            
+                            </div>                            
                             <div class="col-4"></div>
                         </div>
+                        <div class="row">
+                            <div id="speaking-now" class="row bg-dark-transparent text-center col-sm">
+                                <span id="speaking-now-name" class="col-sm"></span>
+                            </div>    
+                        </div>                          
+
                         <div class="bottom-right p-2">                            
                             <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
                                 title="(Alt-I) Clear the message/intput field.">Clear Input</button>
@@ -335,10 +340,6 @@
             </div>
         </dialog>
 
-
-        <div id="speaking-now" class="row bg-dark-transparent bottom-right m-2" style="display:none;">
-            <span id="speaking-now-name" class="col-sm"></span>
-        </div>
     </main>
     <footer>
 
