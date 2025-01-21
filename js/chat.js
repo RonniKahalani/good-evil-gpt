@@ -340,6 +340,7 @@ function isSpeaking() {
  * Cancels all current speeches.
  */
 function cancelSpeaking() {
+    showSpeakingNow(false);
     window.speechSynthesis.cancel();
 }
 
@@ -356,24 +357,32 @@ function testVoice(mood) {
 }
 
 /**
+ * 
+ */
+function showSpeakingNow(show) {
+    speakingNow.style.display = show ? "block" : "none";
+ }
+
+/**
  * Updates who is currently speaking.
  * @param {*} e 
  */
 function updateVoiceStarted(e) {
-    console.log("Voice start" + e)
+    console.log("Voice start" + e);
     speakingNowName.textContent = e.utterance.name + " is speaking...";
-    speakingNow.style.display = "block";
+    showSpeakingNow(true);
 }
+
 
 /**
  * Clears and removes an ended speech.
  * @param {*} e 
  */
 function updateVoiceEnded(e) {
-    speakingNow.style.display = "none";
+    showSpeakingNow(false);
     speakingNowName.textContent = "";
     removeFromArray(speeches, e.utterance);
-    console.log("Voice end" + e)
+    console.log("Voice end" + e);
 }
 
 /**
@@ -458,12 +467,31 @@ function clearMessageLog() {
 }
 
 /**
+ * Returns a message by id and role.
+ * @param {*} messageId 
+ * @param {*} role 
+ * @returns 
+ */
+function getMessageByIdAndRole(messageId, role) {   
+    return messageLog.filter(m => m.messageId === messageId && m.role === role)[0];
+}   
+
+/**
+ * Returns all messages by role.
+ * @param {*} role 
+ * @returns 
+ */
+function getMessagesByRole(role) {
+    return messageLog.filter(m => m.role === role);
+}
+
+/**
  * Copies a message to the clipboard.
  * @param {*} messageId 
  */
 function copyMessageToClipboard(messageId) {
-    const request = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_USER)[0];
-    const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
+    const request = getMessageByIdAndRole(messageId, GPT_CHAT_ROLE_USER);
+    const response = getMessageByIdAndRole(messageId, GPT_CHAT_ROLE_ASSISTANT);
 
     let txt = `Role: ${request.role}\nTime: ${formatDateTime(new Date(request.created), shortDateTimeFormat)}\nMessage: ${request.content}\nMood: ${request.mood}`;
 
@@ -503,24 +531,32 @@ function formatDateTime(datetime, format) {
  * @returns 
  */
 function createMessageUI(messageId, request, response) {
+
+    const copyIcon = `<i class="bi bi-copy icon mx-1" title="Copy message to clipboard." onclick="copyMessageToClipboard('${messageId}');"></i>`;
+    const speakIcon = `<i class="bi bi-play-circle-fill icon mx-1" title="Speak the message out loud." onclick="speakMessage('${messageId}');"></i>`;
+    const floatingIcons = `<span style="float: right">${copyIcon}${speakIcon}</span>`;
+
+    const createdInfo = `<span id="@{messageId}-created" class="message-time-ago col-4 info-sm" title="${
+        formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
+    }">${
+        timeAgo(request.created)
+    }</span>`;
+
+    const tokenInfo = `<span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>`;
+    const waitTimeInfo = `<span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>`;
+    
     return `<div class="message bg-dark-transparent">
         <div id="${messageId}-request" class="message-${request.role}">
-            <span style="float: right">
-                <i class="bi bi-copy icon mx-1" title="Copy message to clipboard." onclick="copyMessageToClipboard('${messageId}');"></i>
-                <i title="Speak the message out loud." onclick="speakMessage('${messageId}');" class="bi bi-play-circle-fill icon mx-1"></i>
-            </span>${replaceNewlines(request.content)}
+            ${floatingIcons}
+            ${replaceNewlines(request.content)}
         </div>
         <div id="${messageId}-response" class="message-assistant mood-${request.mood} p-2">
-        ${response ? replaceNewlines(response.content) : spinner}
+            ${response ? replaceNewlines(response.content) : spinner}
         </div>
         <div class="row">
-            <span id="@{messageId}-created" class="message-time-ago col-4 info-sm" title="${
-                formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
-            }">${
-                timeAgo(request.created)
-            }</span>
-            <span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>
-            <span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>
+            ${createdInfo}
+            ${tokenInfo}
+            ${waitTimeInfo}
         </div>
     </div>`;
 }
@@ -791,8 +827,8 @@ function getLocalItemAsJson(key) {
  * Updates the message UI conversations.
  */
 function updateConversations() {
-    const requests = messageLog.filter((m) => m.role === GPT_CHAT_ROLE_USER);
-    const responses = messageLog.filter((m) => m.role === GPT_CHAT_ROLE_ASSISTANT);
+    const requests = getMessagesByRole(GPT_CHAT_ROLE_USER);
+    const responses = getMessagesByRole(GPT_CHAT_ROLE_ASSISTANT);
 
     for(i=0; i < requests.length; i++) {
         addToChatUI(requests[i], responses[i]);
@@ -871,7 +907,7 @@ function speakMessage(messageId) {
         return;
     }
 
-    const response = messageLog.filter(m => m.messageId === messageId && m.role === GPT_CHAT_ROLE_ASSISTANT)[0];
+    const response = getMessageByIdAndRole(messageId, GPT_CHAT_ROLE_ASSISTANT);
     const speech = speak(response.content, getVoiceSettingsByMood(response.mood));
     speeches.push(speech);
     speech.onstart = (e) => updateVoiceStarted(e);

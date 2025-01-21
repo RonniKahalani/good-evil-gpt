@@ -9,9 +9,20 @@
     border-right: 1px solid #333333;
 }
 
-.message-time-ago {
+.blink-me {
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
 
+.message-time-ago {
+    display: block;
 }
+
 .btn-nav {
     width:130px;
     margin-right:2px;
