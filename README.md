@@ -9,4 +9,6 @@ This is one of several OpenAI ChatGPT example apps. See also [ChatGPT Jokes App]
 
 ![The GooDevil Chat][def]
 
-[def]: https://drive.google.com/file/d/1Y6ugVMStAKIMt-MXvJSHHzXBc0zKkChw/view?usp=drive_link
+[def]: /doc/thumb-demo-end.png
+
+Click the image og this link to watch a video introduction.
