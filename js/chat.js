@@ -1,27 +1,21 @@
 /**
  * This script handles the chat UI and GPT communication.
  */
+
 document.addEventListener("DOMContentLoaded", () => {
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-        });
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
-
-    if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
-        openAutoVoiceDialog();
-    }
 
     txtMessageInput.focus();
     handleApiKey();
     loadLocalStorage();
     populateSystemVoices();
+    getGeoLocation();
+    
+    if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
+        openAutoVoiceDialog();
+    }
+
     setInterval(updateTimeAgo, 30000);
+
     // createFakeMessages();
 });
 
@@ -138,6 +132,21 @@ let evilVoiceIndex = -1;
 let isVoicesMuted = false;
 
 const speeches = [];
+
+const user = { name: "John Doe" };
+
+function getGeoLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            user.latitude = position.coords.latitude;
+            user.longitude = position.coords.longitude;
+            console.log(`Latitude: ${user.latitude}, Longitude: ${user.longitude}`);
+        });
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+
+}
 
 /**
  * Removes an entry from an array.
@@ -643,8 +652,7 @@ function updateUI() {
  * @returns 
  */
 function createMessage(messageId, role, content, mood) {
-    const userName = "John Doe";
-    const name = (role === GPT_CHAT_ROLE_ASSISTANT) ? getPersonalityName(mood) : userName;
+    const name = (role === GPT_CHAT_ROLE_ASSISTANT) ? getPersonalityName(mood) : user.name;
     return { name: name, role: role, content: content, created: new Date().getTime(), mood: mood, messageId: messageId };
 }
 
