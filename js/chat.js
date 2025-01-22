@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleApiKey();
     loadLocalStorage();
     populateSystemVoices();
-    getGeoLocation();
+    copyGeoLocation();
     
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
         openAutoVoiceDialog();
@@ -132,13 +132,12 @@ let evilVoiceIndex = -1;
 let isVoicesMuted = false;
 
 const speeches = [];
-
 const user = { name: "John Doe" };
 
 /**
  * Copies geolocation data to a user object.
  */
-function getGeoLocation() {
+function copyGeoLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             user.latitude = position.coords.latitude;
@@ -595,7 +594,6 @@ function getTokenTotalsFor(role, mood) {
     return tokenTotals.length > 0 ? tokenTotals.reduce((num, sum) => sum + num, 0) : 0;
 }
 
-
 /**
  * Updates token counts.
  */
@@ -640,6 +638,7 @@ function updateMessageLog() {
  * Updates the UI.
  */
 function updateUI() {
+    updateConversations();
     updateMessageCount();
     updateTokenCount();
     updateMuteVoicesChanged();
@@ -852,10 +851,11 @@ function updateConversations() {
     const requests = getMessagesByRole(GPT_CHAT_ROLE_USER);
     const responses = getMessagesByRole(GPT_CHAT_ROLE_ASSISTANT);
 
-    for (i = 0; i < requests.length; i++) {
+    for (let i = 0; i < requests.length; i++) {
         addToChatUI(requests[i], responses[i]);
     }
 }
+
 /**
  * Loads local storage data.
  */
@@ -892,7 +892,6 @@ function loadLocalStorage() {
         isVoicesMuted = JSON.parse(value);
     }
 
-    updateConversations();
     updateUI();
 }
 
