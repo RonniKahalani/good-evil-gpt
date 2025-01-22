@@ -135,6 +135,9 @@ const speeches = [];
 
 const user = { name: "John Doe" };
 
+/**
+ * Copies geolocation data to a user object.
+ */
 function getGeoLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
