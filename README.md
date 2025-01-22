@@ -12,4 +12,4 @@ This is one of several OpenAI ChatGPT example apps. See also [ChatGPT Jokes App]
 [def]: /doc/thumb-demo-end.png
 
 ## Video Introduction
-Follow [this link](https://drive.google.com/file/d/1Y6ugVMStAKIMt-MXvJSHHzXBc0zKkChw/view?usp=drive_link) to watch a video introduction.
+Follow [this link](https://drive.google.com/file/d/1Y6ugVMStAKIMt-MXvJSHHzXBc0zKkChw/view?usp=drive_link) to watch the video.
