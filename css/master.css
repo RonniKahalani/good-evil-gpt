@@ -4,6 +4,10 @@
     opacity: 0.75;
 }
 
+.personality-title {
+    font-size: 1.5em;
+}
+
 #speaking-now {
     text-align:center;
     margin:300px 100px;

@@ -638,7 +638,6 @@ function updateMessageLog() {
  * Updates the UI.
  */
 function updateUI() {
-    updateConversations();
     updateMessageCount();
     updateTokenCount();
     updateMuteVoicesChanged();
@@ -892,6 +891,7 @@ function loadLocalStorage() {
         isVoicesMuted = JSON.parse(value);
     }
 
+    updateConversations();
     updateUI();
 }
 
