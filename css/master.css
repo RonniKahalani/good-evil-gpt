@@ -175,11 +175,13 @@
  
 .message-user {
     width: 100%;
+    font-size: 0.875rem;
     padding: 2px;
     margin-bottom: 2px;
 }
 .message-assistant {
     width: 100%;
+    font-size: 0.875rem;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #0c0c0c;
@@ -209,7 +211,6 @@
 .mood-evil {
     background-color: darkred;
     color: #fff;
-    font-size: 0.875rem;
     border-bottom: 1px solid #333333;
     border-right: 1px solid #333333;
 }
@@ -217,7 +218,6 @@
 .mood-good {
     background-color: darkblue;
     color: #fff;
-    font-size: 0.875rem;
     border-bottom: 1px solid #333333;
     border-right: 1px solid #333333;
 }
