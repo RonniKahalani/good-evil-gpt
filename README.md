@@ -13,3 +13,14 @@ This is one of several OpenAI ChatGPT example apps. See also [ChatGPT Jokes App]
 
 ## Video Introduction
 Follow [this link](https://drive.google.com/file/d/1Y6ugVMStAKIMt-MXvJSHHzXBc0zKkChw/view?usp=drive_link) to watch the video.
+
+## Features
+This app supports:
+
+- Synthesis speech, if available on the client system.
+- Configuring different voices for the personalities.
+- Muting/replay voices/messages.
+- Configuring personality system prompts.
+- Configuring ChatGPT request parameters (gpt model, max. tokens...).
+- Clear/Copy all messages to Json format.
+- Showing used number of tokens.
