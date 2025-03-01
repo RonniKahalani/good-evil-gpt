@@ -873,12 +873,7 @@ function getLocalItemAsJson(key) {
  * Updates the message UI conversations.
  */
 function updateConversations() {
-    const requests = getMessagesByRole(GPT_CHAT_ROLE_USER);
-
-    for (let request of requests) {
-        const response = getMessageByIdAndRole(request.messageId, GPT_CHAT_ROLE_ASSISTANT);
-        addToChatUI(request, response);
-    }
+    getMessagesByRole(GPT_CHAT_ROLE_USER).forEach( (request) => addToChatUI(request, getMessageByIdAndRole(request.messageId, GPT_CHAT_ROLE_ASSISTANT)));
 }
 
 /**
