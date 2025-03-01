@@ -28,13 +28,18 @@ Free code use under the open-source software MIT license. Enjoy.
 
 # Who?
 Ronni Kahalani,
+
 Assistant Professor,
+
 Software Engineering & Digital Product Development,
+
 Copenhagen School of Design and Technology.
 
 ## Contact Info
 LinkedIn: https://www.linkedin.com/in/kahalani/
+
 X: https://x.com/RonniKahalani
+
 Website: https://learningisliving.dk
 
 # Why?
