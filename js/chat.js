@@ -25,9 +25,10 @@ SOFTWARE.
 */
 
 /**
- * This script handles the chat UI and GPT communication, when the DOM content is fully loaded.
+ * This script handles the chat UI and GPT communication.
  */
 
+// We start when the DOM content is fully loaded.
 document.addEventListener("DOMContentLoaded", () => {
 
     txtMessageInput.focus();
@@ -45,21 +46,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // createFakeMessages();
 });
 
+/**
+ *  API key.
+ */
 const DEFAULT_API_KEY = "your-api-key";
+let apiKey = DEFAULT_API_KEY;
 
-const GPT_CHAT_URL = "https://api.openai.com/v1/chat/completions";
-const GPT_CHAT_ROLE_ASSISTANT = "assistant";
-const GPT_CHAT_ROLE_SYSTEM = "system";
-const GPT_CHAT_ROLE_USER = "user";
+/**
+ * GPT request attributes.
+ */
+const GPT_URL = "https://api.openai.com/v1/chat/completions";
+const GPT_ROLE_ASSISTANT = "assistant";
+const GPT_ROLE_SYSTEM = "system";
+const GPT_ROLE_USER = "user";
 
+/**
+ * Local storage keys.
+ */
 const LOCAL_ITEM_API_KEY = "api-key";
 const LOCAL_ITEM_MESSAGE_LOG = "message-log";
 const LOCAL_ITEM_VOICES = "voices";
 const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
 const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 
-let apiKey = DEFAULT_API_KEY;
-
+/**
+ * Messages.
+ */
 const MSG_NO_MESSAGES_FOUND = "No messages found.";
 const MSG_CLEAR_MESSAGES_CONFIRM = "You are about to clear all the chat history.\nYou can copy the current history on the Messages pane.\n\nAre you sure you want to continue?";
 const MSG_ENTER_APIKEY = "Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.";
@@ -72,6 +84,9 @@ const HTML_SPINNER = `<div class="spinner-border message-spinner" role="status">
 const ERR_GPT_REQUEST = "Failed to get response from ChatGPT:";
 const ERR_GPT_COMMUNICATION = "Error communicating with ChatGPT:";
 
+/**
+ * Query selectors for HTML input and action elements.
+ */
 const dialogVoiceSettings = qs("#dialog-voice-settings");
 const dialogAutoVoice = qs("#dialog-auto-voice");
 
@@ -106,23 +121,6 @@ const btnUseAutoVoice = qs("#btn-use-auto-voice");
 const btnIgnoreAutoVoice = qs("#btn-ignore-auto-voice");
 const btnMuteVoices = qs("#btn-mute-voices");
 
-btnAskBoth.onclick = () => chatBoth();
-btnAskEvil.onclick = () => chat(Personality.EVIL);
-btnAskGood.onclick = () => chat(Personality.GOOD);
-btnClearInput.onclick = () => clearInput();
-btnClearHistory.onclick = () => clearMessageLog();
-btnCopyHistory.onclick = () => copyTextToClipboard(txtMessageLog.innerHTML);
-btnOpenVoiceSettings.onclick = () => openVoiceSettingsDialog();
-btnCloseVoiceSettings.onclick = () => closeVoiceSettingsDialog();
-btnTestGoodVoice.onclick = () => testVoice(Personality.GOOD);
-btnTestEvilVoice.onclick = () => testVoice(Personality.EVIL);
-btnCancelGoodVoice.onclick = () => cancelVoice();
-btnCancelEvilVoice.onclick = () => cancelVoice();
-btnUseAutoVoice.onclick = () => enableAutoVoices();
-btnIgnoreAutoVoice.onclick = () => ignoreAutoVoices();
-btnMuteVoices.onclick = () => toggleVoiceMuting();
-chkAutoVoice.onclick = () => setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
-
 const messageGood = qs("#message-good");
 const messageEvil = qs("#message-evil");
 const moodEvil = qs("#mood-evil");
@@ -141,8 +139,28 @@ const gptTopP = qs("#gpt-top-p");
 const gptFrequencyPenalty = qs("#gpt-frequency-penalty");
 const gptPresencePenalty = qs("#gpt-presence-penalty");
 
-const speakingNow = document.querySelector("#speaking-now");
-const speakingNowName = document.querySelector("#speaking-now-name");
+const speakingNow = qs("#speaking-now");
+const speakingNowName = qs("#speaking-now-name");
+
+/**
+ * Event handlers for HTML input and action elements.
+ */
+btnAskBoth.onclick = () => chatBoth();
+btnAskEvil.onclick = () => chat(Personality.EVIL);
+btnAskGood.onclick = () => chat(Personality.GOOD);
+btnClearInput.onclick = () => clearInput();
+btnClearHistory.onclick = () => clearMessageLog();
+btnCopyHistory.onclick = () => copyTextToClipboard(txtMessageLog.innerHTML);
+btnOpenVoiceSettings.onclick = () => openVoiceSettingsDialog();
+btnCloseVoiceSettings.onclick = () => closeVoiceSettingsDialog();
+btnTestGoodVoice.onclick = () => testVoice(Personality.GOOD);
+btnTestEvilVoice.onclick = () => testVoice(Personality.EVIL);
+btnCancelGoodVoice.onclick = () => cancelVoice();
+btnCancelEvilVoice.onclick = () => cancelVoice();
+btnUseAutoVoice.onclick = () => enableAutoVoices();
+btnIgnoreAutoVoice.onclick = () => ignoreAutoVoices();
+btnMuteVoices.onclick = () => toggleVoiceMuting();
+chkAutoVoice.onclick = () => setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
 
 const Personality = {
     EVIL: "evil",
@@ -539,8 +557,8 @@ function getMessagesByRole(role) {
  * @param {*} messageId 
  */
 function copyMessageToClipboard(messageId) {
-    const request = getMessageByIdAndRole(messageId, GPT_CHAT_ROLE_USER);
-    const response = getMessageByIdAndRole(messageId, GPT_CHAT_ROLE_ASSISTANT);
+    const request = getMessageByIdAndRole(messageId, GPT_ROLE_USER);
+    const response = getMessageByIdAndRole(messageId, GPT_ROLE_ASSISTANT);
 
     let txt = `Role: ${request.role}\nTime: ${formatDateTime(new Date(request.created), shortDateTimeFormat)}\nMessage: ${request.content}\nMood: ${request.mood}`;
 
@@ -623,8 +641,8 @@ function getTokenTotalsFor(role, mood) {
  * Updates token counts.
  */
 function updateTokenCount() {
-    const goodCount = getTokenTotalsFor(GPT_CHAT_ROLE_ASSISTANT, Personality.GOOD);
-    const evilCount = getTokenTotalsFor(GPT_CHAT_ROLE_ASSISTANT, Personality.EVIL);
+    const goodCount = getTokenTotalsFor(GPT_ROLE_ASSISTANT, Personality.GOOD);
+    const evilCount = getTokenTotalsFor(GPT_ROLE_ASSISTANT, Personality.EVIL);
 
     goodTokens.textContent = goodCount;
     evilTokens.textContent = evilCount;
@@ -678,7 +696,7 @@ function updateUI() {
  * @returns 
  */
 function createMessage(messageId, role, content, mood) {
-    const name = (role === GPT_CHAT_ROLE_ASSISTANT) ? getPersonalityName(mood) : user.name;
+    const name = (role === GPT_ROLE_ASSISTANT) ? getPersonalityName(mood) : user.name;
     return { name: name, role: role, content: content, created: new Date().getTime(), mood: mood, messageId: messageId };
 }
 
@@ -701,7 +719,7 @@ function handleGptResponse(request, gptResponse) {
     const timestamp = new Date().getTime();
     const waitTimeSec = (timestamp - request.created) / 1000;
 
-    const response = createMessage(request.messageId, GPT_CHAT_ROLE_ASSISTANT, reply, request.mood);
+    const response = createMessage(request.messageId, GPT_ROLE_ASSISTANT, reply, request.mood);
 
     response.waitTimeSec = waitTimeSec;
     response.tokens = gptResponse.usage.total_tokens;
@@ -731,7 +749,7 @@ function chat(mood) {
     if (input) {
 
         const messageId = `id${(new Date()).getTime()}`;
-        const request = createMessage(messageId, GPT_CHAT_ROLE_USER, input, mood);
+        const request = createMessage(messageId, GPT_ROLE_USER, input, mood);
 
         addToMessageLog(request);
         addToChatUI(request);
@@ -784,8 +802,8 @@ function createGptRequest(request) {
     };
 
     const messages = messageLog.map((m) => { return { role: m.role, content: m.content } });
-    messages.push({ role: GPT_CHAT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood) });
-    messages.push({ role: GPT_CHAT_ROLE_USER, content: request.content });
+    messages.push({ role: GPT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood) });
+    messages.push({ role: GPT_ROLE_USER, content: request.content });
 
     const data = {
         model: gptModel.value,
@@ -812,7 +830,7 @@ function createGptRequest(request) {
 async function chatWithGPT(request) {
 
     try {
-        const response = await fetch(GPT_CHAT_URL, createGptRequest(request));
+        const response = await fetch(GPT_URL, createGptRequest(request));
         if (!response.ok) {
             throw new Error(`The response ChatGPT returned an error: ${response.status} - ${response.statusText}`);
         }
@@ -880,7 +898,7 @@ function getLocalItemAsJson(key) {
  * Updates the message UI conversations.
  */
 function updateConversations() {
-    getMessagesByRole(GPT_CHAT_ROLE_USER).forEach( (request) => addToChatUI(request, getMessageByIdAndRole(request.messageId, GPT_CHAT_ROLE_ASSISTANT)));
+    getMessagesByRole(GPT_ROLE_USER).forEach( (request) => addToChatUI(request, getMessageByIdAndRole(request.messageId, GPT_ROLE_ASSISTANT)));
 }
 
 /**
@@ -956,7 +974,7 @@ function speakMessage(messageId) {
         return;
     }
 
-    const response = getMessageByIdAndRole(messageId, GPT_CHAT_ROLE_ASSISTANT);
+    const response = getMessageByIdAndRole(messageId, GPT_ROLE_ASSISTANT);
     const speech = speak(response.content, getVoiceSettingsByMood(response.mood));
     speeches.push(speech);
     speech.onstart = (e) => updateVoiceStarted(e);
@@ -1012,8 +1030,8 @@ function updateTimeAgo() {
 function createFakeMessages() {
     let messageId = "idgood" + new Date().getTime();
 
-    let request = createMessage(messageId, GPT_CHAT_ROLE_USER, "Hi there, how are you?", Personality.GOOD);
-    let response = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.GOOD, messageId);
+    let request = createMessage(messageId, GPT_ROLE_USER, "Hi there, how are you?", Personality.GOOD);
+    let response = createMessage(messageId, GPT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.GOOD, messageId);
     response.waitTimeSec = 1.2;
     response.tokens = 39;
 
@@ -1022,8 +1040,8 @@ function createFakeMessages() {
     addToChatUI(request, response);
 
     messageId = "idevil" + new Date().getTime();
-    request = createMessage(messageId, GPT_CHAT_ROLE_USER, "Hi there, how are you?", Personality.EVIL);
-    response = createMessage(messageId, GPT_CHAT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.EVIL, messageId);
+    request = createMessage(messageId, GPT_ROLE_USER, "Hi there, how are you?", Personality.EVIL);
+    response = createMessage(messageId, GPT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.EVIL, messageId);
     response.waitTimeSec = 1.2;
     response.tokens = 39;
 
