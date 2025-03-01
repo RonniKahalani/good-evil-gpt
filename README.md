@@ -27,20 +27,14 @@ Advise: You might want to lower your speaker volume, because the personalities u
 Free code use under the open-source software MIT license. Enjoy.
 
 # Who?
-Ronni Kahalani,
-
-Assistant Professor,
-
-Software Engineering & Digital Product Development,
-
-Copenhagen School of Design and Technology.
+- Ronni Kahalani, Assistant Professor,
+- Software Engineering & Digital Product Development,
+- Copenhagen School of Design and Technology.
 
 ## Contact Info
-LinkedIn: https://www.linkedin.com/in/kahalani/
-
-X: https://x.com/RonniKahalani
-
-Website: https://learningisliving.dk
+- X: https://x.com/RonniKahalani
+- Website: https://learningisliving.dk
+- LinkedIn: https://www.linkedin.com/in/kahalani/
 
 # Why?
 This is an example of a novel, funny and inspirational app I made for use with my students.
