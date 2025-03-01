@@ -343,11 +343,7 @@ function getVoiceSettingsByMood(mood) {
 
     const isGood = (mood == Personality.GOOD);
     const voiceSelector = isGood ? selectGoodVoice : selectEvilVoice;
-
-    let voiceName = "";
-    if (voiceSelector.selectedIndex !== -1) {
-        voiceName = voiceSelector.options[voiceSelector.selectedIndex].text;
-    }
+    let voiceName = (voiceSelector.selectedIndex !== -1) ? voiceSelector.options[voiceSelector.selectedIndex].text : "";
 
     const settings = {
         name: getPersonalityName(mood),
