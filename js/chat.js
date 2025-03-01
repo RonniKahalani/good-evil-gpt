@@ -25,7 +25,7 @@ SOFTWARE.
 */
 
 /**
- * This script handles the chat UI and GPT communication.
+ * This script handles the chat UI and GPT communication, when the DOM content is fully loaded.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -66,6 +66,8 @@ const MSG_ENTER_APIKEY = "Please enter a valid ChatGPT API key.\n\nThe API key w
 const MSG_PROVIDE_APIKEY = "You need to provide a valid ChatGPT API key to use this page.";
 const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
 const MSG_CONFIGURE_VOICES = "Please configure the voices on the Profile tab.";
+
+const HTML_SPINNER = `<div class="spinner-border message-spinner" role="status"></div>`;
 
 const ERR_GPT_REQUEST = "Failed to get response from ChatGPT:";
 const ERR_GPT_COMMUNICATION = "Error communicating with ChatGPT:";
@@ -142,8 +144,6 @@ const gptPresencePenalty = qs("#gpt-presence-penalty");
 const speakingNow = document.querySelector("#speaking-now");
 const speakingNowName = document.querySelector("#speaking-now-name");
 
-const spinner = `<div class="spinner-border message-spinner" role="status"></div>`;
-
 const Personality = {
     EVIL: "evil",
     GOOD: "good"
@@ -151,14 +151,14 @@ const Personality = {
 
 const shortDateTimeFormat = { dateStyle: 'short', timeStyle: 'short' };
 
+const speeches = [];
+const user = { name: "Anonymous" };
+
 let messageLog = [];
 let systemVoices = [];
 let goodVoiceIndex = -1;
 let evilVoiceIndex = -1;
 let isVoicesMuted = false;
-
-const speeches = [];
-const user = { name: "John Doe" };
 
 /**
  * Copies geolocation data to a user object.
@@ -193,9 +193,7 @@ const removeFromArray = function (array, ...deleteElement) {
 
 /**
  * Converts a date to a 'time ago' text.
- * // Example usage:
- * const date = new Date("2024-12-01T12:00:00");
- * console.log(timeAgo(date));
+ * Example: 23 seconds ago.
  * @param {*} date 
  * @returns 
  */
@@ -406,8 +404,9 @@ function testVoice(mood) {
 }
 
 /**
- * 
- */
+ * Shows or hides the speaking now message.
+ * @param {*} show 
+ */ 
 function showSpeakingNow(show) {
     speakingNow.style.display = show ? "block" : "none";
 }
@@ -599,7 +598,7 @@ function createMessageUI(messageId, request, response) {
             ${replaceNewlines(request.content)}
         </div>
         <div id="${messageId}-response" class="message-assistant mood-${request.mood} p-2">
-            ${response ? replaceNewlines(response.content) : spinner}
+            ${response ? replaceNewlines(response.content) : HTML_SPINNER}
         </div>
         <div class="row">
             ${createdInfo}
@@ -683,9 +682,17 @@ function createMessage(messageId, role, content, mood) {
     return { name: name, role: role, content: content, created: new Date().getTime(), mood: mood, messageId: messageId };
 }
 
+/**
+ * Handles the response from ChatGPT.
+ * @param {*} request 
+ * @param {*} gptResponse 
+ * @returns 
+ */
 function handleGptResponse(request, gptResponse) {
 
+    // Get the content of the first reply from the response. Responses can have multiple replies/answer variants.
     let reply = gptResponse.choices[0].message.content;
+    // Get the reason why the response was finished. (length=max tokens exceeded/truncated)
     const finishReason = gptResponse.choices[0].finish_reason;
 
     if (finishReason === "length") {
