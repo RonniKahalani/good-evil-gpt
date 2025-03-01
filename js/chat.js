@@ -874,10 +874,10 @@ function getLocalItemAsJson(key) {
  */
 function updateConversations() {
     const requests = getMessagesByRole(GPT_CHAT_ROLE_USER);
-    const responses = getMessagesByRole(GPT_CHAT_ROLE_ASSISTANT);
 
-    for (let i = 0; i < requests.length; i++) {
-        addToChatUI(requests[i], responses[i]);
+    for (let request of requests) {
+        const response = getMessageByIdAndRole(request.messageId, GPT_CHAT_ROLE_ASSISTANT);
+        addToChatUI(request, response);
     }
 }
 
