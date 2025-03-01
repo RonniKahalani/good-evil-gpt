@@ -34,7 +34,9 @@ Copenhagen School of Design and Technology.
 
 ## Contact Info
 LinkedIn: https://www.linkedin.com/in/kahalani/
+
 X: https://x.com/RonniKahalani
+
 Website: https://learningisliving.dk
 
 # Why?
