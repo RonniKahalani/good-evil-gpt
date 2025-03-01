@@ -5,6 +5,7 @@ All you need is an OpenAI API key and you can have the app running locally in a 
 ![Image of user interface](https://github.com/RonniKahalani/good-evil-gpt/raw/main/doc/thumb-demo-end.png)
 
 ## Features
+- Keyboard shortcuts for most interactions.
 - Synthesis speech, if available on the client system.
 - Change personality system prompts and voices.
 - Muting/replay voices/messages.
