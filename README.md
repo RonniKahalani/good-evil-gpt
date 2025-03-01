@@ -26,11 +26,6 @@ Advise: You might want to lower your speaker volume, because the personalities u
 ## License
 Free code use under the open-source software MIT license. Enjoy.
 
-# Who?
-- Ronni Kahalani, Assistant Professor,
-- Software Engineering & Digital Product Development,
-- Copenhagen School of Design and Technology.
-
 ## Contact Info
 - X: https://x.com/RonniKahalani
 - Website: https://learningisliving.dk
