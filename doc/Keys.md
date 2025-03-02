@@ -11,8 +11,8 @@ You should be able to have a comfortable chat without having to use the mouse, o
 - **Alt+B**: Send message to Both (Goodness and Evilness).
 
 ## Message History
-- **Alt+H**: Clear messages.
-- **Alt+C**: Copy messages to clipboard.
+- **Alt+H**: Clear message history.
+- **Alt+C**: Copy message history to clipboard.
 
 ## Voice
 - **Alt+O**: Show voice settings.
