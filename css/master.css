@@ -179,9 +179,23 @@ SOFTWARE.
     overflow: auto;
 }
 .bg-dark-transparent {
-    background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0.95;
+    background-color: rgba(0, 0, 0, 0.95);
     border-radius: 10px;
+    border-color: white;
+}
+.dialog {
+    background-color: rgba(0, 0, 0, 0.95);
+    border-radius: 10px;
+    color: white;
+    border: 2px solid white;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0);
+    opacity: .95;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: white;    
 }
 
 #message-input {
@@ -268,6 +282,7 @@ h2 {
     font-size: 1.5em;
     color: #cfcfcf;
 }
+
 body {
     font-family: Tahoma, Arial, sans-serif;
     font-size: 1em;

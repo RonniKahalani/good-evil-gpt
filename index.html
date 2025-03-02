@@ -35,12 +35,12 @@
                     title="(Alt-C) Copy message log to clipboard.">Copy
                     messages</button>
 
-                    <div class="col-1"></div>
-                    
-                    <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                <div class="col-1"></div>
+
+                <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm btn-nav col-2 ripple"
                     title="(Alt-O) Open voice settings.">Voices</button>
 
-                    <button id="btn-mute-voices" accesskey="u" class="btn btn-success btn-sm btn-nav col-2 ripple"
+                <button id="btn-mute-voices" accesskey="u" class="btn btn-success btn-sm btn-nav col-2 ripple"
                     title="(Alt-U) Mute/unmute all voices."></button>
 
             </div>
@@ -111,20 +111,18 @@
                             <div class="col-4 m-2"></div>
 
                             <div class="border-low row col-4 m-0 p-0" style="width: 512px;">
-                                <span class="personality-title text-center mood-good col-6"
-                                    >Goodness</span>
-                                <span class="personality-title text-center mood-evil col-6"
-                                    >Evilness</span>                            
-                            </div>                            
+                                <span class="personality-title text-center mood-good col-6">Goodness</span>
+                                <span class="personality-title text-center mood-evil col-6">Evilness</span>
+                            </div>
                             <div class="col-4"></div>
                         </div>
                         <div class="row">
                             <div id="speaking-now" class="row bg-dark-transparent text-center col-sm">
                                 <span id="speaking-now-name" class="col-sm"></span>
-                            </div>    
-                        </div>                          
+                            </div>
+                        </div>
 
-                        <div class="bottom-right p-2">                            
+                        <div class="bottom-right p-2">
                             <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
                                 title="(Alt-I) Clear the message/intput field.">Clear Input</button>
                         </div>
@@ -235,8 +233,11 @@
         </div>
 
         <dialog id="dialog-voice-settings" class="dialog">
-            <h2>Voice Settings</h2>
-            <p>If you computer system has synthesis speech and voices, you should be able to select a voice for each personality.</p>
+            <div class="modal-header">
+                <h5 class="modal-title">Voice Settings</h5>
+            </div>
+            <p>If you computer system has synthesis speech and voices, you should be able to select a voice for each
+                personality.</p>
             <p>You can always mute auto voicing messages, in the main menu bar.</p>
             <div class="row">
                 <div class="col-6">
@@ -326,9 +327,11 @@
         </dialog>
 
         <dialog id="dialog-auto-voice" class="dialog">
-            <h2>Using system voices</h2>
+            <div class="modal-header">
+                <h5 class="modal-title">Do you want to enable using voices?</h5>
+            </div>
             <div class="row mb-3">
-                <p class="">Enable the system voices feature to verbalize the messages and user experiences.</p>
+                <p class="">You can enable using system voices to verbalize the messages and user experiences.</p>
                 <p>The feature can be disabled in the voice settings dialog.</p>
             </div>
             <div class="row m-2">
@@ -338,6 +341,39 @@
                 <button id="btn-ignore-auto-voice" class="btn btn-danger btn-sm col-sm ripple">Don't need it</button>
             </div>
         </dialog>
+
+        <!-- Disclaimer Modal -->
+        <div class="modal fade" id="disclaimerModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ethical AI Disclaimer</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>This AI is for <strong>educational and entertainment purposes only</strong>. Do not rely on
+                            it for real-life decisions.</p>
+
+                        <p>🚨 <strong>Do not share personal data.</strong> Conversations are stored locally, in the browser, and shared only with ChatGPT.
+                            You can clear the chat history in the app or the browsers local storage.</p>
+
+                            <p>🚨 <strong>Adult and rough language might occur.</strong> The Evilness personality is inherently not nice.</p>
+    
+                            <p>❗ By using this AI, you agree that the developers are <strong>not responsible</strong> for
+                            any consequences of AI-generated content.</p>
+
+                            <p>
+                                Check out the <a href="https://github.com/RonniKahalani/good-evil-gpt/discussions/3">GitHub
+                                    discussion</a> for more information.
+                            </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">I Understand</button>
+                        <button type="button" class="btn btn-danger btn-sm"
+                            onclick="window.location.href='https://github.com/RonniKahalani/good-evil-gpt/discussions/3'">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
     <footer>

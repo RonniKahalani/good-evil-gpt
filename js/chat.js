@@ -283,12 +283,15 @@ function enableAutoVoices() {
     populateSystemVoices();
     closeAutoVoiceDialog();
 
+    // This is left out for now, as it can be a bit annoying, but also my default system language is a danish male voice that it terrible to speak english. It is total crap to listen to.
+    /*
     if (!isVoicesMuted) {
         const speech = speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
         speeches.push(speech);
         speech.onstart = (e) => updateVoiceStarted(e);
         speech.onend = (e) => updateVoiceEnded(e);
     }
+    */
 }
 
 /**
@@ -1020,6 +1023,9 @@ function initializeApp() {
     }
 
     setInterval(updateTimeAgo, 30000);
+
+    let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+    disclaimerModal.show();
 
     // createFakeMessages();
 }
