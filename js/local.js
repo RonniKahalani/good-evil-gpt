@@ -25,6 +25,16 @@ SOFTWARE.
 */
 
 /**
+ * Local storage keys.
+ */
+const LOCAL_ITEM_API_KEY = "api-key";
+const LOCAL_ITEM_MESSAGE_LOG = "message-log";
+const LOCAL_ITEM_VOICES = "voices";
+const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
+const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
+const LOCAL_ITEM_DISCLAIMER = "disclaimer";
+
+/**
  * Sets an item valuefrom the local storage.
  * @param {*} key
  * @returns 

@@ -45,15 +45,7 @@ const GPT_ROLE_ASSISTANT = "assistant";
 const GPT_ROLE_SYSTEM = "system";
 const GPT_ROLE_USER = "user";
 
-/**
- * Local storage keys.
- */
-const LOCAL_ITEM_API_KEY = "api-key";
-const LOCAL_ITEM_MESSAGE_LOG = "message-log";
-const LOCAL_ITEM_VOICES = "voices";
-const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
-const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
-const LOCAL_ITEM_DISCLAIMER = "disclaimer";
+
 
 /**
  * Messages.
@@ -688,6 +680,21 @@ function getSystemPromptByMood(mood) {
 }
 
 /**
+ * Checks if an API key is stored in local storage, and prompts the user to enter one if it is not.
+ */
+function handleApiKey() {
+    apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
+    if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
+        apiKey = prompt(MSG_ENTER_APIKEY, "");
+        if (apiKey === null || apiKey === "") {
+            alert(MSG_PROVIDE_APIKEY);
+        } else {
+            setLocalItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
+        }
+    }
+}
+
+/**
  * Creates a GPT request, based on the given message request.
  * @param {*} request 
  * @returns 
@@ -737,22 +744,6 @@ async function chatWithGPT(request) {
         alert(ERR_GPT_COMMUNICATION + "\n" + error);
     }
 }
-
-/**
- * Checks if an API key is stored in local storage, and prompts the user to enter one if it is not.
- */
-function handleApiKey() {
-    apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
-    if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
-        apiKey = prompt(MSG_ENTER_APIKEY, "");
-        if (apiKey === null || apiKey === "") {
-            alert(MSG_PROVIDE_APIKEY);
-        } else {
-            setLocalItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
-        }
-    }
-}
-
 
 /**
  * Updates the message UI conversations.
