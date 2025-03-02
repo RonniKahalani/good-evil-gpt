@@ -1,9 +1,9 @@
 /*
 Copyright (c) 2025 Ronni Kahalani
 
-LinkedIn: https://www.linkedin.com/in/kahalani/
 X: https://x.com/RonniKahalani
 Website: https://learningisliving.dk
+LinkedIn: https://www.linkedin.com/in/kahalani/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy  
 of this software and associated documentation files (the "Software"), to deal  
@@ -29,22 +29,7 @@ SOFTWARE.
  */
 
 // We start when the DOM content is fully loaded.
-document.addEventListener("DOMContentLoaded", () => {
-
-    txtMessageInput.focus();
-    handleApiKey();
-    loadLocalStorage();
-    populateSystemVoices();
-    copyGeoLocation();
-    
-    if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
-        openAutoVoiceDialog();
-    }
-
-    setInterval(updateTimeAgo, 30000);
-
-    // createFakeMessages();
-});
+document.addEventListener("DOMContentLoaded", () => initializeApp());
 
 /**
  *  API key.
@@ -1018,6 +1003,25 @@ function updateTimeAgo() {
             elem.textContent = currentTime;
         }
     });
+}
+
+/**
+ * Initializes the app.
+ */
+function initializeApp() {
+    txtMessageInput.focus();
+    handleApiKey();
+    loadLocalStorage();
+    populateSystemVoices();
+    copyGeoLocation();
+    
+    if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
+        openAutoVoiceDialog();
+    }
+
+    setInterval(updateTimeAgo, 30000);
+
+    // createFakeMessages();
 }
 
 /**
