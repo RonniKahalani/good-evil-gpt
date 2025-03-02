@@ -110,6 +110,7 @@ const goodTokens = qs("#good-tokens");
 const evilTokens = qs("#evil-tokens");
 const totalTokens = qs("#total-tokens");
 
+const selectGptModel = qs("#select-gpt-model");
 const gptModel = qs("#gpt-model");
 const gptMaxTokens = qs("#gpt-max-tokens");
 const gptTemperature = qs("#gpt-temperature");

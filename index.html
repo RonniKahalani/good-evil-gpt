@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
         integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
     <link rel="stylesheet" href="css/master.css">
-    
+
     <script defer src="js/clipboard.js"></script>
     <script defer src="js/util.js"></script>
     <script defer src="js/speech.js"></script>
@@ -189,42 +189,73 @@
             <div class="tab-pane bg-dark-transparent" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 
                 <div class="row m-2">
-                    <label for="gpt-model" class="col-2">Model</label>
-                    <input type="text" class="col-1" id="gpt-model" size="5" value="gpt-4">
-                    <span class="col-9">The model used to generate responses.</span>
+                    <div class="col-2"></div>
+                    <div class="row col-2">
+                        <select id="select-gpt-model" value="gpt-4o" onchange="gptModel.value = this.value"
+                            class="form-control">
+                            <option value="gpt-4">gpt-4</option>
+                            <option value="gpt-4-turbo">gpt-4 turbo</option>
+                            <option value="gpt-4o">gpt-4o</option>
+                        </select>
+                    </div>
+                    <div class="col-8"></div>
                 </div>
+
+                <div class="row m-2">
+                    <label for="gpt-model" class="col-2">Model</label>
+                    <div class="row col-2">
+                        <input type="text" id="gpt-model" size="5" value="GPT-4"
+                            onchange="selectGptModel.value = this.value" class="form-control">
+                    </div>
+                    <span class="col-8">The model used to generate responses.</span>
+                </div>
+
                 <div class="row m-2">
                     <label for="gpt-max-tokens" min="1" class="col-2">Max Tokens</label>
-                    <input type="number" step=100 class="col-1" id="gpt-max-tokens" size="5" value="150">
-                    <span class="col-9">Allows limiting the length of the generated response.</span>
+                    <div class="row col-2">
+                        <input type="number" step=100 id="gpt-max-tokens" size="5" value="150" class="form-control">
+                    </div>
+                    <span class="col-8">Allows limiting the length of the generated response.</span>
                 </div>
+
                 <div class="row m-2">
                     <label for="gpt-temperature" class="col-2">Temperature</label>
-                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-temperature" size="3"
-                        value=".5">
-                    <span class="col-9">Influences the response randomness. 0.8 = more diverse, while
+                    <div class="row col-2">
+                        <input type="number" step=0.1 min="0" max="1" id="gpt-temperature" size="3" value=".5"
+                            class="form-control">
+                    </div>
+                    <span class="col-8">Influences the response randomness. 0.8 = more diverse, while
                         0.2 = more focused and deterministic.</span>
                 </div>
+
                 <div class="row m-2">
                     <label for="gpt-top-p" class="col-2">Top P</label>
-                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-top-p" size="3" value="1">
-                    <span class="col-9">Controls the diversity and quality of the responses.</span>
+                    <div class="row col-2">
+                        <input type="number" step=0.1 min="0" max="1" id="gpt-top-p" size="3" value="1"
+                            class="form-control">
+                    </div>
+                    <span class="col-8">Controls the diversity and quality of the responses.</span>
                 </div>
+
                 <div class="row m-2">
                     <label for="gpt-frequency-penalty" class="col-2">Frequency Penalty</label>
-                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-frequency-penalty" size="3"
-                        value="0">
-                    <span class="col-9">Tendency to generate repetitive responses. 1.0 = more,
-                        more diverse and novel, while 0.2 = more likely to
+                    <div class="row col-2">
+                        <input type="number" step=0.1 min="0" max="1" id="gpt-frequency-penalty" size="3" value="0"
+                            class="form-control">
+                    </div>
+                    <span class="col-8">Tendency to generate repetitive responses. 1.0 = more diverse and novel, while
+                        0.2 = more likely to
                         repeat information.</span>
                 </div>
+
                 <div class="row m-2">
                     <label for="gpt-presence-penalty" class="col-2">Presence Penalty</label>
-                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-presence-penalty" size="3"
-                        value="0">
-                    <span class="col-9">Avoidance of specific topics. 1.0 = more likely to avoid mentioning particular
+                    <div class="row col-2">
+                        <input type="number" step=0.1 min="0" max="1" id="gpt-presence-penalty" size="3" value="1"
+                            class="form-control">
+                    </div>
+                    <span class="col-8">Avoidance of specific topics. 1.0 = more likely to avoid mentioning particular
                         topics provided in the user messages, 0.2 = less concerned about preventing those topics.</span>
-
                 </div>
             </div>
 
@@ -370,11 +401,14 @@
                             for any consequences of AI-generated content.</p>
 
                         <p>
-                            <a target="_blank" href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Ethical-AI.md">Ethical AI guidelines for this app</a>
+                            <a target="_blank"
+                                href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Ethical-AI.md">Ethical
+                                AI guidelines for this app</a>
                         </p>
                         <p>
                             Join our GitHub discussion<br>
-                            <a target="_blank" href="https://github.com/RonniKahalani/good-evil-gpt/discussions/3">How to navigate the complexities of ethical AI
+                            <a target="_blank" href="https://github.com/RonniKahalani/good-evil-gpt/discussions/3">How
+                                to navigate the complexities of ethical AI
                                 development</a>
                         </p>
                     </div>
@@ -390,10 +424,18 @@
 
         <footer>
             <div class="row">
-            <div class="col-4">Please read this <a target="_blank" title="Ethical AI Disclaimer" href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Ethical-AI.md">Ethical AI Disclaimer</a> before using this app.</div>
-            <div class="col-4 text-center">Got any <a target="_blank" title="Feedback & Ideas" href="https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas">feedback or ideas?</a></div>
-            <div class="col-4 text-end"><a target="_blank" title="Keyboard Shortcuts" href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md">Keyboard Shortcuts</a> | <a target="_blank" title="Ethical AI Discussion" href="https://github.com/RonniKahalani/good-evil-gpt/discussions/3">Ethical AI Discussion</a></div>
-        </div>
+                <div class="col-4">Please read this <a target="_blank" title="Ethical AI Disclaimer"
+                        href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Ethical-AI.md">Ethical AI
+                        Disclaimer</a> before using this app.</div>
+                <div class="col-4 text-center">Got any <a target="_blank" title="Feedback & Ideas"
+                        href="https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas">feedback or
+                        ideas?</a></div>
+                <div class="col-4 text-end"><a target="_blank" title="Keyboard Shortcuts"
+                        href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md">Keyboard
+                        Shortcuts</a> | <a target="_blank" title="Ethical AI Discussion"
+                        href="https://github.com/RonniKahalani/good-evil-gpt/discussions/3">Ethical AI Discussion</a>
+                </div>
+            </div>
         </footer>
     </main>
 </body>
