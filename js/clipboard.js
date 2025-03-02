@@ -1,9 +1,9 @@
 /*
 Copyright (c) 2025 Ronni Kahalani
 
-LinkedIn: https://www.linkedin.com/in/kahalani/
 X: https://x.com/RonniKahalani
 Website: https://learningisliving.dk
+LinkedIn: https://www.linkedin.com/in/kahalani/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy  
 of this software and associated documentation files (the "Software"), to deal  
