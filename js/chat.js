@@ -498,7 +498,7 @@ function createMessageUI(messageId, request, response) {
         }</span>`;
 
     const tokenInfo = `<span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>`;
-    const waitTimeInfo = `<span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec : "..."}</span></span>`;
+    const waitTimeInfo = `<span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec.toFixed(2) : "..."}</span></span>`;
 
     return `<div class="message bg-dark-transparent">
         <div id="${messageId}-request" class="message-${request.role}">
