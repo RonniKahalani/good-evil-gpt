@@ -1,10 +1,10 @@
 # Ethical AI Disclaimer
-This AI app it raises several ethical considerations, do not rely on it for real-life decisions. So to clarify
+This AI app raises several ethical considerations, do not rely on it for real-life decisions:
 
 ## For educational and entertainment purposes only
 Do not rely on it for real-life decisions.
 
-## Do not share personal data. 
+## Do not share personal data
 Conversations are stored locally, in the browser, and shared only with ChatGPT. You can clear the chat history in the app or the browsers local storage.
 
 ## Adult, rough and offenvise language might occur 
