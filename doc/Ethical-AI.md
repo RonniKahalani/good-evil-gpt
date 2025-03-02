@@ -1,12 +1,17 @@
-# Ethical IA Disclaimer
-This AI is for educational and entertainment purposes only. Do not rely on it for real-life decisions.
+# Ethical AI Disclaimer
+This AI app it raises several ethical considerations, do not rely on it for real-life decisions. So to clarify
 
-## 🚨 Do not share personal data. 
+## For educational and entertainment purposes only
+Do not rely on it for real-life decisions.
+
+## Do not share personal data. 
 Conversations are stored locally, in the browser, and shared only with ChatGPT. You can clear the chat history in the app or the browsers local storage.
 
-## 🚨 Adult and rough language might occur. 
+## Adult, rough and offenvise language might occur 
 The Evilness personality is inherently not nice.
 
-❗ By using this AI, you agree that the developers are not responsible for any consequences of AI-generated content.
+## More to come...
 
-Check out the GitHub discussion for more information.
+By using this AI, you agree that the developers are not responsible for any consequences of AI-generated content.
+
+Join our GitHub discussion on [How to navigate the complexities of ethical AI development](https://github.com/RonniKahalani/good-evil-gpt/discussions/3)
