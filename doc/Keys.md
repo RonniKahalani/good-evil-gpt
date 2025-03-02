@@ -1,17 +1,25 @@
 # Keyboard Shortcuts
 
-**Alt+G**: Sends current message to Goodness.
+## Message Input
+### **Alt+M**: Set focus to the message input field.
 
-**Alt+E**: Sends current message to Evilness.
+### **Alt+I**: Clear the message input field.
 
-**Alt+B**: Sends current message to Both (Goodness and Evilness).
+## Sending
+### **Alt+G**: Sends current message to Goodness.
 
-**Alt+H**: Clear messages.
+### **Alt+E**: Sends current message to Evilness.
 
-**Alt+C**: Copy messages.
+### **Alt+B**: Sends current message to Both (Goodness and Evilness).
 
-**Alt+O**: Voice settings.
+## Message History
+### **Alt+H**: Clear messages.
 
-**Alt+U**: Mute/unmute voices.
+### **Alt+C**: Copy messages to clipboard.
 
-**Alt+M**: Set focus to the message input field.
+## Voice
+### **Alt+O**: Voice settings.
+
+### **Alt+U**: Mute/unmute voices.
+
+
