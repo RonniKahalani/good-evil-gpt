@@ -207,13 +207,13 @@
                 </div>
                 <div class="row m-2">
                     <label for="gpt-top-p" class="col-2">Top P</label>
-                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-top-p" size="3" value=".6">
+                    <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-top-p" size="3" value="1">
                     <span class="col-9">Controls the diversity and quality of the responses.</span>
                 </div>
                 <div class="row m-2">
                     <label for="gpt-frequency-penalty" class="col-2">Frequency Penalty</label>
                     <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-frequency-penalty" size="3"
-                        value=".6">
+                        value="0">
                     <span class="col-9">Tendency to generate repetitive responses. 1.0 = more,
                         more diverse and novel, while 0.2 = more likely to
                         repeat information.</span>
@@ -221,7 +221,7 @@
                 <div class="row m-2">
                     <label for="gpt-presence-penalty" class="col-2">Presence Penalty</label>
                     <input type="number" step=0.1 min="0" max="1" class="col-1" id="gpt-presence-penalty" size="3"
-                        value=".6">
+                        value="0">
                     <span class="col-9">Avoidance of specific topics. 1.0 = more likely to avoid mentioning particular
                         topics provided in the user messages, 0.2 = less concerned about preventing those topics.</span>
 

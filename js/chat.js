@@ -639,6 +639,8 @@ function chat(mood) {
     const input = txtMessageInput.value;
     if (input) {
 
+        setLocalItemAsJson(LOCAL_ITEM_PROFILES, { evil: moodEvil.value, good: moodGood.value });
+
         const messageId = `id${(new Date()).getTime()}`;
         const request = createMessage(messageId, GPT_ROLE_USER, input, mood);
 
@@ -702,19 +704,21 @@ function handleApiKey() {
  */
 function createGptRequest(request) {
 
-    const messages = messageLog.map((m) => { return { role: m.role, content: m.content } });
-    messages.push({ role: GPT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood) });
-    messages.push({ role: GPT_ROLE_USER, content: request.content });
-
-    const data = {
+    const settings = {
         model: gptModel.value,
-        messages: messages,
         max_tokens: parseInt(gptMaxTokens.value),
         temperature: parseFloat(gptTemperature.value),
         top_p: parseFloat(gptTopP.value),
         frequency_penalty: parseFloat(gptFrequencyPenalty.value),
         presence_penalty: parseFloat(gptPresencePenalty.value)
     };
+    setLocalItemAsJson(LOCAL_ITEM_GPT_SETTINGS, settings);
+
+    const messages = messageLog.map((m) => { return { role: m.role, content: m.content } });
+    messages.push({ role: GPT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood) });
+    messages.push({ role: GPT_ROLE_USER, content: request.content });
+
+    settings.messages = messages;
 
     return {
         method: "POST",
@@ -722,7 +726,7 @@ function createGptRequest(request) {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(settings),
     }
 }
 
@@ -787,6 +791,22 @@ function loadLocalStorage() {
         isVoicesMuted = false;
     } else {
         isVoicesMuted = JSON.parse(value);
+    }
+
+    const settings = getLocalItemAsJson(LOCAL_ITEM_GPT_SETTINGS);
+    if (settings !== null) {
+        gptModel.value = settings.model;
+        gptMaxTokens.value = settings.max_tokens;
+        gptTemperature.value = settings.temperature;
+        gptTopP.value = settings.top_p;
+        gptFrequencyPenalty.value = settings.frequency_penalty;
+        gptPresencePenalty.value = settings.presence_penalty;
+    }
+
+    const profiles = getLocalItemAsJson(LOCAL_ITEM_PROFILES);
+    if (profiles !== null) {
+        moodEvil.value = profiles.evil;
+        moodGood.value = profiles.good;
     }
 
     updateConversations();
@@ -900,8 +920,8 @@ function initializeApp() {
     setInterval(updateTimeAgo, 30000);
 
     if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
-            showDisclaimerDialog();
-        };
+        showDisclaimerDialog();
+    };
 
     // createFakeMessages();
 }
