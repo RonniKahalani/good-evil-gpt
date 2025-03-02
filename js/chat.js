@@ -176,7 +176,6 @@ function copyGeoLocation() {
     } else {
         console.log("Geolocation is not supported by this browser.");
     }
-
 }
 
 /**
@@ -218,7 +217,6 @@ function cancelVoice() {
  * Updates auto voices.
  */
 function updateAutoVoices() {
-
     setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
 }
 
@@ -230,7 +228,8 @@ function enableAutoVoices() {
     populateSystemVoices();
     closeAutoVoiceDialog();
 
-    // This is left out for now, as it can be a bit annoying, but also my default system language is a danish male voice that it terrible to speak english. It is total crap to listen to.
+    // This is left out for now, as it can be a bit annoying, also my default system language is a danish voice that it terrible at speaking english. It is total crap to listen to.
+    // Would rather like to wait with voices until the user has experimentet with the voices and found a voice that is good for them.
     /*
     if (!isVoicesMuted) {
         const speech = speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
@@ -325,7 +324,7 @@ function testVoice(mood) {
 /**
  * Shows or hides the speaking now message.
  * @param {*} show 
- */ 
+ */
 function showSpeakingNow(show) {
     speakingNow.style.display = show ? "block" : "none";
 }
@@ -336,7 +335,7 @@ function showSpeakingNow(show) {
  */
 function updateVoiceStarted(e) {
     speakingNow.classList.remove("mood-evil", "mood-good");
-    speakingNow.classList.add( (e.utterance.mood === Personality.EVIL) ? "mood-evil" : "mood-good");
+    speakingNow.classList.add((e.utterance.mood === Personality.EVIL) ? "mood-evil" : "mood-good");
     speakingNowName.textContent = e.utterance.name + " is speaking...";
     showSpeakingNow(true);
 }
@@ -759,7 +758,7 @@ function handleApiKey() {
  * Updates the message UI conversations.
  */
 function updateConversations() {
-    getMessagesByRole(GPT_ROLE_USER).forEach( (request) => addToChatUI(request, getMessageByIdAndRole(request.messageId, GPT_ROLE_ASSISTANT)));
+    getMessagesByRole(GPT_ROLE_USER).forEach((request) => addToChatUI(request, getMessageByIdAndRole(request.messageId, GPT_ROLE_ASSISTANT)));
 }
 
 /**
@@ -895,7 +894,7 @@ function initializeApp() {
     loadLocalStorage();
     populateSystemVoices();
     copyGeoLocation();
-    
+
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
         openAutoVoiceDialog();
     }
