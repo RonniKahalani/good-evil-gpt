@@ -27,7 +27,7 @@ SOFTWARE.
 /**
  * Copies text to the clipboard.
  */
-function copyTextToClipboard(text) {
+export function copyTextToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
         console.log("Copied to clipboard:", text);
         alert("Copied to clipboard.");
