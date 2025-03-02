@@ -1,6 +1,6 @@
 # Keyboard Shortcuts
 
-Alt+G: Sends current message to Goodness.
+**Alt+G**: Sends current message to Goodness.
 
 Alt+E: Sends current message to Evilness.
 
