@@ -217,6 +217,7 @@ function updateAutoVoices() {
  */
 function enableAutoVoices() {
     chkAutoVoice.checked = true;
+    updateAutoVoices();
     populateSystemVoices();
     closeAutoVoiceDialog();
 
@@ -875,6 +876,12 @@ function updateTimeAgo() {
     });
 }
 
+function showDisclaimerDialog() {
+    let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+    disclaimerModal.show();
+    setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
+}
+
 /**
  * Initializes the app.
  */
@@ -893,10 +900,8 @@ function initializeApp() {
     setInterval(updateTimeAgo, 30000);
 
     if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
-        let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
-        disclaimerModal.show();
-        setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
-    };
+            showDisclaimerDialog();
+        };
 
     // createFakeMessages();
 }
