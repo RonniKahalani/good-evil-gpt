@@ -33,6 +33,7 @@ const LOCAL_ITEM_VOICES = "voices";
 const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
 const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 const LOCAL_ITEM_DISCLAIMER = "disclaimer";
+const LOCAL_ITEM_GPT_SETTINGS = "gpt-settings";
 
 /**
  * Sets an item valuefrom the local storage.
