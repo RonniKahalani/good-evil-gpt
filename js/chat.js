@@ -24,7 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import  { copyTextToClipboard }  from './clipboard.js';
 /**
  * This script handles the chat UI and GPT communication.
  */
@@ -54,6 +53,7 @@ const LOCAL_ITEM_MESSAGE_LOG = "message-log";
 const LOCAL_ITEM_VOICES = "voices";
 const LOCAL_ITEM_AUTO_VOICE = "auto-voice";
 const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
+const LOCAL_ITEM_DISCLAIMER = "disclaimer";
 
 /**
  * Messages.
@@ -165,7 +165,7 @@ let evilVoiceIndex = -1;
 let isVoicesMuted = false;
 
 /**
- * Copies geolocation data to a user object.
+ * Copies geolocation data to a user object (if the user allows it).
  */
 function copyGeoLocation() {
     if (navigator.geolocation) {
@@ -178,59 +178,6 @@ function copyGeoLocation() {
         console.log("Geolocation is not supported by this browser.");
     }
 
-}
-
-/**
- * Removes an entry from an array.
- * @param {*} array 
- * @param  {...any} deleteElement 
- * @returns 
- */
-const removeFromArray = function (array, ...deleteElement) {
-    for (let element of deleteElement) {
-        if (array.includes(element)) {
-            array.splice(array.indexOf(element), 1);
-        }
-    }
-    return array;
-};
-
-/**
- * Converts a date to a 'time ago' text.
- * Example: 23 seconds ago.
- * @param {*} date 
- * @returns 
- */
-function timeAgo(date) {
-    const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
-
-    const intervals = [
-        { label: "year", seconds: 31536000 },
-        { label: "month", seconds: 2592000 },
-        { label: "day", seconds: 86400 },
-        { label: "hour", seconds: 3600 },
-        { label: "minute", seconds: 60 },
-        { label: "second", seconds: 1 }
-    ];
-
-    for (const interval of intervals) {
-        const count = Math.floor(seconds / interval.seconds);
-        if (count >= 1) {
-            return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
-        }
-    }
-
-    return "just now";
-}
-
-/**
- * Works as a short version of document.querySelector(...).
- * @param {*} key 
- * @returns 
- */
-function qs(key) {
-    return document.querySelector(key);
 }
 
 /**
@@ -354,36 +301,6 @@ function getVoiceSettingsByMood(mood) {
  */
 function getPersonalityName(mood) {
     return (mood === Personality.GOOD) ? "Goodness" : "Evilness"
-}
-
-/**
- * Speaks out a voice.
- * @param {*} text 
- * @param {*} settings 
- * @returns 
- */
-function speak(text, settings) {
-
-    const speech = new SpeechSynthesisUtterance();
-    speech.name = settings ? settings.name : null;
-    speech.mood = settings ? settings.mood : null;
-    speech.lang = "en_US";
-    speech.text = text;
-    speech.volume = settings ? settings.volume : 1;
-    speech.rate = settings ? settings.rate : 1;
-    speech.pitch = settings ? settings.pitch : 1;
-    speech.voice = settings ? systemVoices[settings.voiceIndex] : null;
-
-    window.speechSynthesis.speak(speech);
-    return speech;
-}
-
-/**
- * Tests wether a current speech is active.
- * @returns false if no voice is currently being spoken.
- */
-function isSpeaking() {
-    return window.speechSynthesis.speaking;
 }
 
 /**
@@ -781,11 +698,6 @@ function getSystemPromptByMood(mood) {
  */
 function createGptRequest(request) {
 
-    const headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`
-    };
-
     const messages = messageLog.map((m) => { return { role: m.role, content: m.content } });
     messages.push({ role: GPT_ROLE_SYSTEM, content: getSystemPromptByMood(request.mood) });
     messages.push({ role: GPT_ROLE_USER, content: request.content });
@@ -802,7 +714,10 @@ function createGptRequest(request) {
 
     return {
         method: "POST",
-        headers: headers,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`
+        },
         body: JSON.stringify(data),
     }
 }
@@ -842,42 +757,6 @@ function handleApiKey() {
     }
 }
 
-/**
- * Sets an item valuefrom the local storage.
- * @param {*} key
- * @returns 
- */
-function setLocalItem(key, value) {
-    return localStorage.setItem(key, value);
-}
-
-/**
- * Sets the json version string of an item value.
- * @param {*} key 
- * @param {*} value
- * @returns 
- */
-function setLocalItemAsJson(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
-/**
- * Returns an item from the local storage.
- * @param {*} key 
- * @returns 
- */
-function getLocalItem(key) {
-    return localStorage.getItem(key);
-}
-
-/**
- * Returns the json version of an item value.
- * @param {*} key 
- * @returns 
- */
-function getLocalItemAsJson(key) {
-    return JSON.parse(localStorage.getItem(key));
-}
 
 /**
  * Updates the message UI conversations.
@@ -1013,6 +892,7 @@ function updateTimeAgo() {
  * Initializes the app.
  */
 function initializeApp() {
+
     txtMessageInput.focus();
     handleApiKey();
     loadLocalStorage();
@@ -1025,8 +905,11 @@ function initializeApp() {
 
     setInterval(updateTimeAgo, 30000);
 
-    let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
-    disclaimerModal.show();
+    if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
+        let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+        disclaimerModal.show();
+        setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
+    };
 
     // createFakeMessages();
 }
