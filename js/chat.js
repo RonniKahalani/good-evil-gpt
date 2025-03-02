@@ -172,7 +172,6 @@ function copyGeoLocation() {
         navigator.geolocation.getCurrentPosition(function (position) {
             user.latitude = position.coords.latitude;
             user.longitude = position.coords.longitude;
-            console.log(`Latitude: ${user.latitude}, Longitude: ${user.longitude}`);
         });
     } else {
         console.log("Geolocation is not supported by this browser.");
@@ -336,7 +335,6 @@ function showSpeakingNow(show) {
  * @param {*} e 
  */
 function updateVoiceStarted(e) {
-    console.log("Voice start" + e);
     speakingNow.classList.remove("mood-evil", "mood-good");
     speakingNow.classList.add( (e.utterance.mood === Personality.EVIL) ? "mood-evil" : "mood-good");
     speakingNowName.textContent = e.utterance.name + " is speaking...";
@@ -351,7 +349,6 @@ function updateVoiceEnded(e) {
     showSpeakingNow(false);
     speakingNowName.textContent = "";
     removeFromArray(speeches, e.utterance);
-    console.log("Voice end" + e);
 }
 
 /**
