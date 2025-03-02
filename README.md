@@ -81,7 +81,9 @@ To get it up and running:
 - You need an OpenAI API key, which the app will ask you for.
 - Clone/Fork this [GitHub repository](https://github.com/RonniKahalani/good-evil-gpt)
 - Use ex. VS Code to run the web app, via the Live Server plugin.
+- Check this [Keyboard Shortcuts](https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md),  [Ethical AI Disclaimer](https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Ethical-AI.md), [Ethical AI Discussion](https://github.com/RonniKahalani/good-evil-gpt/discussions/3).
 - Have fun :)
+- Please share any [feedback and ideas here](https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas)
 
 ## Stuff left to do
 The code needs cleaning up and refactoring.
