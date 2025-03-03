@@ -53,3 +53,35 @@ function speak(text, settings) {
 function isSpeaking() {
     return window.speechSynthesis.speaking;
 }
+
+/**
+ * Speaks a message via a message id.
+ * @param {*} messageId 
+ * @returns 
+ */
+function speakMessage(messageId) {
+
+    if (isVoicesMuted) {
+        if (confirm(MSG_UNMUTE_CONFIRM)) {
+            isVoicesMuted = false;
+            updateMuteVoicesChanged();
+        } else {
+            return;
+        }
+    }
+
+    populateSystemVoices();
+
+    const localVoices = getLocalItemAsJson(LOCAL_ITEM_VOICES);
+
+    if (localVoices === null) {
+        alert(MSG_CONFIGURE_VOICES);
+        return;
+    }
+
+    const response = getMessageByIdAndRole(messageId, GPT_ROLE_ASSISTANT);
+    const speech = speak(response.content, getVoiceSettingsByMood(response.mood));
+    speeches.push(speech);
+    speech.onstart = (e) => updateVoiceStarted(e);
+    speech.onend = (e) => updateVoiceEnded(e);
+}

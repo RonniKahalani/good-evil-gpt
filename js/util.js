@@ -76,3 +76,23 @@ function timeAgo(date) {
 function qs(key) {
     return document.querySelector(key);
 }
+
+/**
+ * Replaces newlines with HTML line breaks.
+ * @param {*} text 
+ * @returns the replaced text.
+ */
+function replaceNewlines(text) {
+    return text.replaceAll("\n", "<br>");
+}
+
+/**
+ * Formats a date, using a given format.
+ * @param {*} datetime 
+ * @param {*} format 
+ * @returns 
+ */
+function formatDateTime(datetime, format) {
+    const currentBrowserLocale = navigator.language || navigator.userLanguage;
+    return Intl.DateTimeFormat(currentBrowserLocale, format).format(datetime);
+}

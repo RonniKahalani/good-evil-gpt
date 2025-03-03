@@ -16,6 +16,7 @@
     <script defer src="js/clipboard.js"></script>
     <script defer src="js/util.js"></script>
     <script defer src="js/speech.js"></script>
+    <script defer src="js/voice.js"></script>
     <script defer src="js/local.js"></script>
     <script defer src="js/chat.js"></script>
 
@@ -30,17 +31,7 @@
 
             <div class="row col-6 text-end">
 
-                <div class="col-sm"></div>
-
-                <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                    title="(Alt-H) Clear message log.">Clear
-                    messages</button>
-
-                <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                    title="(Alt-C) Copy message log to clipboard.">Copy
-                    messages</button>
-
-                <div class="col-1"></div>
+                <div class="col-8"></div>
 
                 <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm btn-nav col-2 ripple"
                     title="(Alt-O) Open voice settings.">Voices</button>
@@ -53,28 +44,30 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs bg-dark-transparent" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                        type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                    <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat"
+                        type="button" role="tab" aria-controls="chat" aria-selected="true">Chat</button>
                 </li>
+
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
                         type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
                 </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings"
+                        type="button" role="tab" aria-controls="settings" aria-selected="false">GPT</button>
+                </li>
+
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
                         type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings"
-                        type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
-                </li>
-
             </ul>
         </div>
         <!-- Tab panes -->
         <div class="tab-content">
 
-            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 
                 <div class="row bg-dark-transparent p-2">
 
@@ -186,13 +179,35 @@
 
             </div>
 
+
+            <div class="tab-pane bg-dark-transparent" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+
+                <div class="row">
+                    <pre><div id="message-log" class="col-12"></div></pre>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm"></div>
+
+                    <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                        title="(Alt-H) Clear message log.">Clear
+                        messages</button>
+
+                    <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                        title="(Alt-C) Copy message log to clipboard.">Copy
+                        messages</button>
+
+                </div>
+
+            </div>
+
             <div class="tab-pane bg-dark-transparent" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 
                 <div class="row m-2">
                     <div class="col-2"></div>
                     <div class="row col-2">
                         <select id="select-gpt-model" value="gpt-4o" onchange="gptModel.value = this.value"
-                            class="form-control">
+                            class="form-select">
                             <option value="gpt-4">gpt-4</option>
                             <option value="gpt-4-turbo">gpt-4 turbo</option>
                             <option value="gpt-4o">gpt-4o</option>
@@ -207,7 +222,8 @@
                         <input type="text" id="gpt-model" size="5" value="GPT-4"
                             onchange="selectGptModel.value = this.value" class="form-control">
                     </div>
-                    <span class="col-8">The model used to generate responses.</span>
+                    <span class="col-8">The model used to generate responses. Edit or use dropdown selector
+                        above.</span>
                 </div>
 
                 <div class="row m-2">
@@ -254,31 +270,34 @@
                         <input type="number" step=0.1 min="0" max="1" id="gpt-presence-penalty" size="3" value="1"
                             class="form-control">
                     </div>
-                    <span class="col-8">Avoidance of specific topics. 1.0 = more likely to avoid mentioning particular
-                        topics provided in the user messages, 0.2 = less concerned about preventing those topics.</span>
+                    <span class="col-8">Avoidance of specific topics. 1.0 = more likely to avoid mentioning topics in
+                        the user messages, 0.2 = less concerned about preventing those topics.</span>
+                </div>
+
+                <div class="row m-2 p-3">
+                    Note:
+                    <p>
+                        The default values are recommended for most cases.<br>
+                        Adjusting these values can have a significant impact on the quality and diversity of the
+                        responses.<br>
+                        Your changes are saved locally the next time they are used in a chat.</p>
+
                 </div>
             </div>
-
-            <div class="tab-pane bg-dark-transparent" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-
-                <div class="row">
-                    <pre><div id="message-log" class="col-12"></div></pre>
-                </div>
-            </div>
-
         </div>
 
         <dialog id="dialog-voice-settings" class="dialog">
             <div class="modal-header">
                 <h5 class="modal-title">Voice Settings</h5>
             </div>
-            <p>If you computer system has synthesis speech and voices, you should be able to select a voice for each
-                personality.</p>
-            <p>You can always mute auto voicing messages, in the main menu bar.</p>
-            <div class="row">
+            <p class="m-2 p-2">If you computer system has synthesis speech and voices, you should be able to select a voice for each
+                personality.<br>
+                You can always mute auto voicing messages, in the main menu bar.</p>
+
+            <div class="row m-2 p-2">
                 <div class="col-6">
 
-                    <h4>Goodness</h4>
+                    <h4 class="text-center">Goodness</h4>
 
                     <div class="row">
                         <div class="col-8"></div>
@@ -289,29 +308,29 @@
                     </div>
 
                     <label for="select-good-voice">System voice</label>
-                    <select id="select-good-voice" value="-1" class="form-control"></select>
+                    <select id="select-good-voice" value="-1" class="form-select m-2"></select>
 
                     <label class="form-label" for="input-good-voice-rate">Rate</label>
-                    <div data-mdb-range-init class="range">
+                    <div data-mdb-range-init class="range m-2">
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-good-voice-rate" />
                     </div>
 
                     <label class="form-label" for="input-good-voice-pitch">Pitch</label>
-                    <div data-mdb-range-init class="range">
+                    <div data-mdb-range-init class="range m-2">
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-good-voice-pitch" />
                     </div>
 
                     <label class="form-label" for="input-good-voice-volume">Volume</label>
-                    <div data-mdb-range-init class="range">
+                    <div data-mdb-range-init class="range m-2">
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-good-voice-volume" />
                     </div>
                 </div>
 
                 <div class="col-6">
-                    <h4>Evilness</h4>
+                    <h4 class="text-center">Evilness</h4>
 
                     <div class="row">
                         <div class="col-8"></div>
@@ -322,21 +341,21 @@
                     </div>
 
                     <label for="select-evil-voice">System voice</label>
-                    <select id="select-evil-voice" class="form-control"></select>
+                    <select id="select-evil-voice" class="form-select m-2"></select>
 
                     <label class="form-label" for="input-evil-voice-rate">Rate</label>
-                    <div data-mdb-range-init class="range">
+                    <div data-mdb-range-init class="range m-2">
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-evil-voice-rate" />
                     </div>
 
                     <label class="form-label" for="input-evil-voice-pitch">Pitch</label>
-                    <div data-mdb-range-init class="range">
+                    <div data-mdb-range-init class="range m-2">
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-evil-voice-pitch" />
                     </div>
                     <label class="form-label" for="input-evil-voice-volume">Volume</label>
-                    <div data-mdb-range-init class="range">
+                    <div data-mdb-range-init class="range m-2">
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-evil-voice-volume" />
                     </div>
@@ -344,7 +363,8 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row m-2">
+                    
                     <div class="col-6">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="chk-auto-voice">
@@ -353,9 +373,12 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-4"></div>
-                    <button id="btn-close-voice-settings" class="btn btn-primary btn-sm col-2 ripple">Close &
-                        Save</button>
+
+                    <div class="row col-6 text-end">
+                        <div class="col-8"></div>
+                        <button id="btn-close-voice-settings" class="btn btn-primary btn-sm ripple col-4">Close &
+                            Save</button>
+                    </div>
                 </div>
 
             </div>
