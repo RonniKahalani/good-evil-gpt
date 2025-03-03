@@ -12,7 +12,7 @@ All you need is an OpenAI API key and you're up and running in a few minutes.
 - Muting/replay voices/messages.
 - Change AI request parameters (gpt model, max. tokens...).
 - Clear and export chat history (Json format).
-- Visualising used token counts (totals + per message).
+- Visualizing used token counts (totals + per message).
 - Copy a message text to the clipboard.
 
 ##  Technology
