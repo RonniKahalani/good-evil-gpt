@@ -1,9 +1,9 @@
+![Image of user interface](https://github.com/RonniKahalani/good-evil-gpt/raw/main/doc/thumb-demo-end.png)
+
 # What?
 This app creates two opposite AI personalities (Goodness & Evilness) for you to have a conversation with.
 
 All you need is an OpenAI API key and you're up and running in a few minutes.
-
-![Image of user interface](https://github.com/RonniKahalani/good-evil-gpt/raw/main/doc/thumb-demo-end.png)
 
 ## Features
 - Keyboard shortcuts for most interactions.
