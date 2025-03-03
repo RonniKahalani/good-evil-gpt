@@ -145,13 +145,17 @@
 
                     <div class="row col-4">
 
-                        <div class="col-6 text-center bg-light-transparent">
-                            <div class="m-2">Messages</div>
+                        <div class="col-12 p-2 bg-light-transparent" style="border-radius: 10px;">
+                            <h5>Goodness</h5>A good, helpful and funny AI simulation.
+                        </div>
+
+                        <div class="col-6 text-center bg-light-transparent pt-1">
+                            <div>Messages</div>
                             <div id="good-message-count" class="big-number">0</div>
                         </div>
 
-                        <div class="col-6 text-center bg-light-transparent">
-                            <div class="m-2">Tokens</div>
+                        <div class="col-6 text-center bg-light-transparent pt-1">
+                            <div>Tokens</div>
                             <div id="good-tokens" class="big-number">0</div>
                         </div>
 
@@ -160,7 +164,7 @@
                     <div class="row col-sm m-0 p-2 text-center bg-light-transparent">
 
                         <textarea id="message-input" class="col-sm" accesskey="m" placeholder="Ask me anything..."
-                            tabindex="0" rows="2" title="Place cursor here. (Alt-M)"></textarea>
+                            tabindex="0" rows="3" title="Place cursor here. (Alt-M)"></textarea>
 
                         <div class="row col-12 m-0 p-2">
 
@@ -181,46 +185,52 @@
 
                     <div class="row col-4">
 
-                        <div class="col-6 text-center bg-light-transparent">
-                            <div class="m-2">Tokens</div>
+                        <div class="col-12 p-2 bg-light-transparent" style="border-radius: 10px;">
+                            <h5>Evilness</h5>A bitter, angry and evil AI simulation.
+                        </div>
+
+                        <div class="col-6 text-center bg-light-transparent pt-1">
+                            <div>Tokens</div>
                             <div id="evil-tokens" class="big-number">0</div>
                         </div>
 
-                        <div class="col-6 text-center bg-light-transparent">
-                            <div class="m-2">Messages</div>
+                        <div class="col-6 text-center bg-light-transparent pt-1">
+                            <div>Messages</div>
                             <div id="evil-message-count" class="big-number">0</div>
                         </div>
                     </div>
                 </div>
                 <div class="row bg-light-transparent m-0 p-3">
-                <div id="activity-log" class="row">
-                    Initializing...
+                    <div id="activity-log" class="row">
+                        Initializing...
+                    </div>
                 </div>
             </div>
-            </div>
 
-            <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"
+                aria-labelledby="profile-tab">
                 <h1>Profiles</h1>
 
                 <div class="row">
 
-                <div class="col-6">
-                    <h2>Evilness</h2>
-                    <textarea id="mood-evil" class="form-control"
-                        rows="5">If asked about your name, you answer Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have a dark sarcastic humor.</textarea>
+                    <div class="col-6">
+                        <h2>Evilness</h2>
+                        <textarea id="mood-evil" class="form-control"
+                            rows="5">If asked about your name, you answer Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have a dark sarcastic humor.</textarea>
+                    </div>
+
+                    <div class="col-6">
+                        <h2>Goodness</h2>
+                        <textarea id="mood-good" class="form-control"
+                            rows="5">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive, supportive and have a great sense of humor.</textarea>
+                    </div>
                 </div>
 
-                <div class="col-6">
-                    <h2>Goodness</h2>
-                    <textarea id="mood-good" class="form-control"
-                        rows="5">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive, supportive and have a great sense of humor.</textarea>
-                </div>
-            </div>
-
             </div>
 
 
-            <div class="tab-pane bg-dark-transparent m-4 p-4" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+            <div class="tab-pane bg-dark-transparent m-4 p-4" id="messages" role="tabpanel"
+                aria-labelledby="messages-tab">
                 <h1>Messages</h1>
                 <div class="row">
                     <div class="row">
@@ -238,7 +248,8 @@
                 </div>
             </div>
 
-            <div class="tab-pane bg-dark-transparent m-4 p-4" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="tab-pane bg-dark-transparent m-4 p-4" id="settings" role="tabpanel"
+                aria-labelledby="settings-tab">
                 <h1>GPT Settings</h1>
                 <div class="row m-2 p-0">
                     <div class="col-2"></div>
@@ -482,7 +493,7 @@
                 </div>
             </div>
         </div>
-       
+
     </main>
     <div class="bottom-right bg-dark-transparent m-2 p-2" style="z-index: 100;">
         <h3>The Good vs. Evil Chat</h3>
