@@ -1,16 +1,16 @@
 # Ethical AI Disclaimer
-This AI app raises several ethical considerations:
+This experimental AI app raises several ethical considerations, because one of the AI personalities is inherently evil.
 
 ## For educational and entertainment purposes only
 Do not rely on it for real-life decisions.
 
 ## Do not share personal data
-Conversations are stored locally, in the browser, and shared only with ChatGPT.
+Conversations and configurations are stored locally, in the browser, and shared only with ChatGPT.
 
 You can clear the chat history in the app or the browsers local storage.
 
 ## Adult, rough and offenvise language might occur 
-The Evilness personality is inherently not nice.
+The Evilness personality is not nice and will try to insult and ridicule you.
 
 ## Other considerations...
 
