@@ -43,12 +43,12 @@ function updateMuteVoices() {
     if (isVoicesMuted) {
         btnMuteVoices.classList.remove("btn-success");
         btnMuteVoices.classList.add("btn-danger");
-        btnMuteVoices.textContent = "Unmute voices";
+        btnMuteVoices.textContent = "Unmute";
         cancelVoice();
     } else {
         btnMuteVoices.classList.remove("btn-danger");
         btnMuteVoices.classList.add("btn-success");
-        btnMuteVoices.textContent = "Mute voices";
+        btnMuteVoices.textContent = "Mute";
     }
 }
 

@@ -189,6 +189,8 @@ SOFTWARE.
     background-color: rgba(0, 0, 0, 0.85);
     border-radius: 10px;
     border-color: white;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
 }
 
 .dialog {
@@ -209,7 +211,7 @@ SOFTWARE.
 #message-input {
     width:512px;
     margin-bottom: 10px;
-    border: 1px solid #0c0c0c;
+    border: 2px solid #0c0c0c;
     border-radius: 1;
 }
 
@@ -269,7 +271,11 @@ SOFTWARE.
     border-right: 1px solid #333333;
 }
 
-.tab-pane {
+#mainTablist {
+    border:none
+}
+
+.mpane {
     margin: 10px;
     padding: 10px;
 }
@@ -319,7 +325,12 @@ body {
     height:500px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: lightgray darkblue;
+    scrollbar-color: darkblue lightgray;
+}
+
+.big-number{
+    font-size: 3em;
+    color: #cfcfcf;
 }
 
 #message-evil {
@@ -328,7 +339,7 @@ body {
     height:500px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: lightgray darkred;
+    scrollbar-color: darkred lightgray;
 }
  
 

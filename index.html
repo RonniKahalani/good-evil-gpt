@@ -27,75 +27,60 @@
 
         <div class="border-low row m-2 p-2 bg-dark-transparent">
 
-            <div class="col-6">The Good vs. Evil Chat</div>
+            <div class="row">
 
-            <div class="row col-6 text-end">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs col-6" id="mainTablist" role="tablist">
 
-                <div class="col-8"></div>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat"
+                            type="button" role="tab" aria-controls="chat" aria-selected="true">Chat</button>
+                    </li>
 
-                <button id="btn-open-voice-settings" accesskey="o" class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                    title="(Alt-O) Open voice settings.">Voices</button>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                    </li>
 
-                <button id="btn-mute-voices" accesskey="u" class="btn btn-success btn-sm btn-nav col-2 ripple"
-                    title="(Alt-U) Mute/unmute all voices."></button>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings"
+                            type="button" role="tab" aria-controls="settings" aria-selected="false">GPT</button>
+                    </li>
 
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
+                            type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+                    </li>
+                </ul>
+
+                <div class="col-6 text-end" style="margin-top:5px;">
+
+                    <i class="bi bi-keyboard icon mx-1 h4" title="Keyboard Shortcuts."
+                        onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md', '_blank')"></i>
+
+                    <i class="bi bi-lightbulb icon mx-1 h4" title="Feedback & Ideas."
+                        onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas', '_blank')"></i>
+
+                    <i class="bi bi-people icon mx-1 h4" title="Ethical AI Discussion."
+                        onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/discussions/3', '_blank')"></i>
+
+                    <i class="bi bi-twitter-x icon mx-1 h5" title="More info on X/Twitter."
+                        onclick="window.open('https://x.com/RonniKahalani', '_blank')"></i>
+
+                    <i class="bi bi-github icon mx-1 h5" title="Get code on GitHub."
+                        onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt', '_blank')"></i>
+
+                    <i class="bi bi-linkedin icon mx-1 h5" title="More on LinkedIn."
+                        onclick="window.open('https://www.linkedin.com/in/kahalani', '_blank')"></i>
+
+                </div>
             </div>
-
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs bg-dark-transparent" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat"
-                        type="button" role="tab" aria-controls="chat" aria-selected="true">Chat</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                        type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings"
-                        type="button" role="tab" aria-controls="settings" aria-selected="false">GPT</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
-                        type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
-                </li>
-            </ul>
         </div>
+
         <!-- Tab panes -->
         <div class="tab-content">
 
             <div class="tab-pane active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
-
-                <div class="row bg-dark-transparent p-2">
-
-                    <div class="col-1 text-center">
-                        <div>Messages</div>
-                        <div id="good-message-count">0</div>
-                    </div>
-
-                    <div class="col-1 text-center">
-                        <div>Tokens</div>
-                        <div id="good-tokens" class="col-sm">0</div>
-                    </div>
-
-                    <div class="col-sm text-center">
-                        <div>Total tokens</div>
-                        <div id="total-tokens">0</div>
-                    </div>
-
-                    <div class="col-1 text-center">
-                        <div>Tokens</div>
-                        <div id="evil-tokens">0</div>
-                    </div>
-
-                    <div class="col-1 text-center">
-                        <div>Messages</div>
-                        <div id="evil-message-count">0</div>
-                    </div>
-                </div>
 
                 <div class="row pt-2">
 
@@ -124,13 +109,23 @@
                         <div class="bottom-left p-2">
                             <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
                                 title="(Alt-I) Clear the message input field.">Clear Input</button>
-                        </div>
 
-                        <div class="bottom-right p-2">
                             <button id="btn-clear-history" accesskey="h"
                                 class="btn btn-primary btn-sm btn-nav col-2 ripple"
                                 title="(Alt-H) Clear message log.">Clear
-                                messages</button>
+                                Messages</button>
+                        </div>
+
+                        <div class="bottom-right p-2">
+
+                            <button id="btn-open-voice-settings" accesskey="o"
+                                class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                                title="(Alt-O) Open voice settings.">Voices</button>
+
+                            <button id="btn-mute-voices" accesskey="u"
+                                class="btn btn-success btn-sm btn-nav col-2 ripple"
+                                title="(Alt-U) Mute/unmute all voices."></button>
+
                         </div>
                     </div>
 
@@ -139,8 +134,21 @@
                     </div>
                 </div>
 
-                <div class="row text-center">
-                    <div class="col-sm m-0"></div>
+                <div class="row text-center bg-dark-transparent m-2 p-2">
+
+                    <div class="row col-sm m-0">
+
+                        <div class="col-6 text-center">
+                            <div>Messages</div>
+                            <div id="good-message-count" class="big-number">0</div>
+                        </div>
+
+                        <div class="col-6 text-center">
+                            <div>Tokens</div>
+                            <div id="good-tokens" class="big-number">0</div>
+                        </div>
+
+                    </div>
 
                     <div class="row text-center p-0" style="width: 512px;">
 
@@ -162,10 +170,27 @@
                                     Evilness</button>
                             </div>
                         </div>
+
+                        <div class="row">
+
+                            <div class="col-sm text-center m-2">
+                                <span>Total use of tokens in current conversation:</span> <span id="total-tokens">0</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-sm"></div>
+                    <div class="row col-sm">
 
+                        <div class="col-6 text-center">
+                            <div>Tokens</div>
+                            <div id="evil-tokens" class="big-number">0</div>
+                        </div>
+
+                        <div class="col-6 text-center" style="vertical-align: middle;">
+                            <div>Messages</div>
+                            <div id="evil-message-count" class="big-number">0</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -449,23 +474,11 @@
                 </div>
             </div>
         </div>
-
-        <footer>
-            <div class="row">
-                <div class="col-4">Please read this <a target="_blank" title="Ethical AI Disclaimer"
-                        href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Ethical-AI.md">Ethical AI
-                        Disclaimer</a> before using this app.</div>
-                <div class="col-4 text-center">Got any <a target="_blank" title="Feedback & Ideas"
-                        href="https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas">feedback or
-                        ideas?</a></div>
-                <div class="col-4 text-end"><a target="_blank" title="Keyboard Shortcuts"
-                        href="https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md">Keyboard
-                        Shortcuts</a> | <a target="_blank" title="Ethical AI Discussion"
-                        href="https://github.com/RonniKahalani/good-evil-gpt/discussions/3">Ethical AI Discussion</a>
-                </div>
-            </div>
-        </footer>
     </main>
+    <div class="bottom-right bg-dark-transparent m-2 p-2">
+        <h3>The Good vs. Evil Chat</h3>
+
+    </div>
 </body>
 
 </html>

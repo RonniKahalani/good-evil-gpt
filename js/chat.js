@@ -170,6 +170,12 @@ function getPersonalityName(mood) {
  * Sends a chat to both personalities (Goodness and Evilness).
  */
 function chatBoth() {
+    
+    if( txtMessageInput.value === "" ) {
+        askForInput();
+        return;
+    }
+
     chat(Personality.EVIL);
     chat(Personality.GOOD);
 }
@@ -427,6 +433,11 @@ function addToMessageLog(entry) {
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
 }
 
+function askForInput() {
+    alert("Please enter a message to chat.");
+    txtMessageInput.focus();
+}
+
 /**
  * Sends a chat in a certain mood.
  * @param {*} mood 
@@ -434,28 +445,31 @@ function addToMessageLog(entry) {
 function chat(mood) {
 
     const input = txtMessageInput.value;
-    if (input) {
-
-        setLocalItemAsJson(LOCAL_ITEM_PROFILES, { evil: moodEvil.value, good: moodGood.value });
-
-        const messageId = `id${(new Date()).getTime()}`;
-        const request = createMessage(messageId, GPT_ROLE_USER, input, mood);
-
-        addToMessageLog(request);
-        addToChatUI(request);
-
-        chatWithGPT(request).then((gptResponse) => {
-
-            const response = handleGptResponse(request, gptResponse);
-            addToMessageLog(response);
-            updateResponseUI(response);
-            updateUI();
-
-            if (!isVoicesMuted && chkAutoVoice.checked) {
-                speakMessage(response.messageId);
-            }
-        });
+    if (!input) {
+        askForInput();
+        return;
     }
+
+    setLocalItemAsJson(LOCAL_ITEM_PROFILES, { evil: moodEvil.value, good: moodGood.value });
+
+    const messageId = `id${(new Date()).getTime()}`;
+    const request = createMessage(messageId, GPT_ROLE_USER, input, mood);
+
+    addToMessageLog(request);
+    addToChatUI(request);
+
+    chatWithGPT(request).then((gptResponse) => {
+
+        const response = handleGptResponse(request, gptResponse);
+        addToMessageLog(response);
+        updateResponseUI(response);
+        updateUI();
+
+        if (!isVoicesMuted && chkAutoVoice.checked) {
+            speakMessage(response.messageId);
+        }
+    });
+
 }
 
 /**
@@ -565,7 +579,7 @@ function initializeApp() {
     handleApiKey();
     loadLocalStorage();
     updateConversations();
-    updateUI();    
+    updateUI();
     populateSystemVoices();
 
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
