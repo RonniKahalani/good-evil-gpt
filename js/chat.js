@@ -54,6 +54,7 @@ const MSG_ENTER_APIKEY = "Please enter a valid ChatGPT API key.\n\nThe API key w
 const MSG_PROVIDE_APIKEY = "You need to provide a valid ChatGPT API key to use this page.";
 const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
 const MSG_CONFIGURE_VOICES = "Please configure the voices on the Profile tab.";
+const MSG_INPUT_MESSAGE = "Please enter a message to send.";
 
 const HTML_SPINNER = `<div class="spinner-border message-spinner" role="status"></div>`;
 
@@ -454,7 +455,7 @@ function addToMessageLog(entry) {
  * Asks the user for message input.
  */
 function askForInput() {
-    alert("Please enter a message to chat.");
+    alert(MSG_INPUT_MESSAGE);
     txtMessageInput.focus();
 }
 
@@ -540,7 +541,6 @@ async function chatWithGPT(request) {
         }
 
         logActivity(`Got a response (${request.messageId}) from ${getPersonalityName(request.mood)} via ${gptModel.value}.`);
-
         return await response.json();
 
     } catch (error) {
@@ -622,9 +622,7 @@ function initializeApp() {
     
     logActivity("Loading storage...");
     loadLocalStorage();
-
-    updateConversations();
-    
+    updateConversations(); 
     updateUI();
 
     logActivity("Loading system voices...");
@@ -641,31 +639,4 @@ function initializeApp() {
     };
 
     setInterval(updateTimeAgo, updateTimeAgoInterval);
-    // createFakeMessages();
-}
-
-/**
- * Create fake messages.
- */
-function createFakeMessages() {
-    let messageId = "idgood" + new Date().getTime();
-
-    let request = createMessage(messageId, GPT_ROLE_USER, "Hi there, how are you?", Personality.GOOD);
-    let response = createMessage(messageId, GPT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.GOOD, messageId);
-    response.waitTimeSec = 1.2;
-    response.tokens = 39;
-
-    messageLog.push(request);
-    messageLog.push(response);
-    addToChatUI(request, response);
-
-    messageId = "idevil" + new Date().getTime();
-    request = createMessage(messageId, GPT_ROLE_USER, "Hi there, how are you?", Personality.EVIL);
-    response = createMessage(messageId, GPT_ROLE_ASSISTANT, "Hi, I'm perfect, how about you?", Personality.EVIL, messageId);
-    response.waitTimeSec = 1.2;
-    response.tokens = 39;
-
-    messageLog.push(request);
-    messageLog.push(response);
-    addToChatUI(request, response);
 }

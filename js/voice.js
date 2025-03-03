@@ -32,7 +32,7 @@ function toggleVoiceMuting() {
     speakingNow.style.display = "none";
     speakingNowName.textContent = "";
     updateMuteVoices();
-    logActivity( isVoicesMuted ? "Muted voices." : "Unmuted voices.");
+    logActivity( isVoicesMuted ? "Muted voice." : "Unmuted voice.");
 }
 
 /**
@@ -75,17 +75,6 @@ function enableAutoVoices() {
     updateAutoVoices();
     populateSystemVoices();
     closeAutoVoiceDialog();
-
-    // This is left out for now, as it can be a bit annoying, also my default system language is a danish voice that it terrible at speaking english. It is total crap to listen to.
-    // Would rather like to wait with voices until the user has experimentet with the voices and found a voice that is good for them.
-    /*
-    if (!isVoicesMuted) {
-        const speech = speak("hi, and welcome.", getVoiceSettingsByMood(Personality.EVIL));
-        speeches.push(speech);
-        speech.onstart = (e) => updateVoiceStarted(e);
-        speech.onend = (e) => updateVoiceEnded(e);
-    }
-    */
 }
 
 /**
