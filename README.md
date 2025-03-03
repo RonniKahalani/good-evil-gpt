@@ -15,7 +15,7 @@ All you need is an OpenAI API key and you're up and running in a few minutes.
 - Visualize used token counts (totals + per message).
 - Copy a message text to the clipboard.
 
-##  Technology
+##  Technologies
 - Language: JavaScript.
 - HTML & Bootstrap CSS.
 - OpenAI ChatGPT API.
