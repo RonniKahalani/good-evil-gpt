@@ -51,7 +51,7 @@ const GPT_ROLE_USER = "user";
  * Messages.
  */
 const MSG_NO_MESSAGES_FOUND = "No messages found.";
-const MSG_CLEAR_MESSAGES_CONFIRM = "You are about to clear all the chat history.\nYou can copy the current history on the Messages pane.\n\nAre you sure you want to continue?";
+const MSG_CLEAR_MESSAGES_CONFIRM = "You are about to clear all the chat history.\n\nAre you sure you want to continue?";
 const MSG_ENTER_APIKEY = "Please enter a valid ChatGPT API key.\n\nThe API key will be enchrypted and saved in local browser storage.";
 const MSG_PROVIDE_APIKEY = "You need to provide a valid ChatGPT API key to use this page.";
 const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
@@ -147,7 +147,7 @@ const Personality = {
 };
 
 const shortDateTimeFormat = { dateStyle: 'short', timeStyle: 'short' };
-
+const updateTimeAgoInterval = 30000;
 const speeches = [];
 const user = { name: "Anonymous" };
 
@@ -918,12 +918,11 @@ function initializeApp() {
         openAutoVoiceDialog();
     }
 
-    setInterval(updateTimeAgo, 30000);
-
     if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
         showDisclaimerDialog();
     };
 
+    setInterval(updateTimeAgo, updateTimeAgoInterval);
     // createFakeMessages();
 }
 
