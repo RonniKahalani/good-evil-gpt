@@ -30,7 +30,7 @@
             <div class="row">
 
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs col-6" id="mainTablist" role="tablist">
+                <ul class="nav nav-tabs col-4" id="mainTablist" role="tablist">
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat"
@@ -53,15 +53,22 @@
                     </li>
                 </ul>
 
-                <div class="col-6 text-end" style="margin-top:5px;">
+                <div class="row col-4">
+
+                    <div class="col-sm text-center m-2">
+                        <span>Total use of tokens in current conversation:</span> <span id="total-tokens">0</span>
+                    </div>
+                </div>
+
+                <div class="col-4 text-end" style="margin-top:5px;">
 
                     <i class="bi bi-keyboard icon mx-1 h4" title="Keyboard Shortcuts."
                         onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md', '_blank')"></i>
 
-                    <i class="bi bi-lightbulb icon mx-1 h4" title="Feedback & Ideas."
+                    <i class="bi bi-lightbulb-fill icon mx-1 h5" title="Feedback & Ideas."
                         onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas', '_blank')"></i>
 
-                    <i class="bi bi-people icon mx-1 h4" title="Ethical AI Discussion."
+                    <i class="bi bi-people-fill icon mx-1 h4" title="Ethical AI Discussion."
                         onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/discussions/3', '_blank')"></i>
 
                     <i class="bi bi-twitter-x icon mx-1 h5" title="More info on X/Twitter."
@@ -134,28 +141,28 @@
                     </div>
                 </div>
 
-                <div class="row text-center bg-dark-transparent m-2 p-2">
+                <div class="row text-center">
 
-                    <div class="row col-sm m-0">
+                    <div class="row col-4">
 
-                        <div class="col-6 text-center">
-                            <div>Messages</div>
+                        <div class="col-6 text-center bg-dark-transparent">
+                            <div class="m-2">Messages</div>
                             <div id="good-message-count" class="big-number">0</div>
                         </div>
 
-                        <div class="col-6 text-center">
-                            <div>Tokens</div>
+                        <div class="col-6 text-center bg-dark-transparent">
+                            <div class="m-2">Tokens</div>
                             <div id="good-tokens" class="big-number">0</div>
                         </div>
 
                     </div>
 
-                    <div class="row text-center p-0" style="width: 512px;">
+                    <div class="row col-sm m-0 p-2 text-center bg-dark-transparent">
 
-                        <textarea id="message-input" class="col-12" accesskey="m" placeholder="Ask me anything..."
-                            tabindex="0" rows="3" title="(Alt-M) Place cursor here."></textarea>
+                        <textarea id="message-input" class="col-sm" accesskey="m" placeholder="Ask me anything..."
+                            tabindex="0" rows="2" title="(Alt-M) Place cursor here."></textarea>
 
-                        <div class="row col-12 m-0 p-0">
+                        <div class="row col-12 m-0 p-2">
 
                             <div class="row m-0">
                                 <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 ripple"
@@ -170,69 +177,65 @@
                                     Evilness</button>
                             </div>
                         </div>
-
-                        <div class="row">
-
-                            <div class="col-sm text-center m-2">
-                                <span>Total use of tokens in current conversation:</span> <span id="total-tokens">0</span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="row col-sm">
+                    <div class="row col-4">
 
-                        <div class="col-6 text-center">
-                            <div>Tokens</div>
+                        <div class="col-6 text-center bg-dark-transparent">
+                            <div class="m-2">Tokens</div>
                             <div id="evil-tokens" class="big-number">0</div>
                         </div>
 
-                        <div class="col-6 text-center" style="vertical-align: middle;">
-                            <div>Messages</div>
+                        <div class="col-6 text-center bg-dark-transparent">
+                            <div class="m-2">Messages</div>
                             <div id="evil-message-count" class="big-number">0</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="tab-pane bg-dark-transparent" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <h1>Profiles</h1>
 
-                <section class="m-2 p-2">
-                    <legend>Evilness</legend>
-                    <label for="mood-evil">Personality mood (evil)</label>
+                <div class="row">
+
+                <div class="col-6">
+                    <h2>Evilness</h2>
                     <textarea id="mood-evil" class="form-control"
-                        rows="3">If asked about your name, you answer Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have a dark sarcastic humor.</textarea>
-                </section>
-                <hr>
-                <section class="m-2 p-2">
-                    <legend>Goodness</legend>
-                    <label for="mood-good">Personality mood (good)</label>
+                        rows="5">If asked about your name, you answer Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have a dark sarcastic humor.</textarea>
+                </div>
+
+                <div class="col-6">
+                    <h2>Goodness</h2>
                     <textarea id="mood-good" class="form-control"
-                        rows="3">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive, supportive and have a great sense of humor.</textarea>
-                </section>
+                        rows="5">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive, supportive and have a great sense of humor.</textarea>
+                </div>
+            </div>
 
             </div>
 
 
-            <div class="tab-pane bg-dark-transparent" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-
+            <div class="tab-pane bg-dark-transparent m-4 p-4" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                <h1>Messages</h1>
                 <div class="row">
-                    <pre><div id="message-log" class="col-12"></div></pre>
+                    <div class="row">
+                        <pre><div id="message-log" class="col-12"></div></pre>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm"></div>
+
+                        <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                            title="(Alt-C) Copy message log to clipboard.">Copy
+                            messages</button>
+
+                    </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-sm"></div>
-
-                    <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                        title="(Alt-C) Copy message log to clipboard.">Copy
-                        messages</button>
-
-                </div>
-
             </div>
 
-            <div class="tab-pane bg-dark-transparent" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-
-                <div class="row m-2">
+            <div class="tab-pane bg-dark-transparent m-4 p-4" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                <h1>GPT Settings</h1>
+                <div class="row m-2 p-2">
                     <div class="col-2"></div>
                     <div class="row col-2">
                         <select id="select-gpt-model" value="gpt-4o" onchange="gptModel.value = this.value"
