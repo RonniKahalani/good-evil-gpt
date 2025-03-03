@@ -32,6 +32,7 @@ function toggleVoiceMuting() {
     speakingNow.style.display = "none";
     speakingNowName.textContent = "";
     updateMuteVoices();
+    logActivity( isVoicesMuted ? "Muted voices." : "Unmuted voices.");
 }
 
 /**
@@ -193,6 +194,7 @@ function updateVoiceEnded(e) {
  * Opens the voice settings dialog.
  */
 function openVoiceSettingsDialog() {
+    logActivity("Opened voice dialog.");
     populateSystemVoices();
     dialogVoiceSettings.showModal();
 }
@@ -213,6 +215,7 @@ function closeVoiceSettingsDialog() {
 
     setLocalItemAsJson(LOCAL_ITEM_VOICES, voiceSelection);
     dialogVoiceSettings.close();
+    logActivity("Closed voice dialog.");
 }
 
 /**

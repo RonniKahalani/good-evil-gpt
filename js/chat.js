@@ -80,6 +80,8 @@ const txtMessageInput = qs("#message-input");
 const txtMessageLog = qs("#message-log");
 
 const chkAutoVoice = qs("#chk-auto-voice");
+const activityLog = qs("#activity-log");
+
 
 const btnAskBoth = qs("#btn-ask-both");
 const btnAskEvil = qs("#btn-ask-evil");
@@ -195,6 +197,7 @@ function chatBoth() {
 function clearInput() {
     txtMessageInput.value = "";
     txtMessageInput.focus();
+    logActivity("Message input cleared.");
 }
 
 /**
@@ -225,6 +228,7 @@ function clearMessageLog() {
     evilMessageCount.textContent = 0;
 
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
+    logActivity("Message log cleared.");
 }
 
 /**
@@ -270,6 +274,7 @@ function copyMessageToClipboard(messageId) {
     }
 
     copyTextToClipboard(txt);
+    logActivity("Message copied to clipboard.");
 }
 
 /**
@@ -528,10 +533,13 @@ function createGptRequest(request) {
 async function chatWithGPT(request) {
 
     try {
+        logActivity(`Sending message (${request.messageId}) to ${getPersonalityName(request.mood)} via ${gptModel.value}...`);
         const response = await fetch(GPT_URL, createGptRequest(request));
         if (!response.ok) {
             throw new Error(`The response ChatGPT returned an error: ${response.status} - ${response.statusText}`);
         }
+
+        logActivity(`Got a response (${request.messageId}) from ${getPersonalityName(request.mood)} via ${gptModel.value}.`);
 
         return await response.json();
 
@@ -539,6 +547,7 @@ async function chatWithGPT(request) {
         const msg = `${ERR_GPT_REQUEST}\nWhen trying to send to ${getPersonalityName(request.mood)} via ${gptModel.value}`;
         console.error(msg, error);
         alert(msg);
+        logActivity(msg);
     }
 }
 
@@ -574,15 +583,31 @@ function handleGptResponse(request, gptResponse) {
  * Checks if an API key is stored in local storage, and prompts the user to enter one if it is not.
  */
 function handleApiKey() {
+
     apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
+
+    // Do we have an API key
     if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
+
+        logActivity("No API key in local storage, asking user for a key...");
+        // Ask the user for an API key.
         apiKey = prompt(MSG_ENTER_APIKEY, "");
+
         if (apiKey === null || apiKey === "") {
+            logActivity("User did not give a valid API key.");
             alert(MSG_PROVIDE_APIKEY);
         } else {
+            // Yes, we've got an API key. Now encode it and save it to local storage.
             setLocalItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
+            logActivity("API key saved to local storage.");
         }
+    } else {
+        logActivity("API key found in local storage.");
     }
+}
+
+function logActivity(message) {
+    activityLog.innerHTML = `${new Date().toISOString().slice(0, 19).replace("T", " ")} ${message}<br>` + activityLog.innerHTML;
 }
 
 /**
@@ -591,17 +616,27 @@ function handleApiKey() {
 function initializeApp() {
 
     txtMessageInput.focus();
+    
+    logActivity("Validating API key...");
     handleApiKey();
+    
+    logActivity("Loading storage...");
     loadLocalStorage();
+
     updateConversations();
+    
     updateUI();
+
+    logActivity("Loading system voices...");
     populateSystemVoices();
 
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
+        logActivity("Showing auto voice dialog...");
         openAutoVoiceDialog();
     }
 
     if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
+        logActivity("Showing disclaimer dialog...");
         showDisclaimerDialog();
     };
 

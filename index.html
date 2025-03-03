@@ -115,11 +115,11 @@
 
                         <div class="bottom-left p-2">
                             <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
-                                title="(Alt-I) Clear the message input field.">Clear Input</button>
+                                title="Clear message input field. (Alt-I)">Clear Input</button>
 
                             <button id="btn-clear-history" accesskey="h"
                                 class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                                title="(Alt-H) Clear message log.">Clear
+                                title="Clear message log. (Alt-H)">Clear
                                 Messages</button>
                         </div>
 
@@ -127,11 +127,11 @@
 
                             <button id="btn-open-voice-settings" accesskey="o"
                                 class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                                title="(Alt-O) Open voice settings.">Voices</button>
+                                title="Open voice settings. (Alt-O)">Voices</button>
 
                             <button id="btn-mute-voices" accesskey="u"
                                 class="btn btn-success btn-sm btn-nav col-2 ripple"
-                                title="(Alt-U) Mute/unmute all voices."></button>
+                                title="Mute/unmute all voices. (Alt-U)"></button>
 
                         </div>
                     </div>
@@ -145,35 +145,35 @@
 
                     <div class="row col-4">
 
-                        <div class="col-6 text-center bg-dark-transparent">
+                        <div class="col-6 text-center bg-light-transparent">
                             <div class="m-2">Messages</div>
                             <div id="good-message-count" class="big-number">0</div>
                         </div>
 
-                        <div class="col-6 text-center bg-dark-transparent">
+                        <div class="col-6 text-center bg-light-transparent">
                             <div class="m-2">Tokens</div>
                             <div id="good-tokens" class="big-number">0</div>
                         </div>
 
                     </div>
 
-                    <div class="row col-sm m-0 p-2 text-center bg-dark-transparent">
+                    <div class="row col-sm m-0 p-2 text-center bg-light-transparent">
 
                         <textarea id="message-input" class="col-sm" accesskey="m" placeholder="Ask me anything..."
-                            tabindex="0" rows="2" title="(Alt-M) Place cursor here."></textarea>
+                            tabindex="0" rows="2" title="Place cursor here. (Alt-M)"></textarea>
 
                         <div class="row col-12 m-0 p-2">
 
                             <div class="row m-0">
                                 <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 ripple"
-                                    title="(Alt-G) Ask Goodness.">Ask
+                                    title="Ask Goodness. (Alt-G)">Ask
                                     Goodness</button>
                                 <button id="btn-ask-both" accesskey="b"
                                     class="btn btn-secondary bg-good-evil btn-sm col-4 ripple"
-                                    title="(Alt-B) Ask Both.">Ask
+                                    title="Ask Both. (Alt-B)">Ask
                                     Both</button>
                                 <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 ripple"
-                                    title="(Alt-V) Ask Evilness.">Ask
+                                    title="Ask Evilness. (Alt-V)">Ask
                                     Evilness</button>
                             </div>
                         </div>
@@ -181,17 +181,22 @@
 
                     <div class="row col-4">
 
-                        <div class="col-6 text-center bg-dark-transparent">
+                        <div class="col-6 text-center bg-light-transparent">
                             <div class="m-2">Tokens</div>
                             <div id="evil-tokens" class="big-number">0</div>
                         </div>
 
-                        <div class="col-6 text-center bg-dark-transparent">
+                        <div class="col-6 text-center bg-light-transparent">
                             <div class="m-2">Messages</div>
                             <div id="evil-message-count" class="big-number">0</div>
                         </div>
                     </div>
                 </div>
+                <div class="row bg-light-transparent m-0 p-3">
+                <div id="activity-log" class="row">
+                    Initializing...
+                </div>
+            </div>
             </div>
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -226,7 +231,7 @@
                         <div class="col-sm"></div>
 
                         <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                            title="(Alt-C) Copy message log to clipboard.">Copy
+                            title="Copy to clipboard. (Alt-C)">Copy
                             messages</button>
 
                     </div>
@@ -477,10 +482,10 @@
                 </div>
             </div>
         </div>
+       
     </main>
-    <div class="bottom-right bg-dark-transparent m-2 p-2">
+    <div class="bottom-right bg-dark-transparent m-2 p-2" style="z-index: 100;">
         <h3>The Good vs. Evil Chat</h3>
-
     </div>
 </body>
 

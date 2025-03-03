@@ -175,9 +175,10 @@ SOFTWARE.
     background-repeat:  no-repeat;
     background-position: center center; 
     background-image: url('../img/good-evil.png');
-    opacity: 1.2;
-    margin: 0px;
+    opacity: 1;
+    margin: 5px;
     padding: 0px;
+    border-radius: 10px;
 }
 
 #message-log {
@@ -187,6 +188,13 @@ SOFTWARE.
 
 .bg-dark-transparent {
     background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 10px;
+    border-color: white;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+.bg-light-transparent {
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     border-color: white;
     border-bottom: 1px solid #333333;
@@ -356,11 +364,22 @@ body {
     background-color: darkred; /* Hover color for the scrollbar thumb */
   }
   
-footer {
-    margin:10px;
-    background-color: rgba(0, 0, 0, 0.85);
-    border-radius: 10px;
-    padding: 10px;
+#message-evil {
+    margin: 0px 2px 5px 2px;
+    padding: 2px;
+    height:500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: darkred lightgray;
+}
+
+#activity-log {
+    font-size: .85em;
+    height:75px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: black lightgray;
+
 }
 
 #select-gpt-model {
