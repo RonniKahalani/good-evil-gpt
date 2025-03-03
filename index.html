@@ -114,15 +114,23 @@
                             </div>
                             <div class="col-4"></div>
                         </div>
+
                         <div class="row">
                             <div id="speaking-now" class="row bg-dark-transparent text-center col-sm">
                                 <span id="speaking-now-name" class="col-sm"></span>
                             </div>
                         </div>
 
-                        <div class="bottom-right p-2">
+                        <div class="bottom-left p-2">
                             <button id="btn-clear-input" accesskey="i" class="btn btn-primary btn-sm ripple"
-                                title="(Alt-I) Clear the message/intput field.">Clear Input</button>
+                                title="(Alt-I) Clear the message input field.">Clear Input</button>
+                        </div>
+
+                        <div class="bottom-right p-2">
+                            <button id="btn-clear-history" accesskey="h"
+                                class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                                title="(Alt-H) Clear message log.">Clear
+                                messages</button>
                         </div>
                     </div>
 
@@ -188,10 +196,6 @@
 
                 <div class="row">
                     <div class="col-sm"></div>
-
-                    <button id="btn-clear-history" accesskey="h" class="btn btn-primary btn-sm btn-nav col-2 ripple"
-                        title="(Alt-H) Clear message log.">Clear
-                        messages</button>
 
                     <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
                         title="(Alt-C) Copy message log to clipboard.">Copy
@@ -290,7 +294,8 @@
             <div class="modal-header">
                 <h5 class="modal-title">Voice Settings</h5>
             </div>
-            <p class="m-2 p-2">If you computer system has synthesis speech and voices, you should be able to select a voice for each
+            <p class="m-2 p-2">If you computer system has synthesis speech and voices, you should be able to select a
+                voice for each
                 personality.<br>
                 You can always mute auto voicing messages, in the main menu bar.</p>
 
@@ -364,7 +369,7 @@
                 </div>
 
                 <div class="row m-2">
-                    
+
                     <div class="col-6">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="chk-auto-voice">

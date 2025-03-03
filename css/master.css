@@ -74,6 +74,12 @@ SOFTWARE.
     right: 0;
   }
 
+  .bottom-left{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
 .bottom-left{
     position: absolute;
     bottom: 0;
