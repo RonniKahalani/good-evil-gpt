@@ -45,8 +45,6 @@ const GPT_ROLE_ASSISTANT = "assistant";
 const GPT_ROLE_SYSTEM = "system";
 const GPT_ROLE_USER = "user";
 
-
-
 /**
  * Messages.
  */
@@ -147,14 +145,25 @@ const Personality = {
 };
 
 const shortDateTimeFormat = { dateStyle: 'short', timeStyle: 'short' };
-const updateTimeAgoInterval = 30000;
-const speeches = [];
-const user = { name: "Anonymous" };
 
+/*
+    Primary configuration
+ */
+// Currently only used to pass a user name to ChatGPT.
+const user = { name: "John Doe" };
+// Interval updates time info om messages every 30 secs.
+const updateTimeAgoInterval = 30000;
+// List of current and pending speeches.
+const speeches = [];
+// List of all conversation messages.
 let messageLog = [];
+// List of all registered voices on the client system.
 let systemVoices = [];
+// Voice index for Goodness.
 let goodVoiceIndex = -1;
+// Voice index for Evilness.
 let evilVoiceIndex = -1;
+// Voice muted flag.
 let isVoicesMuted = false;
 
 /**
@@ -170,7 +179,7 @@ function getPersonalityName(mood) {
  * Sends a chat to both personalities (Goodness and Evilness).
  */
 function chatBoth() {
-    
+
     if( txtMessageInput.value === "" ) {
         askForInput();
         return;
@@ -405,6 +414,9 @@ function updateTimeAgo() {
     });
 }
 
+/**
+ * Shows the disclamer dialog.
+ */
 function showDisclaimerDialog() {
     let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
     disclaimerModal.show();
@@ -433,6 +445,9 @@ function addToMessageLog(entry) {
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
 }
 
+/**
+ * Asks the user for message input.
+ */
 function askForInput() {
     alert("Please enter a message to chat.");
     txtMessageInput.focus();
@@ -501,7 +516,7 @@ function createGptRequest(request) {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${atob(getLocalItem(LOCAL_ITEM_API_KEY))}`
         },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(settings)
     }
 }
 
