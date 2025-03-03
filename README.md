@@ -38,12 +38,16 @@ This is an example of a novel, funny and inspirational app I made for use with m
 
 ## Purpose
 Create an experience of having an entertaining and meaningful conversation with a personified AI with extreme dual personality.
+
 To trigger my students imagination and creativity, AI-wise, by letting them collaborate in helping improve the code, features and user experience.
 
 ## Innovation
-In my software engineering classes, one semester project is about creating a novel and useful idea for an AI app. 
+In my software engineering classes, one semester project is about creating a novel and useful idea for an AI app.
+
 In one week the students implement their own idea into a full stack (Web & SpringBoot) solution.
+
 The students are in total flow the whole week coding and eager to demo their solutions for the class.
+
 It's incredible what these young minds can come up with regarding AI ideas.
 
 ## Inspiration
