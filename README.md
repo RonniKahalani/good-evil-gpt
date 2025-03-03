@@ -104,5 +104,6 @@ Only tested manually, in my Chrome browser on Windows 10.
 - Create responsive design (currently best viewed via a desktop browser).
 - Design final graphical look n feel concept.
 
+
 This is one of several OpenAI ChatGPT example apps. See also [ChatGPT Jokes App](https://github.com/RonniKahalani/chatgpt-jokes).
 
