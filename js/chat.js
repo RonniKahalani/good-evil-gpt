@@ -454,9 +454,6 @@ function chat(mood) {
             if (!isVoicesMuted && chkAutoVoice.checked) {
                 speakMessage(response.messageId);
             }
-
-        }).catch((error) => {
-            console.error(ERR_GPT_REQUEST, error);
         });
     }
 }
@@ -510,7 +507,9 @@ async function chatWithGPT(request) {
         return await response.json();
 
     } catch (error) {
-        alert(ERR_GPT_COMMUNICATION + "\n" + error);
+        const msg = `${ERR_GPT_REQUEST}\nWhen trying to send to ${getPersonalityName(request.mood)} via ${gptModel.value}`;
+        console.error(msg, error);
+        alert(msg);
     }
 }
 
