@@ -9,10 +9,10 @@ All you need is an OpenAI API key and you're up and running in a few minutes.
 - Keyboard shortcuts for most interactions.
 - Synthesis speech, if available on the client system.
 - Change personality system prompts and voices.
-- Muting/replay voices/messages.
+- Mute/replay voices/messages.
 - Change AI request parameters (gpt model, max. tokens...).
 - Clear and export chat history (Json format).
-- Visualizing used token counts (totals + per message).
+- Visualize used token counts (totals + per message).
 - Copy a message text to the clipboard.
 
 ##  Technology
