@@ -5,8 +5,8 @@ This experimental AI app raises several ethical considerations, because one of t
 Do not rely on it for real-life decisions.
 
 ## Do not share personal data
-Conversations and configurations are stored locally, in the browser, and shared only with ChatGPT.
-
+This app has no backend server part, except for ChatGPT requests. Everything i saved in the local browser storage.
+Conversations and configurations are shared only with ChatGPT.
 You can clear the chat history in the app or the browsers local storage.
 
 ## Adult, rough and offenvise language might occur 
