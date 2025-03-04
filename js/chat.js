@@ -569,7 +569,7 @@ function handleGptResponse(request, gptResponse) {
     const finishReason = gptResponse.choices[0].finish_reason;
 
     if (finishReason === "length") {
-        reply += `...\n\nNote: Message is truncated because of the max. tokens ${gptMaxTokens.value} limit.\nYou can adjust this value on the Settings page.`;
+        reply += `...\n\nNote: Message is truncated because of the max. tokens ${gptMaxTokens.value} limit.\nYou can adjust this value on the GPT page.`;
     }
     const timestamp = new Date().getTime();
     const waitTimeSec = (timestamp - request.created) / 1000;
