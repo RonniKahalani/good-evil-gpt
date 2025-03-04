@@ -374,16 +374,13 @@ body {
 }
 
 #activity-log {
-    margin: 2px;
-    padding: 2px;
-    padding-top: 4px;
+color:white;
     text-align: left;
     font-size: .85em;
     height:150px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: black lightgray;
-
 }
 
 #select-gpt-model {

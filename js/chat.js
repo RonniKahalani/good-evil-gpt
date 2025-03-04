@@ -429,6 +429,10 @@ function showDisclaimerDialog() {
     setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
 }
 
+function toggleActivityLog() {
+    activityLog.style.display = (activityLog.style.display === "none") ? "block" : "none";
+}
+
 /**
  * Creates a new chat message.
  * @param {*} messageId 

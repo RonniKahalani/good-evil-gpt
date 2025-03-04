@@ -159,9 +159,7 @@
 
                         <div class="col-3"></div>
 
-                        <div class="col-12 p-2" style="height:150px;">
-                           <!-- <h5>Goodness</h5>A good, helpful and funny AI simulation. -->
-                        </div>
+                        <div class="col-12 p-2" style="height: 75px;"></div>
 
 
                     </div>
@@ -186,11 +184,8 @@
                                     Evilness</button>
                             </div>
                         </div>
-
-
-                        <div id="activity-log"></div>
-        
                     </div>
+
 
                     <div class="row col-4">
 
@@ -208,9 +203,7 @@
 
                         <div class="col-3"></div>
 
-                        <div class="col-12 p-2" style="height:150px;">
-                            <!-- <h5>Evilness</h5>A bitter, angry and evil AI simulation. -->
-                        </div>
+                        <div class="col-12 p-2" style="height:75px;"></div>
                     </div>
                 </div>
             </div>
@@ -503,8 +496,16 @@
         </div>
 
     </main>
-    <div class="bottom-right bg-dark-transparent m-2 p-2" style="z-index: 100;">
-        <h3>The Good vs. Evil Chat</h3>
+    <div class="bottom-right p-3 bg-dark-transparent">
+
+        <div class="row" onclick="toggleActivityLog()" style="cursor: pointer;">
+            <i class="bi bi-activity icon mx-1 h4 col-1 text-end" title="Activity Log."></i>
+            <div class="col-sm">Activity Log</div>
+        </div>
+        <div id="activity-log"></div>
+    </div>
+    <div class="bottom-left bg-dark-transparent p-2" style="z-index: 100;">
+        <h4>The Good vs. Evil Chat</h4>
     </div>
 </body>
 
