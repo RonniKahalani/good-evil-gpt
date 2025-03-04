@@ -615,6 +615,7 @@ function logActivity(message) {
  */
 function initializeApp() {
 
+    logActivity("Initializing app...");
     txtMessageInput.focus();
     
     logActivity("Validating API key...");
@@ -625,7 +626,7 @@ function initializeApp() {
     updateConversations(); 
     updateUI();
 
-    logActivity("Loading system voices...");
+    logActivity("Preparing voices...");
     populateSystemVoices();
 
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
@@ -639,4 +640,6 @@ function initializeApp() {
     };
 
     setInterval(updateTimeAgo, updateTimeAgoInterval);
+
+    logActivity("Ready to serve.");   
 }

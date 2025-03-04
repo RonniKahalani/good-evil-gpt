@@ -374,8 +374,12 @@ body {
 }
 
 #activity-log {
+    margin: 2px;
+    padding: 2px;
+    padding-top: 4px;
+    text-align: left;
     font-size: .85em;
-    height:75px;
+    height:125px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: black lightgray;
