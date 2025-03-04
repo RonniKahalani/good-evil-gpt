@@ -534,7 +534,7 @@ function createGptRequest(request) {
 async function chatWithGPT(request) {
 
     try {
-        logActivity(`Sending message (${request.messageId}) to ${getPersonalityName(request.mood)} via ${gptModel.value}...`);
+        logActivity(`Sending message (${request.messageId}) to ${getPersonalityName(request.mood)} via ${gptModel.value}.`);
         const response = await fetch(GPT_URL, createGptRequest(request));
         if (!response.ok) {
             throw new Error(`The response ChatGPT returned an error: ${response.status} - ${response.statusText}`);
@@ -589,7 +589,7 @@ function handleApiKey() {
     // Do we have an API key
     if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
 
-        logActivity("No API key in local storage, asking user for a key...");
+        logActivity("No API key in local storage, asking user for a key.");
         // Ask the user for an API key.
         apiKey = prompt(MSG_ENTER_APIKEY, "");
 
@@ -615,27 +615,27 @@ function logActivity(message) {
  */
 function initializeApp() {
 
-    logActivity("Initializing app...");
+    logActivity("Initializing app.");
     txtMessageInput.focus();
     
-    logActivity("Validating API key...");
+    logActivity("Validating API key.");
     handleApiKey();
     
-    logActivity("Loading storage...");
+    logActivity("Loading storage.");
     loadLocalStorage();
     updateConversations(); 
     updateUI();
 
-    logActivity("Preparing voices...");
+    logActivity("Preparing voices.");
     populateSystemVoices();
 
     if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
-        logActivity("Showing auto voice dialog...");
+        logActivity("Showing auto voice dialog.");
         openAutoVoiceDialog();
     }
 
     if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
-        logActivity("Showing disclaimer dialog...");
+        logActivity("Showing disclaimer dialog.");
         showDisclaimerDialog();
     };
 
