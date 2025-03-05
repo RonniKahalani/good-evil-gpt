@@ -35,6 +35,7 @@ const LOCAL_ITEM_MUTE_VOICES = "mute-voices";
 const LOCAL_ITEM_DISCLAIMER = "disclaimer";
 const LOCAL_ITEM_GPT_SETTINGS = "gpt-settings";
 const LOCAL_ITEM_PROFILES = "profiles";
+const LOCAL_ITEM_LANGUAGE = "language";
 
 /**
  * Sets an item valuefrom the local storage.
@@ -123,5 +124,12 @@ function loadLocalStorage() {
     if (profiles !== null) {
         moodEvil.value = profiles.evil;
         moodGood.value = profiles.good;
+    }
+
+    const language = getLocalItem(LOCAL_ITEM_LANGUAGE);
+    if (language !== null) {
+        selectListenLanguage.value = language;
+    } else {
+        selectListenLanguage.value = "en_US";
     }
 }

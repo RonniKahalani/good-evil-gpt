@@ -93,11 +93,12 @@ function startListening() {
 
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = selectListenLanguage.options[selectListenLanguage.selectedIndex].value;
+    setLocalItem(LOCAL_ITEM_LANGUAGE, recognition.lang);
 
     recognition.onstart = () => {
         const languageText = selectListenLanguage.options[selectListenLanguage.selectedIndex].text;
         txtMessageInput.placeholder = 'I am listening in ' + languageText + '...';
-        btnListen.style = 'background-color: green;';
+        btnListen.style = 'background-color: green';
         btnListen.disabled = true;
     };
 
@@ -109,7 +110,7 @@ function startListening() {
     recognition.onend = () => {
         txtMessageInput.placeholder = 'Ask me anything...'; 
 
-        btnListen.style = 'background-color: none;';
+        btnListen.style = 'background-color: none';
         btnListen.disabled = false;
     };
 
