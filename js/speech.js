@@ -85,3 +85,26 @@ function speakMessage(messageId) {
     speech.onstart = (e) => updateVoiceStarted(e);
     speech.onend = (e) => updateVoiceEnded(e);
 }
+
+const startButton = document.getElementById('startButton');
+let recognition;
+
+startButton.addEventListener('click', () => {
+
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.onstart = () => {
+        startButton.textContent = 'Listening...';
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        txtMessageInput.value = transcript;
+    };
+
+    recognition.onend = () => {
+        startButton.innerHTML = '<i class="bi bi-mic icon mx-1 h5 m-0 p-0col-1" title="Speak.">';
+    };
+
+    recognition.start();
+});
