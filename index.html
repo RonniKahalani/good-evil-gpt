@@ -89,7 +89,7 @@
 
             <div class="tab-pane active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 
-                <div class="row pt-2">
+                <div class="row pt-0">
 
                     <div class="col-sm">
                         <div id="message-good"></div>
@@ -97,7 +97,8 @@
 
                     <div class="good-evil-content block">
 
-                        <div class="row text-center m-2">
+                        <div class="row text-center m-2" style="height: 30px;">
+
                             <div class="col-4 m-2"></div>
 
                             <div class="border-low row col-4 m-0 p-0" style="width: 512px;">
@@ -145,7 +146,7 @@
 
                     <div class="row col-4">
 
-                        <div class="col-3"></div>
+                        <div class="col-sm"></div>
 
                         <div class="col-3 text-center bg-dark-transparent m-1 p-3">
                             <div>Messages</div>
@@ -157,39 +158,16 @@
                             <div id="good-tokens" class="big-number">0</div>
                         </div>
 
-                        <div class="col-3"></div>
-
-                        <div class="col-12 p-2" style="height: 75px;"></div>
-
-
                     </div>
 
                     <div class="row col-sm m-0 p-2 bg-dark-transparent">
 
-                        <textarea id="message-input" class="col-sm" accesskey="m" placeholder="Ask me anything..."
-                            tabindex="0" rows="3" title="Place cursor here. (Alt-M)"></textarea>
-
-                        <div class="row col-12 m-0 p-2">
-
-                            <div class="row m-0">
-                                <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm col-4 ripple"
-                                    title="Ask Goodness. (Alt-G)">Ask
-                                    Goodness</button>
-                                <button id="btn-ask-both" accesskey="b"
-                                    class="btn btn-secondary bg-good-evil btn-sm col-4 ripple"
-                                    title="Ask Both. (Alt-B)">Ask
-                                    Both</button>
-                                <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm col-4 ripple"
-                                    title="Ask Evilness. (Alt-V)">Ask
-                                    Evilness</button>
-                            </div>
-                        </div>
+                        <textarea id="message-input" class="col-sm m-0" accesskey="m" placeholder="Ask me anything..."
+                            tabindex="0" rows="2" title="Input message. (Alt-M)"></textarea>
                     </div>
 
 
                     <div class="row col-4">
-
-                        <div class="col-3"></div>
 
                         <div class="col-3 text-center bg-dark-transparent m-1 p-3">
                             <div>Tokens</div>
@@ -201,11 +179,32 @@
                             <div id="evil-message-count" class="big-number">0</div>
                         </div>
 
-                        <div class="col-3"></div>
+                        <div class="col-sm"></div>
 
-                        <div class="col-12 p-2" style="height:75px;"></div>
                     </div>
                 </div>
+
+                <div class="row col-12 m-0 p-0">
+
+                    <div class="col-sm"></div>
+
+                    <div class="row m-0 p-1 text-center col-3 bg-dark-transparent">
+
+                        <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm ripple text-center col-4"
+                            title="Ask Goodness. (Alt-G)">Ask
+                            Goodness</button>
+                        <button id="btn-ask-both" accesskey="b"
+                            class="btn btn-secondary bg-good-evil btn-sm ripple text-center col-4"
+                            title="Ask Both. (Alt-B)">Ask
+                            Both</button>
+                        <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm ripple text-center col-4"
+                            title="Ask Evilness. (Alt-V)">Ask
+                            Evilness</button>
+                    </div>
+
+                    <div class="col-sm"></div>
+                </div>
+
             </div>
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"

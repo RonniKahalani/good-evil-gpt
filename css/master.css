@@ -181,7 +181,6 @@ SOFTWARE.
     opacity: 1;
     margin: 5px;
     padding: 0px;
-    border-radius: 10px;
 }
 
 #message-log {
@@ -221,7 +220,6 @@ SOFTWARE.
 }
 
 #message-input {
-    width: 512px;
     margin-bottom: 10px;
     border: 2px solid #0c0c0c;
     border-radius: 1;
@@ -362,11 +360,8 @@ body {
 
 #message-evil::-webkit-scrollbar-thumb {
     background-color: red;
-    /* Color of the scrollbar thumb */
     border-radius: 6px;
-    /* Rounded corners for the scrollbar thumb */
     border: 3px solid #f1f1f1;
-    /* Add a border to separate thumb from track */
 }
 
 #message-evil::-webkit-scrollbar-thumb:hover {
