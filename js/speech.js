@@ -97,7 +97,8 @@ function startListening() {
     recognition.lang = 'en-US';
  
     recognition.onstart = () => {
-        btnListen.textContent = 'Listening...';
+        txtMessageInput.placeholder = 'Listening...';
+        btnListen.style = 'background-color: green;';
     };
 
     recognition.onresult = (event) => {
@@ -106,7 +107,8 @@ function startListening() {
     };
 
     recognition.onend = () => {
-        btnListen.innerHTML = '<i class="bi bi-mic icon mx-1 h5 m-0 p-0col-1" title="Speak.">';
+        txtMessageInput.placeholder = 'Ask me anything...';
+        btnListen.style = 'background-color: none;';
     };
 
     recognition.start();
