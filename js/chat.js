@@ -69,6 +69,7 @@ const dialogAutoVoice = qs("#dialog-auto-voice");
 
 const selectGoodVoice = qs("#select-good-voice");
 const selectEvilVoice = qs("#select-evil-voice");
+const selectListenLanguage = qs("#select-listen-language");
 
 const inputGoodVoicePitch = qs("#input-good-voice-pitch");
 const inputGoodVoiceRate = qs("#input-good-voice-rate");

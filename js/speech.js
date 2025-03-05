@@ -94,21 +94,25 @@ function speakMessage(messageId) {
 function startListening() { 
 
     recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-    recognition.lang = 'en-US';
+    recognition.lang = selectListenLanguage.options[selectListenLanguage.selectedIndex].value;
  
     recognition.onstart = () => {
-        txtMessageInput.placeholder = 'Listening...';
+        const languageText = selectListenLanguage.options[selectListenLanguage.selectedIndex].text;
+        txtMessageInput.placeholder = 'I am listening in ' + languageText + '...';
+        txtMessageInput.value = "";
         btnListen.style = 'background-color: green;';
+        btnListen.disabled = true;
     };
 
     recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        txtMessageInput.value = transcript;
+        txtMessageInput.value = event.results[0][0].transcript;
     };
 
     recognition.onend = () => {
-        txtMessageInput.placeholder = 'Ask me anything...';
+        txtMessageInput.placeholder = 'Ask me anything...'; 
+
         btnListen.style = 'background-color: none;';
+        btnListen.disabled = false;
     };
 
     recognition.start();
