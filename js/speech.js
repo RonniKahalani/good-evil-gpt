@@ -24,8 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-let recognition;
-
 /**
  * Speaks out a voice.
  * @param {*} text 
@@ -93,19 +91,19 @@ function speakMessage(messageId) {
  */
 function startListening() { 
 
-    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = selectListenLanguage.options[selectListenLanguage.selectedIndex].value;
- 
+
     recognition.onstart = () => {
         const languageText = selectListenLanguage.options[selectListenLanguage.selectedIndex].text;
         txtMessageInput.placeholder = 'I am listening in ' + languageText + '...';
-        txtMessageInput.value = "";
         btnListen.style = 'background-color: green;';
         btnListen.disabled = true;
     };
 
     recognition.onresult = (event) => {
-        txtMessageInput.value = event.results[0][0].transcript;
+        const insertNewline = txtMessageInput.value.length > 0;
+        txtMessageInput.value += (insertNewline ? "\n" : "") + event.results[0][0].transcript;
     };
 
     recognition.onend = () => {
