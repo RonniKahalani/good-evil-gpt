@@ -7,7 +7,8 @@ All you need is an OpenAI API key and you're up and running in a few minutes.
 
 ## Features
 - Keyboard shortcuts for most interactions.
-- Synthesis speech, if available on the client system.
+- Use synthesis speech, to read the messages.
+- Use microphone to create messages.
 - Change personality system prompts and voices.
 - Mute/replay voices/messages.
 - Change AI request parameters (gpt model, max. tokens...).
