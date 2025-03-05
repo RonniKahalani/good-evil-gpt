@@ -101,6 +101,7 @@ const btnUseAutoVoice = qs("#btn-use-auto-voice");
 const btnIgnoreAutoVoice = qs("#btn-ignore-auto-voice");
 const btnMuteVoices = qs("#btn-mute-voices");
 const btnListen = qs("#btn-listen");
+const iconListen = qs("#icon-listen");
 
 const messageGood = qs("#message-good");
 const messageEvil = qs("#message-evil");

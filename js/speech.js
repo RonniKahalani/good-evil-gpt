@@ -86,20 +86,32 @@ function speakMessage(messageId) {
     speech.onend = (e) => updateVoiceEnded(e);
 }
 
+let currentListening = null;
 /**
  * Starts the speech recognition.
  */
 function startListening() { 
 
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+
+    if(currentListening !== null) {
+        currentListening.stop();
+        return
+    }
+
+
     recognition.lang = selectListenLanguage.options[selectListenLanguage.selectedIndex].value;
     setLocalItem(LOCAL_ITEM_LANGUAGE, recognition.lang);
 
     recognition.onstart = () => {
+
+        currentListening = recognition;
         const languageText = selectListenLanguage.options[selectListenLanguage.selectedIndex].text;
-        txtMessageInput.placeholder = 'I am listening in ' + languageText + '...';
+        txtMessageInput.placeholder = 'Listening in ' + languageText + '...';
         btnListen.style = 'background-color: green';
-        btnListen.disabled = true;
+        
+        iconListen.classList.add('bi-mic');
+        iconListen.classList.remove('bi-mic-mute');
     };
 
     recognition.onresult = (event) => {
@@ -108,10 +120,16 @@ function startListening() {
     };
 
     recognition.onend = () => {
+        currentListening = null;
+
+        iconListen.classList.add('bi-mic');
+        iconListen.classList.remove('bi-mic-mute');
+
         txtMessageInput.placeholder = 'Ask me anything...'; 
 
         btnListen.style = 'background-color: none';
-        btnListen.disabled = false;
+        iconListen.classList.add('bi-mic-mute');
+        iconListen.classList.remove('bi-mic');
     };
 
     recognition.start();
