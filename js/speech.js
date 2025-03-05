@@ -24,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+let recognition;
+
 /**
  * Speaks out a voice.
  * @param {*} text 
@@ -86,15 +88,16 @@ function speakMessage(messageId) {
     speech.onend = (e) => updateVoiceEnded(e);
 }
 
-const startButton = document.getElementById('startButton');
-let recognition;
-
-startButton.addEventListener('click', () => {
+/**
+ * Starts the speech recognition.
+ */
+function startListening() { 
 
     recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = 'en-US';
+ 
     recognition.onstart = () => {
-        startButton.textContent = 'Listening...';
+        btnListen.textContent = 'Listening...';
     };
 
     recognition.onresult = (event) => {
@@ -103,8 +106,8 @@ startButton.addEventListener('click', () => {
     };
 
     recognition.onend = () => {
-        startButton.innerHTML = '<i class="bi bi-mic icon mx-1 h5 m-0 p-0col-1" title="Speak.">';
+        btnListen.innerHTML = '<i class="bi bi-mic icon mx-1 h5 m-0 p-0col-1" title="Speak.">';
     };
 
     recognition.start();
-});
+}

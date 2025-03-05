@@ -99,6 +99,7 @@ const btnCancelEvilVoice = qs("#btn-cancel-evil-voice");
 const btnUseAutoVoice = qs("#btn-use-auto-voice");
 const btnIgnoreAutoVoice = qs("#btn-ignore-auto-voice");
 const btnMuteVoices = qs("#btn-mute-voices");
+const btnListen = qs("#btn-listen");
 
 const messageGood = qs("#message-good");
 const messageEvil = qs("#message-evil");
@@ -141,6 +142,8 @@ btnUseAutoVoice.onclick = () => enableAutoVoices();
 btnIgnoreAutoVoice.onclick = () => ignoreAutoVoices();
 btnMuteVoices.onclick = () => toggleVoiceMuting();
 chkAutoVoice.onclick = () => setLocalItem(LOCAL_ITEM_AUTO_VOICE, chkAutoVoice.checked);
+btnListen.onclick = () => startListening();
+
 
 const Personality = {
     EVIL: "evil",
