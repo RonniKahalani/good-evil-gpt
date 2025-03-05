@@ -627,7 +627,6 @@ function initializeApp() {
     logActivity("Initializing app.");
     txtMessageInput.focus();
     
-    logActivity("Validating API key.");
     handleApiKey();
     
     logActivity("Loading storage.");
