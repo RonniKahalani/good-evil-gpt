@@ -435,7 +435,8 @@ function showDisclaimerDialog() {
 }
 
 function toggleActivityLog() {
-    activityLog.style.display = (activityLog.style.display === "none") ? "block" : "none";
+    const display = activityLog.style.display;
+    activityLog.style.display = (display === "none" || display === "") ? "block" : "none";
 }
 
 /**

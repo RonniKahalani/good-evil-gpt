@@ -89,13 +89,13 @@
 
             <div class="tab-pane active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 
-                <div class="row pt-0">
+                <div class="row m-0 p-0">
 
-                    <div class="col-sm">
+                    <div class="col-sm p-0 m-0">
                         <div id="message-good"></div>
                     </div>
 
-                    <div class="good-evil-content block">
+                    <div class="good-evil-content block m-0 p-0">
 
                         <div class="row text-center m-2" style="height: 30px;">
 
@@ -108,7 +108,7 @@
                             <div class="col-4"></div>
                         </div>
 
-                        <div class="row" style="height: 100px;">
+                        <div class="row m-0 p-0" style="height: 100px;">
                             <div id="speaking-now" class="row bg-dark-transparent text-center col-sm">
                                 <span id="speaking-now-name" class="col-sm"></span>
                             </div>
@@ -137,132 +137,10 @@
                         </div>
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-sm p-0 m-0">
                         <div id="message-evil"></div>
                     </div>
                 </div>
-
-                <div class="row text-center m-2">
-
-                    <div class="row col-4">
-
-                        <div class="col-sm"></div>
-
-                        <div class="col-3 text-center bg-dark-transparent m-1 p-3">
-                            <div>Messages</div>
-                            <div id="good-message-count" class="big-number">0</div>
-                        </div>
-
-                        <div class="col-3 text-center bg-dark-transparent m-1 p-3">
-                            <div>Tokens</div>
-                            <div id="good-tokens" class="big-number">0</div>
-                        </div>
-
-                    </div>
-
-                    <div class="row col-sm m-0 p-2 bg-dark-transparent">
-
-                        <textarea id="message-input" class="col-sm m-0" accesskey="m" placeholder="Ask me anything..."
-                            tabindex="0" rows="2" title="Input message. (Alt-M)"></textarea>
-                    </div>
-
-
-                    <div class="row col-4">
-
-                        <div class="col-3 text-center bg-dark-transparent m-1 p-3">
-                            <div>Tokens</div>
-                            <div id="evil-tokens" class="big-number">0</div>
-                        </div>
-
-                        <div class="col-3 text-center bg-dark-transparent m-1 p-3">
-                            <div>Messages</div>
-                            <div id="evil-message-count" class="big-number">0</div>
-                        </div>
-
-                        <div class="col-sm"></div>
-
-                    </div>
-                </div>
-
-                <div class="row col-12 m-0 p-0">
-
-                    <div class="col-sm"></div>
-
-                    <div class="row m-0 p-1 text-center col-3 bg-dark-transparent">
-
-                        <button id="btn-ask-good" accesskey="g"
-                            class="btn btn-secondary btn-sm ripple text-center col-4" title="Ask Goodness. (Alt-G)">Ask
-                            Goodness</button>
-                        <button id="btn-ask-both" accesskey="b"
-                            class="btn btn-secondary bg-good-evil btn-sm ripple text-center col-4"
-                            title="Ask Both. (Alt-B)">Ask
-                            Both</button>
-                        <button id="btn-ask-evil" accesskey="v"
-                            class="btn btn-secondary btn-sm ripple text-center col-4" title="Ask Evilness. (Alt-V)">Ask
-                            Evilness</button>
-                    </div>
-
-                    <div class="col-sm"></div>
-                </div>
-
-                <div class="col-12 m-0 p-2 text-center">
-                    <div class="col-sm"></div>
-
-                    <button id="btn-listen" class="btn btn-sm btn-dark" title="Speak you message. (Alt-S)" accesskey="s"><i
-                            id="icon-listen" class="bi bi-mic-mute icon mx-1 h4 m-0 p-0"></i></button>
-
-                    <div class="col-sm"></div>
-                </div>
-
-
-                <div class="row col-12 m-0 p-0 text-center">
-                    <div class="col-sm"></div>
-
-                    <select id="select-listen-language" value="en-US" class="form-select">
-                        <option value="ar_SA">Arabic (Saudi Arabia)</option>
-                        <option value="zh_CN">Chinese (Simplified)</option>
-                        <option value="zh_TW">Chinese (Traditional)</option>
-                        <option value="cs_CZ">Czech</option>
-                        <option value="da_DK">Danish</option>
-                        <option value="nl_NL">Dutch (Netherlands)</option>
-                        <option value="en_US">English (United States)</option>
-                        <option value="en_GB">English (United Kingdom)</option>
-                        <option value="fi_FI">Finnish</option>
-                        <option value="fr_FR">French (France)</option>
-                        <option value="fr_CA">French (Canada)</option>
-                        <option value="de_DE">German (Germany)</option>
-                        <option value="el_GR">Greek (Greece)</option>
-                        <option value="il_IL">Hebrew</option>
-                        <option value="hi_IN">Hindi (India)</option>
-                        <option value="id_ID">Indonesian</option>
-                        <option value="it_IT">Italian (Italy)</option>
-                        <option value="ja_JP">Japanese</option>
-                        <option value="ko_KR">Korean</option>
-                        <option value="pt_PT">Portuguese (Portugal)</option>
-                        <option value="pt_BR">Portuguese (Brazil)</option>
-                        <option value="pl_PL">Polish</option>
-                        <option value="ru_RU">Russian</option>
-                        <option value="es_ES">Spanish (Spain)</option>
-                        <option value="es_MX">Spanish (Mexico)</option>
-                        <option value="sv_SE">Swedish</option>
-                        <option value="tr_TR">Turkish</option>
-                    </select>
-                        
-                    <div class="col-sm"></div>
-                </div>
-
-                <div class="row col-12 m-0 pt-2 text-center">
-                    <div class="col-sm"></div>
-
-                    <div class="col-6 p-2 bg-dark-transparent" style="font-size: .9em;opacity: .95;border-radius: 10px;">
-                        Click the microphone icon, or use (Alt-S), to speak your message (for 10 secs). Repeat this to add more lines.<br>
-                    </div>
-
-                    <div class="col-sm"></div>
-                </div>
-
-                <div class="col-sm"></div>
-
             </div>
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"
@@ -552,17 +430,136 @@
         </div>
 
     </main>
-    <div class="bottom-right p-3 bg-dark-transparent">
 
-        <div class="row" onclick="toggleActivityLog()" style="cursor: pointer;">
-            <i class="bi bi-activity icon mx-1 h4 col-1 text-end" title="Activity Log."></i>
-            <div class="col-sm">Activity Log</div>
+    <div class="row col-12 m-0 p-2 bottom-left" style="background-color: black;">
+
+
+
+        <div class="row col-sm m-0 p-2">
+            <div class="col-sm"></div>
+
+            <textarea id="message-input" class="col-sm m-0" accesskey="m" placeholder="Ask me anything..." tabindex="0"
+                rows="2" title="Input message. (Alt-M)"></textarea>
+
+            <div class="col-sm">
+                <button id="btn-listen" class="btn btn-sm btn-dark m-0 p-0"
+                    title="Click the microphone icon, or use (Alt-S), to speak your message (for 10 secs). Repeat this to add more lines."
+                    accesskey="s"><i id="icon-listen" class="bi bi-mic-mute icon mx-1 h4 m-0 p-0"></i></button>
+            </div>
+
         </div>
+
+        <div class="col-12 m-0 p-0 text-center">
+            <label for="select-listen-language">Microphone language</label>
+            <select id="select-listen-language" value="en_US" title="Select the language for microphone to recognize.">
+                <option value="ar_SA">Arabic (Saudi Arabia)</option>
+                <option value="zh_CN">Chinese (Simplified)</option>
+                <option value="zh_TW">Chinese (Traditional)</option>
+                <option value="cs_CZ">Czech</option>
+                <option value="da_DK">Danish</option>
+                <option value="nl_NL">Dutch (Netherlands)</option>
+                <option value="en_US">English (United States)</option>
+                <option value="en_GB">English (United Kingdom)</option>
+                <option value="fi_FI">Finnish</option>
+                <option value="fr_FR">French (France)</option>
+                <option value="fr_CA">French (Canada)</option>
+                <option value="de_DE">German (Germany)</option>
+                <option value="el_GR">Greek (Greece)</option>
+                <option value="il_IL">Hebrew</option>
+                <option value="hi_IN">Hindi (India)</option>
+                <option value="id_ID">Indonesian</option>
+                <option value="it_IT">Italian (Italy)</option>
+                <option value="ja_JP">Japanese</option>
+                <option value="ko_KR">Korean</option>
+                <option value="pt_PT">Portuguese (Portugal)</option>
+                <option value="pt_BR">Portuguese (Brazil)</option>
+                <option value="pl_PL">Polish</option>
+                <option value="ru_RU">Russian</option>
+                <option value="es_ES">Spanish (Spain)</option>
+                <option value="es_MX">Spanish (Mexico)</option>
+                <option value="sv_SE">Swedish</option>
+                <option value="tr_TR">Turkish</option>
+            </select>
+
+            <div class="col-sm"></div>
+        </div>
+
+        <div class="row col-12 m-0 p-0">
+
+            <div class="col-sm"></div>
+
+            <div class="row m-0 p-1 text-center col-3">
+
+                <button id="btn-ask-good" accesskey="g" class="btn btn-secondary btn-sm ripple text-center col-4"
+                    title="Ask Goodness. (Alt-G)">Ask
+                    Goodness</button>
+                <button id="btn-ask-both" accesskey="b"
+                    class="btn btn-secondary bg-good-evil btn-sm ripple text-center col-4" title="Ask Both. (Alt-B)">Ask
+                    Both</button>
+                <button id="btn-ask-evil" accesskey="v" class="btn btn-secondary btn-sm ripple text-center col-4"
+                    title="Ask Evilness. (Alt-V)">Ask
+                    Evilness</button>
+            </div>
+
+            <div class="col-sm"></div>
+        </div>
+
+        <div class="col-sm"></div>
+
+    </div>
+
+    <div class="p-2 bottom-left" style="width:500px;height:150px;">
+        <i class="bi bi-activity icon mx-1 h5" title="Activity Log."> Activity</i>
         <div id="activity-log"></div>
     </div>
-    <div class="bottom-left bg-dark-transparent p-3" style="z-index: 100;">
-        <h4>The Good vs. Evil Chat</h4>
+
+    <div class="p-2 bottom-right" style="width:500px;height:150px;">
+
+        <div class="row col-12 m-0 p-0">
+            <i class="bi bi-graph-up-arrow icon mx-1 h5 m-0 p-0" title="Stats."> Stats</i>
+        </div>
+
+        <div class="row col-12 mt-3 m-0 p-0">
+
+            <div class="col-sm m-0 p-0 px-2">Goodness</div>
+
+            <div class="col-sm m-0 p-0 px-2">
+                Messages:
+            </div>
+
+            <div class="col-sm m-0 p-0 px-2">
+                <span id="good-message-count">0</span>
+            </div>
+
+            <div class="col-sm m-0 p-0 px-2">
+                Tokens:
+            </div>
+
+            <div class="col-sm m-0 p-0 px-2">
+                <span id="good-tokens">0</span>
+            </div>
+
+        </div>
+
+        <div class="row col-12 mt-3 m-0 p-0">
+
+            <div class="col-sm m-0 p-0 px-2">Evilness</div>
+
+            <div class="col-sm m-0 p-0 px-2">Messages:</div>
+
+            <div class="col-sm m-0 p-0 px-2">
+                <span id="evil-message-count">0</span>
+            </div>
+
+            <div class="col-sm m-0 p-0 px-2">Tokens:</div>
+
+            <div class="col-sm m-0 p-0 px-2"><span id="evil-tokens">0</span></div>
+
+        </div>
     </div>
+
+    </div>
+
 </body>
 
 </html>
