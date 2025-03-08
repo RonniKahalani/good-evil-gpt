@@ -25,6 +25,7 @@
 <body>
     <main class="container main-container">
 
+
         <div class="border-low row m-2 p-2 bg-dark-transparent">
 
             <div class="row m-0 p-0">
@@ -206,7 +207,7 @@
                 <div class="row m-2">
                     <label for="gpt-model" class="col-2">Model</label>
                     <div class="row col-2">
-                        <input type="text" id="gpt-model" size="5" value="GPT-4"
+                        <input type="text" id="gpt-model" size="5" value="gpt-4"
                             onchange="selectGptModel.value = this.value" class="form-control">
                     </div>
                     <span class="col-8">The model used to generate responses. Edit or use dropdown selector
@@ -246,7 +247,8 @@
                         <input type="number" step=0.1 min="0" max="1" id="gpt-frequency-penalty" size="3" value="0"
                             class="form-control">
                     </div>
-                    <span class="col-8">Tendency to generate repetitive responses. 1.0 = more diverse and novel, while
+                    <span class="col-8">Tendency to generate repetitive responses. 1.0 = more diverse and novel,
+                        while
                         0.2 = more likely to
                         repeat information.</span>
                 </div>
@@ -257,7 +259,8 @@
                         <input type="number" step=0.1 min="0" max="1" id="gpt-presence-penalty" size="3" value="1"
                             class="form-control">
                     </div>
-                    <span class="col-8">Avoidance of specific topics. 1.0 = more likely to avoid mentioning topics in
+                    <span class="col-8">Avoidance of specific topics. 1.0 = more likely to avoid mentioning topics
+                        in
                         the user messages, 0.2 = less concerned about preventing those topics.</span>
                 </div>
 
@@ -277,7 +280,8 @@
             <div class="modal-header">
                 <h5 class="modal-title">Voice Settings</h5>
             </div>
-            <p class="m-2 p-2">If you computer system has synthesis speech and voices, you should be able to select a
+            <p class="m-2 p-2">If you computer system has synthesis speech and voices, you should be able to select
+                a
                 voice for each
                 personality.<br>
                 You can always mute auto voicing messages, in the main menu bar.</p>
@@ -385,7 +389,8 @@
             </div>
             <div class="row m-0 pt-3" style="border-top: 1px solid white;">
 
-                <button id="btn-ignore-auto-voice" class="btn btn-danger btn-sm col-sm ripple">Don't need it</button>
+                <button id="btn-ignore-auto-voice" class="btn btn-danger btn-sm col-sm ripple">Don't need
+                    it</button>
 
                 <div class="col-sm"></div>
 
@@ -437,7 +442,6 @@
                 </div>
             </div>
         </div>
-
     </main>
 
     <div class="row col-12 m-0 p-3 bottom-left" style="background-color: black;">

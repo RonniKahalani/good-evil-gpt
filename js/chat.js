@@ -190,6 +190,11 @@ function getPersonalityName(mood) {
  */
 function chatBoth() {
 
+    handleApiKey();
+    if(isApiKeyUnset()) {
+        return;
+    }
+
     if( txtMessageInput.value === "" ) {
         askForInput();
         return;
@@ -439,7 +444,7 @@ function showDisclaimerDialog() {
     dialog.addEventListener("hidden.bs.modal", function () {
         
             setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
-            
+
         if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
             logActivity("Showing auto voice dialog.");
             openAutoVoiceDialog();
@@ -488,6 +493,11 @@ function askForInput() {
  * @param {*} mood 
  */
 function chat(mood) {
+
+    handleApiKey();
+    if(isApiKeyUnset()) {
+        return;
+    }
 
     const input = txtMessageInput.value;
     if (!input) {
@@ -603,6 +613,9 @@ function handleGptResponse(request, gptResponse) {
     return response;
 }
 
+function isApiKeyUnset() {
+    return apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY;
+}
 /**
  * Checks if an API key is stored in local storage, and prompts the user to enter one if it is not.
  */
@@ -611,14 +624,14 @@ function handleApiKey() {
     apiKey = getLocalItem(LOCAL_ITEM_API_KEY);
 
     // Do we have an API key
-    if (apiKey === null || apiKey === "" || apiKey === DEFAULT_API_KEY) {
+    if (isApiKeyUnset()) {
 
         logActivity("No API key in local storage, asking user for a key.");
         // Ask the user for an API key.
         apiKey = prompt(MSG_ENTER_APIKEY, "");
 
         if (apiKey === null || apiKey === "") {
-            logActivity("User did not give a valid API key.");
+            logActivity("User did not provide a valid API key.");
             alert(MSG_PROVIDE_APIKEY);
         } else {
             // Yes, we've got an API key. Now encode it and save it to local storage.
@@ -643,7 +656,7 @@ function initializeApp() {
     txtMessageInput.focus();
     
     handleApiKey();
-    
+
     logActivity("Loading storage.");
     loadLocalStorage();
     updateConversations(); 

@@ -317,7 +317,7 @@ SOFTWARE.
     color: white;
 }
 
-body {
+body, html {
     font-family: Tahoma, Arial, sans-serif;
     font-size: 1em;
     background-color: #000;
