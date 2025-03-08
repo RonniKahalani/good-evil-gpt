@@ -433,9 +433,19 @@ function updateTimeAgo() {
  * Shows the disclamer dialog.
  */
 function showDisclaimerDialog() {
-    let disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+    const dialog = document.getElementById('disclaimerModal');
+    let disclaimerModal = new bootstrap.Modal(dialog);
+
+    dialog.addEventListener("hidden.bs.modal", function () {
+        
+            setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
+            
+        if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
+            logActivity("Showing auto voice dialog.");
+            openAutoVoiceDialog();
+        }
+    });
     disclaimerModal.show();
-    setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
 }
 
 function toggleActivityLog() {
@@ -641,11 +651,6 @@ function initializeApp() {
 
     logActivity("Preparing voices.");
     populateSystemVoices();
-
-    if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
-        logActivity("Showing auto voice dialog.");
-        openAutoVoiceDialog();
-    }
 
     if (getLocalItem(LOCAL_ITEM_DISCLAIMER) === null) {
         logActivity("Showing disclaimer dialog.");

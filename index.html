@@ -27,7 +27,7 @@
 
         <div class="border-low row m-2 p-2 bg-dark-transparent">
 
-            <div class="row">
+            <div class="row m-0 p-0">
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs col-4" id="mainTablist" role="tablist">
@@ -55,8 +55,8 @@
 
                 <div class="row col-4">
 
-                    <div class="col-sm text-center m-2">
-                        The Good vs. Evil Chat
+                    <div class="row col-sm text-center m-0 pt-2">
+                        <h1>The Good vs. Evil Chat</h1>
                     </div>
                 </div>
 
@@ -140,7 +140,11 @@
                     <div class="col-sm p-0 m-0">
                         <div id="message-evil"></div>
                     </div>
+
+
                 </div>
+
+
             </div>
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"
@@ -369,25 +373,30 @@
 
         </dialog>
 
-        <dialog id="dialog-auto-voice" class="dialog">
-            <div class="modal-header">
-                <h5 class="modal-title">Do you want to enable using voices?</h5>
+        <dialog id="dialog-auto-voice" class="dialog" style="width:500px;">
+
+            <div class="modal-header mb-0" style="border-bottom: 1px solid white;">
+                <h5 class="modal-title">Want to enable voices?</h5>
             </div>
-            <div class="row mb-3">
-                <p class="">You can enable using system voices to verbalize the messages and user experiences.</p>
-                <p>This feature can be disabled in the voice settings dialog.</p>
+            <div class="row my-3">
+                <p class="">Enables voices to read the messages.</p>
+                <p>You can be change in the voice settings dialog.</p>
+                <p>Do you want to enable voices?</p>
             </div>
-            <div class="row m-2">
+            <div class="row m-0 pt-3" style="border-top: 1px solid white;">
+
+                <button id="btn-ignore-auto-voice" class="btn btn-danger btn-sm col-sm ripple">Don't need it</button>
+
+                <div class="col-sm"></div>
+
                 <button id="btn-use-auto-voice" class="btn btn-success btn-sm col-sm ripple"
                     onclick="enableAutoVoices()">Cool, use it</button>
-                <div class="col-sm"></div>
-                <button id="btn-ignore-auto-voice" class="btn btn-danger btn-sm col-sm ripple">Don't need it</button>
             </div>
         </dialog>
 
         <!-- Disclaimer Modal -->
         <div class="modal fade" id="disclaimerModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="background-color: black;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Ethical AI Disclaimer</h5>
@@ -431,7 +440,7 @@
 
     </main>
 
-    <div class="row col-12 m-0 p-2 bottom-left" style="background-color: black;">
+    <div class="row col-12 m-0 p-3 bottom-left" style="background-color: black;">
 
         <div class="row col-sm m-0 p-2">
             <div class="col-sm"></div>
@@ -506,12 +515,14 @@
 
     </div>
 
-    <div class="p-2 bottom-left view-activity">
+    <div class="m-2 p-2 bottom-left view-activity">
+        <i class="bi bi-trash icon mx-1 h6" title="Clear Activity Log." style="float:right;"
+            onclick="document.querySelector('#activity-log').textContent = '';"></i>
         <i class="bi bi-activity icon mx-1 h6" title="Activity Log."> Activity</i>
         <div id="activity-log"></div>
     </div>
 
-    <div class="p-2 bottom-right view-total">
+    <div class="m-2 p-2 bottom-right view-total">
 
         <div class="row col-12 m-0 p-0">
             <i class="bi bi-graph-up-arrow icon mx-1 h6 m-0 p-0" title="Stats."> Stats</i>

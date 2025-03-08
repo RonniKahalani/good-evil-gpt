@@ -198,6 +198,7 @@ SOFTWARE.
     border: 5px solid #000000;
     border-radius: 10px;
     width:300px;
+    font-size: .9em;
 }
 
 .bg-dark-transparent {
@@ -218,7 +219,7 @@ SOFTWARE.
 }
 
 .dialog {
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: black;
     border-radius: 10px;
     color: white;
     border: 2px solid white;
@@ -414,6 +415,8 @@ i {
 }
 
 .view-activity {
+    border: 1px solid #3c3c3c;
+    border-radius: 10px;;
     width:500px;
     height:150px;
     font-size:.9em;
@@ -421,6 +424,8 @@ i {
 }
 
 .view-total {
+    border: 1px solid #3c3c3c;
+    border-radius: 10px;
     width:500px;
     height:150px;
     font-size:.9em;
@@ -430,4 +435,11 @@ i {
 .label-mic {
     font-size:.9em;
     color: #6c6c6c;
+}
+
+h1 {
+    font-size: 16pt;
+    vertical-align: middle;
+    margin: 0px;
+    padding: 0px;
 }
