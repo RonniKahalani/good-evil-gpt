@@ -114,6 +114,7 @@ const evilMessageCount = qs("#evil-message-count");
 const goodTokens = qs("#good-tokens");
 const evilTokens = qs("#evil-tokens");
 const totalTokens = qs("#total-tokens");
+const totalMessages = qs("#total-messages");
 
 const selectGptModel = qs("#select-gpt-model");
 const gptModel = qs("#gpt-model");
@@ -229,6 +230,7 @@ function clearMessageLog() {
     messageGood.textContent = "";
     messageEvil.textContent = "";
     totalTokens.textContent = 0;
+    totalMessages.textContent = 0;
     goodTokens.textContent = 0;
     evilTokens.textContent = 0;
     goodMessageCount.textContent = 0;
@@ -351,6 +353,7 @@ function updateTokenCount() {
     goodTokens.textContent = goodCount;
     evilTokens.textContent = evilCount;
     totalTokens.textContent = goodCount + evilCount;
+    totalMessages.textContent = parseInt(evilMessageCount.textContent) + parseInt(goodMessageCount.textContent);
 }
 
 /**

@@ -56,7 +56,7 @@
                 <div class="row col-4">
 
                     <div class="col-sm text-center m-2">
-                        <span>Total used tokens:</span> <span id="total-tokens">0</span>
+                        The Good vs. Evil Chat
                     </div>
                 </div>
 
@@ -448,7 +448,7 @@
         </div>
 
         <div class="col-12 m-0 p-0 text-center">
-            <label for="select-listen-language">Microphone language</label>
+            <label for="select-listen-language" class="label-mic">Microphone language</label>
             <select id="select-listen-language" value="en_US" title="Select the language for microphone to recognize.">
                 <option value="ar_SA">Arabic (Saudi Arabia)</option>
                 <option value="zh_CN">Chinese (Simplified)</option>
@@ -506,12 +506,12 @@
 
     </div>
 
-    <div class="p-2 bottom-left" style="width:500px;height:150px;">
+    <div class="p-2 bottom-left view-activity">
         <i class="bi bi-activity icon mx-1 h6" title="Activity Log."> Activity</i>
         <div id="activity-log"></div>
     </div>
 
-    <div class="p-2 bottom-right" style="width:500px;height:150px;font-size:.9em;">
+    <div class="p-2 bottom-right view-total">
 
         <div class="row col-12 m-0 p-0">
             <i class="bi bi-graph-up-arrow icon mx-1 h6 m-0 p-0" title="Stats."> Stats</i>
@@ -532,7 +532,7 @@
 
         </div>
 
-        <div class="row col-12 mt-3 m-0 p-0">
+        <div class="row col-12 mt-2 m-0 p-0">
 
             <div class="col-sm m-0 p-0 px-2">Goodness</div>
 
@@ -546,7 +546,7 @@
 
         </div>
 
-        <div class="row col-12 mt-3 m-0 p-0">
+        <div class="row col-12 mt-2 m-0 p-0">
 
             <div class="col-sm m-0 p-0 px-2">Evilness</div>
 
@@ -556,6 +556,20 @@
 
             <div class="col-sm m-0 p-0 px-2 text-center">
                 <span id="evil-tokens">0</span>
+            </div>
+
+        </div>
+
+        <div class="row col-12 mt-2 m-0 p-0 totals">
+
+            <div class="col-sm m-0 p-0 px-2">Totals</div>
+
+            <div class="col-sm m-0 p-0 px-2 text-center">
+                <span id="total-messages">0</span>
+            </div>
+
+            <div class="col-sm m-0 p-0 px-2 text-center">
+                <span id="total-tokens">0</span>
             </div>
 
         </div>
