@@ -55,6 +55,7 @@ const MSG_PROVIDE_APIKEY = "You need to provide a valid ChatGPT API key to use t
 const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
 const MSG_CONFIGURE_VOICES = "Please configure the voices on the Profile tab.";
 const MSG_INPUT_MESSAGE = "Please enter a message to send.";
+const MSG_CLIPBOARD_COPY = "Message copied to clipboard."
 
 const HTML_SPINNER = `<div class="spinner-border message-spinner" role="status"></div>`;
 
@@ -280,7 +281,7 @@ function copyMessageToClipboard(messageId) {
     }
 
     copyTextToClipboard(txt);
-    logActivity("Message copied to clipboard.");
+    logActivity(MSG_CLIPBOARD_COPY);
 }
 
 /**
