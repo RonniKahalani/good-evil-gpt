@@ -417,7 +417,7 @@ i {
 .view-activity {
     border: 1px solid #3c3c3c;
     border-radius: 10px;;
-    width:500px;
+    width:25%;
     height:150px;
     font-size:.9em;
     color: #6c6c6c;
@@ -426,7 +426,7 @@ i {
 .view-total {
     border: 1px solid #3c3c3c;
     border-radius: 10px;
-    width:500px;
+    width:25%;
     height:150px;
     font-size:.9em;
     color: #6c6c6c;
@@ -437,7 +437,16 @@ i {
     color: #6c6c6c;
 }
 
-h1 {
+.tab-title{
+    font-size: 20pt;
+    vertical-align: middle;
+    margin: 0px;
+    padding: 0px;
+    border-bottom: 1px solid white;
+    margin-bottom:5px;
+}
+
+ #title{
     font-size: 16pt;
     vertical-align: middle;
     margin: 0px;

@@ -57,7 +57,7 @@
                 <div class="row col-4">
 
                     <div class="row col-sm text-center m-0 pt-2">
-                        <h1>The Good vs. Evil Chat</h1>
+                        <div id="title">The Good vs. Evil Chat</div>
                     </div>
                 </div>
 
@@ -150,28 +150,30 @@
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"
                 aria-labelledby="profile-tab">
-                <h1>Profiles</h1>
+                <div class="tab-title">Profiles</div>
 
                 <div class="row">
 
                     <div class="col-6">
-                        <h2>Evilness</h2>
+                        <label for="mood-good">Goodness</label>
+                        <textarea id="mood-good" class="form-control"
+                            rows="5">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive, supportive and have a great sense of humor.</textarea>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="mood-evil">Evilness</label>
                         <textarea id="mood-evil" class="form-control"
                             rows="5">If asked about your name, you answer Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have a dark sarcastic humor.</textarea>
                     </div>
 
-                    <div class="col-6">
-                        <h2>Goodness</h2>
-                        <textarea id="mood-good" class="form-control"
-                            rows="5">If asked about your name, you answer Goodness. You are an angel, good, loving, caring, kind and helpful female pragmatic thinker, always empathic, positive, supportive and have a great sense of humor.</textarea>
-                    </div>
                 </div>
 
             </div>
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="messages" role="tabpanel"
                 aria-labelledby="messages-tab">
-                <h1>Messages</h1>
+                <div class="tab-title">Messages</div>
+
                 <div class="row">
                     <div class="row">
                         <pre><div id="message-log" class="col-12"></div></pre>
@@ -190,7 +192,8 @@
 
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="settings" role="tabpanel"
                 aria-labelledby="settings-tab">
-                <h1>GPT Settings</h1>
+                <div class="tab-title">GPT</div>
+
                 <div class="row m-2 p-0">
                     <div class="col-2"></div>
                     <div class="row col-2">
