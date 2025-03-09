@@ -95,48 +95,6 @@ SOFTWARE.
     height: 15px;
 }
 
-.block {
-    position: relative;
-    margin: 300px auto 0;
-    width: 500px;
-    height: 250px;
-    background: linear-gradient(0deg, #000, #272727);
-}
-
-.block:before,
-.block:after {
-    content: '';
-    position: absolute;
-    left: -2px;
-    top: -2px;
-    background: linear-gradient(45deg, hsl(0, 94%, 45%), #3d0101, hsl(27, 92%, 49%), #742602, #49010175, #c70606,
-            #800101, hsl(0, 0%, 0%), #ec4706, #000000);
-    background-size: 400%;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    z-index: -1;
-    animation: steam 30s linear infinite;
-}
-
-@keyframes steam {
-    0% {
-        background-position: 0 0;
-    }
-
-    50% {
-        background-position: 400% 0;
-    }
-
-    100% {
-        background-position: 0 0;
-    }
-}
-
-.block:after {
-    filter: blur(50px);
-}
-
-
 .ripple {
     position: relative;
     overflow: hidden;
@@ -179,8 +137,6 @@ SOFTWARE.
     background-position: center center;
     background-image: url('../img/good-evil.png');
     opacity: 1;
-    margin: 5px;
-    padding: 0px;
 }
 
 #message-log {
@@ -350,7 +306,7 @@ body{overflow:hidden;}
     height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: darkblue rgba(55, 55, 55, .9);
+    scrollbar-color: darkblue #6c6c6c;
 }
 
 .big-number {
@@ -364,7 +320,7 @@ body{overflow:hidden;}
     height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: darkred rgba(55, 55, 55, .9);
+    scrollbar-color: darkred #6c6c6c;
 }
 
 #activity-log {
@@ -398,6 +354,7 @@ i {
     height:150px;
     font-size:.9em;
     color: #6c6c6c;
+    z-index: 100;
 }
 
 .view-total {
@@ -408,6 +365,7 @@ i {
     height:150px;
     font-size:.9em;
     color: #6c6c6c;
+    z-index: 100;
 }
 
 .label-mic {
@@ -427,4 +385,8 @@ i {
 
 input[type="number"] {
     text-align: right;
+}
+
+#bottom-panel {
+    z-index: 100;
 }
