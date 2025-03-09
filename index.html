@@ -26,7 +26,6 @@
 <body>
     <main class="container main-container">
 
-
         <div class="border-low row m-2 p-2 bg-dark-transparent">
 
             <div class="row m-0 p-0">
@@ -55,6 +54,7 @@
                     </li>
                 </ul>
 
+                <!-- Icon links -->
                 <div class="col-6 text-end" style="margin-top:5px;">
 
                     <i class="bi bi-keyboard icon mx-1 h4" title="Keyboard Shortcuts."
@@ -82,6 +82,7 @@
         <!-- Tab panes -->
         <div class="tab-content">
 
+            <!-- Chat tab -->
             <div class="tab-pane active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 
                 <div class="row m-0 p-0">
@@ -128,7 +129,6 @@
                             <button id="btn-mute-voices" accesskey="u"
                                 class="btn btn-success btn-sm btn-nav col-2 ripple"
                                 title="Mute/unmute all voices. (Alt-U)"></button>
-
                         </div>
                     </div>
 
@@ -136,12 +136,10 @@
                         <div id="message-evil"></div>
                     </div>
 
-
                 </div>
-
-
             </div>
 
+            <!-- Profile tab -->
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"
                 aria-labelledby="profile-tab">
                 <div class="tab-title">Profiles</div>
@@ -161,11 +159,10 @@
                         <textarea id="mood-evil" class="form-control"
                             rows="5">If asked about your name, you answer Evilness. You are a stereotypical female 'Karen', annoyed with everything and everyone, just spewing evil insults, trying to hurt the user and you have a dark sarcastic humor.</textarea>
                     </div>
-
                 </div>
-
             </div>
 
+            <!-- Messages tab -->
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="messages" role="tabpanel"
                 aria-labelledby="messages-tab">
                 <div class="tab-title">Messages</div>
@@ -179,14 +176,15 @@
                     <div class="row m-2 p-2" style="border-top: 1px solid white;">
                         <div class="col-sm"></div>
 
-                        <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple m-2"
+                        <button id="btn-copy-history" accesskey="c"
+                            class="btn btn-primary btn-sm btn-nav col-2 ripple m-2"
                             title="Copy to clipboard. (Alt-C)">Copy
                             messages</button>
-
                     </div>
                 </div>
             </div>
 
+            <!-- GPT tab -->
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="settings" role="tabpanel"
                 aria-labelledby="settings-tab">
                 <div class="tab-title">GPT</div>
@@ -272,11 +270,11 @@
                         Adjusting these values can have a significant impact on the quality and diversity of the
                         responses.<br>
                         Your changes are saved locally the next time they are used in a chat.</p>
-
                 </div>
             </div>
         </div>
 
+        <!-- Voice settings dialog -->
         <dialog id="dialog-voice-settings" class="dialog">
             <div class="modal-header">
                 <h5 class="modal-title">Voice Settings</h5>
@@ -352,8 +350,6 @@
                         <input type="range" class="form-range" value="1" min="0" max="1" step=".01"
                             id="input-evil-voice-volume" />
                     </div>
-
-
                 </div>
 
                 <div class="row m-2">
@@ -373,11 +369,10 @@
                             Save</button>
                     </div>
                 </div>
-
             </div>
-
         </dialog>
 
+        <!-- Auto voice dialog -->
         <dialog id="dialog-auto-voice" class="dialog" style="width:500px;">
 
             <div class="modal-header mb-0" style="border-bottom: 1px solid white;">
@@ -400,7 +395,7 @@
             </div>
         </dialog>
 
-        <!-- Disclaimer Modal -->
+        <!-- Disclaimer dialog -->
         <div class="modal fade" id="disclaimerModal" tabindex="-1">
             <div class="modal-dialog" style="background-color: black;">
                 <div class="modal-content">
@@ -419,7 +414,7 @@
 
                         </ul>
 
-                        <p>By using this app, you agree that the developers are not responsible
+                        <p>By using this app you agree that the developers are not responsible
                             for any consequences of AI-generated content.</p>
 
                         <p>
@@ -445,8 +440,9 @@
         </div>
     </main>
 
+    <!-- Bottom panel -->
     <div class="row col-12 m-0 p-3 bottom-left bg-dark-transparent">
-        
+
         <div class="row col-sm m-0 p-2">
             <div class="col-sm"></div>
 
@@ -517,16 +513,20 @@
         </div>
 
         <div class="col-sm"></div>
-
     </div>
 
+    <!-- Activity log panel -->
     <div class="m-2 p-2 bottom-left view-activity">
+
         <i class="bi bi-trash icon mx-0 h6" title="Clear Activity Log." style="float:right;"
             onclick="document.querySelector('#activity-log').textContent = '';"></i>
+
         <i class="bi bi-activity icon mx-1 h6" title="Activity Log."> Activity</i>
+
         <div id="activity-log"></div>
     </div>
 
+    <!-- Status panel -->
     <div class="m-2 p-2 bottom-right view-total">
 
         <div class="row col-12 m-0 p-0">
@@ -545,7 +545,6 @@
             <div class="col-sm m-0 p-0 px-2 text-center">
                 Tokens
             </div>
-
         </div>
 
         <div class="row col-12 mt-2 m-0 p-0">
@@ -559,7 +558,6 @@
             <div class="col-sm m-0 p-0 px-2 text-center">
                 <span id="good-tokens">0</span>
             </div>
-
         </div>
 
         <div class="row col-12 mt-2 m-0 p-0">
@@ -573,7 +571,6 @@
             <div class="col-sm m-0 p-0 px-2 text-center">
                 <span id="evil-tokens">0</span>
             </div>
-
         </div>
 
         <div class="row col-12 mt-2 m-0 p-0 totals">
@@ -587,12 +584,7 @@
             <div class="col-sm m-0 p-0 px-2 text-center">
                 <span id="total-tokens">0</span>
             </div>
-
         </div>
     </div>
-
-    </div>
-
 </body>
-
 </html>
