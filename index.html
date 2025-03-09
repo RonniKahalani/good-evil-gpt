@@ -31,7 +31,7 @@
             <div class="row m-0 p-0">
 
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs col-4" id="mainTablist" role="tablist">
+                <ul class="nav nav-tabs col-6" id="mainTablist" role="tablist">
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat"
@@ -54,14 +54,7 @@
                     </li>
                 </ul>
 
-                <div class="row col-4">
-
-                    <div class="row col-sm text-center m-0 pt-2">
-                        <div id="title">The Good vs. Evil Chat</div>
-                    </div>
-                </div>
-
-                <div class="col-4 text-end" style="margin-top:5px;">
+                <div class="col-6 text-end" style="margin-top:5px;">
 
                     <i class="bi bi-keyboard icon mx-1 h4" title="Keyboard Shortcuts."
                         onclick="window.open('https://github.com/RonniKahalani/good-evil-gpt/blob/main/doc/Keys.md', '_blank')"></i>
@@ -447,8 +440,8 @@
         </div>
     </main>
 
-    <div class="row col-12 m-0 p-3 bottom-left" style="background-color: black;">
-
+    <div class="row col-12 m-0 p-3 bottom-left bg-dark-transparent">
+        
         <div class="row col-sm m-0 p-2">
             <div class="col-sm"></div>
 
@@ -523,7 +516,7 @@
     </div>
 
     <div class="m-2 p-2 bottom-left view-activity">
-        <i class="bi bi-trash icon mx-1 h6" title="Clear Activity Log." style="float:right;"
+        <i class="bi bi-trash icon mx-0 h6" title="Clear Activity Log." style="float:right;"
             onclick="document.querySelector('#activity-log').textContent = '';"></i>
         <i class="bi bi-activity icon mx-1 h6" title="Activity Log."> Activity</i>
         <div id="activity-log"></div>

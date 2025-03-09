@@ -318,6 +318,7 @@ SOFTWARE.
 }
 
 body, html {
+    height: 100%;
     font-family: Tahoma, Arial, sans-serif;
     font-size: 1em;
     background-color: #000;
@@ -329,8 +330,10 @@ body, html {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-
 }
+
+body{overflow:hidden;} 
+
 
 .message {
     margin: 5px;
@@ -393,12 +396,13 @@ body, html {
 }
 
 #activity-log {
+    width: 100%;
     text-align: left;
     font-size: .9em;
     height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: black lightgray;
+    scrollbar-color: black #6c6c6c;
 }
 
 #select-gpt-model {
@@ -415,6 +419,7 @@ i {
 }
 
 .view-activity {
+    background-color: #000;
     border: 1px solid #3c3c3c;
     border-radius: 10px;;
     width:25%;
@@ -424,6 +429,7 @@ i {
 }
 
 .view-total {
+    background-color: #000;
     border: 1px solid #3c3c3c;
     border-radius: 10px;
     width:25%;
@@ -444,11 +450,4 @@ i {
     padding: 0px;
     border-bottom: 1px solid white;
     margin-bottom:5px;
-}
-
- #title{
-    font-size: 16pt;
-    vertical-align: middle;
-    margin: 0px;
-    padding: 0px;
 }
