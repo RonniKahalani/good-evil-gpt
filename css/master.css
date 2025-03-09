@@ -184,8 +184,10 @@ SOFTWARE.
 }
 
 #message-log {
-    height: 500px;
+    height: 300px;
     overflow: auto;
+    border: 1px solid #6c6c6c;
+    border-radius: 10px;
 }
 
 #btn-listen {
@@ -448,6 +450,7 @@ i {
     vertical-align: middle;
     margin: 0px;
     padding: 0px;
+    margin-bottom: 15px;
     border-bottom: 1px solid white;
     margin-bottom:5px;
 }

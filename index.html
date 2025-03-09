@@ -144,6 +144,8 @@
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="profile" role="tabpanel"
                 aria-labelledby="profile-tab">
                 <div class="tab-title">Profiles</div>
+                <p>This is the system prompts the two personalities use.</p>
+                <p>You can change and tune their behaviors here. Changes are saved when first used.</p>
 
                 <div class="row">
 
@@ -166,16 +168,17 @@
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="messages" role="tabpanel"
                 aria-labelledby="messages-tab">
                 <div class="tab-title">Messages</div>
+                <p>This is the log of all the messages. You can copy them to the clipboard.</p>
 
                 <div class="row">
                     <div class="row">
-                        <pre><div id="message-log" class="col-12"></div></pre>
+                        <pre><div id="message-log" class="col-12 m-0 p-2"></div></pre>
                     </div>
 
-                    <div class="row">
+                    <div class="row m-2 p-2" style="border-top: 1px solid white;">
                         <div class="col-sm"></div>
 
-                        <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple"
+                        <button id="btn-copy-history" accesskey="c" class="btn btn-primary btn-sm btn-nav col-2 ripple m-2"
                             title="Copy to clipboard. (Alt-C)">Copy
                             messages</button>
 
@@ -186,6 +189,7 @@
             <div class="tab-pane bg-dark-transparent m-4 p-4" id="settings" role="tabpanel"
                 aria-labelledby="settings-tab">
                 <div class="tab-title">GPT</div>
+                <p>This is properties used by ChatGPT to tune and constrain the requests.</p>
 
                 <div class="row m-2 p-0">
                     <div class="col-2"></div>
