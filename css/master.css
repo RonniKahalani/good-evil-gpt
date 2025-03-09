@@ -347,10 +347,10 @@ body{overflow:hidden;}
 #message-good {
     margin: 0px 2px 5px 2px;
     padding: 2px;
-    height: 600px;
+    height: 600;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: darkblue lightgray;
+    scrollbar-color: darkblue rgba(55, 55, 55, .9);
 }
 
 .big-number {
@@ -361,40 +361,10 @@ body{overflow:hidden;}
 #message-evil {
     margin: 0px 2px 5px 2px;
     padding: 2px;
-    height: 500px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-color: darkred lightgray;
-}
-
-
-#message-evil::-webkit-scrollbar {
-    width: 12px;
-    /* Width of the scrollbar */
-}
-
-#message-evil::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Background color of the track */
-}
-
-#message-evil::-webkit-scrollbar-thumb {
-    background-color: red;
-    border-radius: 6px;
-    border: 3px solid #f1f1f1;
-}
-
-#message-evil::-webkit-scrollbar-thumb:hover {
-    background-color: darkred;
-}
-
-#message-evil {
-    margin: 0px 2px 5px 2px;
-    padding: 2px;
     height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: darkred lightgray;
+    scrollbar-color: darkred rgba(55, 55, 55, .9);
 }
 
 #activity-log {
