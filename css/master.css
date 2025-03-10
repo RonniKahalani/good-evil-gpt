@@ -227,30 +227,30 @@ SOFTWARE.
 }
 
 #btn-ask-good {
-    background-color: darkblue;
+    background-color: #005A8D;
 }
 
 #btn-ask-evil {
-    background-color: darkred;
+    background-color: #660000;
 }
 
 .btn-primary {
-    background-color: darkblue;
+    background-color: #005A8D;
 }
 
 .btn-danger {
-    background-color: darkred;
+    background-color: #660000;
 }
 
 .mood-evil {
-    background-color: darkred;
+    background-color: #660000;
     color: #fff;
     border-bottom: 1px solid #333333;
     border-right: 1px solid #333333;
 }
 
 .mood-good {
-    background-color: darkblue;
+    background-color: #005A8D;
     color: #fff;
     border-bottom: 1px solid #333333;
     border-right: 1px solid #333333;
@@ -270,8 +270,8 @@ SOFTWARE.
     background-image: -webkit-gradient(linear,
             left bottom,
             right bottom,
-            color-stop(0.5, darkblue),
-            color-stop(0.51, darkred));
+            color-stop(0.5, #005A8D),
+            color-stop(0.51, #660000));
     color: white;
 }
 
@@ -306,7 +306,7 @@ body{overflow:hidden;}
     height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: darkblue #6c6c6c;
+    scrollbar-color: #005A8D #6c6c6c;
 }
 
 .big-number {
@@ -320,7 +320,7 @@ body{overflow:hidden;}
     height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-color: darkred #6c6c6c;
+    scrollbar-color: #660000 #6c6c6c;
 }
 
 #activity-log {
@@ -389,4 +389,13 @@ input[type="number"] {
 
 #bottom-panel {
     z-index: 100;
+}
+
+.truncated {
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: black;
+    margin: 5px;
+    padding: 5px;
+    font-style: italic;
 }
