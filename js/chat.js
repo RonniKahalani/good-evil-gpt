@@ -327,7 +327,7 @@ function createMessageUI(messageId, request, response) {
             ${replaceNewlines(request.content)}
         </div>
         <div id="${messageId}-response" class="message-assistant mood-${request.mood} p-2">
-            ${response ? replaceNewlines(response.content) : HTML_SPINNER}
+            ${response ? mdToHtml(response.content) : HTML_SPINNER}
         </div>
         <div class="row">
             ${createdInfo}
@@ -405,7 +405,7 @@ function updateUI() {
  */
 function updateResponseUI(response) {
     const id = "#" + response.messageId;
-    qs(`${id}-response`).innerHTML = replaceNewlines(response.content);
+    qs(`${id}-response`).innerHTML = mdToHtml(response.content);
     qs(`${id}-response-waitsec`).textContent = parseFloat(response.waitTimeSec).toFixed(1);
     qs(`${id}-response-tokens`).textContent = parseInt(response.tokens);
 }
@@ -599,13 +599,12 @@ function handleGptResponse(request, gptResponse) {
     const finishReason = gptResponse.choices[0].finish_reason;
 
     if (finishReason === "length") {
-        reply += `...\n\nNote: Message is truncated because of the max. tokens ${gptMaxTokens.value} limit.\nYou can adjust this value on the GPT page.`;
+        reply += `...\n\n<div class="truncated">Note: Message truncated:<br>Reached the max. tokens limit (${gptMaxTokens.value}). You can adjust the limit on the GPT page.</div>`;
     }
     const timestamp = new Date().getTime();
     const waitTimeSec = (timestamp - request.created) / 1000;
 
     const response = createMessage(request.messageId, GPT_ROLE_ASSISTANT, reply, request.mood);
-
     response.waitTimeSec = waitTimeSec;
     response.tokens = gptResponse.usage.total_tokens;
     response.gpt = gptResponse;
@@ -645,6 +644,15 @@ function handleApiKey() {
 
 function logActivity(message) {
     activityLog.innerHTML = `${new Date().toISOString().slice(0, 19).replace("T", " ")} ${message}<br>` + activityLog.innerHTML;
+}
+
+/**
+ * Converts MD text format to HTML.
+ * @param {*} value 
+ * @returns 
+ */
+function mdToHtml(value) {
+    return marked.parse(value);
 }
 
 /**
