@@ -1,3 +1,4 @@
+"use strict"
 /*
 Copyright (c) 2025 Ronni Kahalani
 
@@ -56,6 +57,11 @@ const MSG_UNMUTE_CONFIRM = "You have voices muted.\nDo you want to unmute?";
 const MSG_CONFIGURE_VOICES = "Please configure the voices on the Profile tab.";
 const MSG_INPUT_MESSAGE = "Please enter a message to send.";
 const MSG_CLIPBOARD_COPY = "Message copied to clipboard."
+
+const MSG_ACTIVITY_MESSAGES_CLEARED = "Message log cleared.";
+const MSG_ACTIVITY_INPUT_CLEARED = "Message input cleared.";
+const MSG_ACTIVITY_VOICE_DIALOG = "Showing auto voice dialog.";
+const MSG_ACTIVITY_NO_API_KEY = "No API key in local storage, asking user for a key.";
 
 const HTML_SPINNER = `<div class="spinner-border message-spinner" role="status"></div>`;
 
@@ -210,7 +216,7 @@ function chatBoth() {
 function clearInput() {
     txtMessageInput.value = "";
     txtMessageInput.focus();
-    logActivity("Message input cleared.");
+    logActivity(MSG_ACTIVITY_INPUT_CLEARED);
 }
 
 /**
@@ -242,7 +248,7 @@ function clearMessageLog() {
     evilMessageCount.textContent = 0;
 
     setLocalItemAsJson(LOCAL_ITEM_MESSAGE_LOG, messageLog);
-    logActivity("Message log cleared.");
+    logActivity(MSG_ACTIVITY_MESSAGES_CLEARED);
 }
 
 /**
@@ -446,7 +452,7 @@ function showDisclaimerDialog() {
             setLocalItem(LOCAL_ITEM_DISCLAIMER, true);
 
         if (getLocalItem(LOCAL_ITEM_AUTO_VOICE) === null) {
-            logActivity("Showing auto voice dialog.");
+            logActivity(MSG_ACTIVITY_VOICE_DIALOG);
             openAutoVoiceDialog();
         }
     });
@@ -625,7 +631,7 @@ function handleApiKey() {
     // Do we have an API key
     if (isApiKeyUnset()) {
 
-        logActivity("No API key in local storage, asking user for a key.");
+        logActivity(MSG_ACTIVITY_NO_API_KEY);
         // Ask the user for an API key.
         apiKey = prompt(MSG_ENTER_APIKEY, "");
 
