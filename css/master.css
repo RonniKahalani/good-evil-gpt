@@ -224,6 +224,8 @@ SOFTWARE.
 .info-sm {
     font-size: .8em;
     color: #888;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 #btn-ask-good {
@@ -231,7 +233,7 @@ SOFTWARE.
 }
 
 #btn-ask-evil {
-    background-color: #660000;
+    background-color: #660000; 
 }
 
 .btn-primary {
@@ -398,4 +400,8 @@ input[type="number"] {
     margin: 5px;
     padding: 5px;
     font-style: italic;
+}
+
+p {
+    margin: 0px 7px 7px 7px;
 }

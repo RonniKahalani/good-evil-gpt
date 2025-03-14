@@ -320,12 +320,12 @@ function createMessageUI(messageId, request, response) {
     const speakIcon = `<i class="bi bi-play-circle-fill icon mx-1" title="Speak the message out loud." onclick="speakMessage('${messageId}');"></i>`;
     const floatingIcons = `<span style="float: right">${copyIcon}${speakIcon}</span>`;
 
-    const createdInfo = `<span id="@{messageId}-created" class="message-time-ago col-4 info-sm" title="${formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
+    const createdInfo = `<span id="@{messageId}-created" class="message-time-ago col-sm info-sm" title="${formatDateTime(request.created, shortDateTimeFormat).replaceAll(",", "")
         }">${timeAgo(request.created)
         }</span>`;
 
     const tokenInfo = `<span class="col-4 text-center info-sm">Tokens: <span id="${messageId}-response-tokens">${response ? response.tokens : "..."}</span></span>`;
-    const waitTimeInfo = `<span class="col-4 text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec.toFixed(2) : "..."}</span></span>`;
+    const waitTimeInfo = `<span class="col-sm text-end info-sm">Seconds: <span id="${messageId}-response-waitsec">${response ? response.waitTimeSec.toFixed(2) : "..."}</span></span>`;
 
     return `<div class="message bg-dark-transparent">
         <div id="${messageId}-request" class="message-${request.role}">
