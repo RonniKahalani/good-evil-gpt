@@ -61,7 +61,10 @@ const MSG_CLIPBOARD_COPY = "Message copied to clipboard."
 const MSG_ACTIVITY_MESSAGES_CLEARED = "Message log cleared.";
 const MSG_ACTIVITY_INPUT_CLEARED = "Message input cleared.";
 const MSG_ACTIVITY_VOICE_DIALOG = "Showing auto voice dialog.";
-const MSG_ACTIVITY_NO_API_KEY = "No API key in local storage, asking user for a key.";
+const MSG_ACTIVITY_NO_API_KEY_ASK_USER = "No API key in local storage, asking user for a key.";
+const MSG_ACTIVITY_NO_VALID_API_KEY_FROM_USER = "User did not provide a valid API key.";
+const MSG_ACTIVITY_API_KEY_SAVED = "API key saved to local storage.";
+const MSG_ACTIVITY_API_KEY_FOUND = "API key found in local storage.";
 
 const HTML_SPINNER = `<div class="spinner-border message-spinner" role="status"></div>`;
 
@@ -631,23 +634,27 @@ function handleApiKey() {
     // Do we have an API key
     if (isApiKeyUnset()) {
 
-        logActivity(MSG_ACTIVITY_NO_API_KEY);
+        logActivity(MSG_ACTIVITY_NO_API_KEY_ASK_USER);
         // Ask the user for an API key.
         apiKey = prompt(MSG_ENTER_APIKEY, "");
 
         if (apiKey === null || apiKey === "") {
-            logActivity("User did not provide a valid API key.");
+            logActivity(MSG_ACTIVITY_NO_VALID_API_KEY_FROM_USER);
             alert(MSG_PROVIDE_APIKEY);
         } else {
             // Yes, we've got an API key. Now encode it and save it to local storage.
             setLocalItem(LOCAL_ITEM_API_KEY, btoa(apiKey));
-            logActivity("API key saved to local storage.");
+            logActivity(MSG_ACTIVITY_API_KEY_SAVED);
         }
     } else {
-        logActivity("API key found in local storage.");
+        logActivity(MSG_ACTIVITY_API_KEY_FOUND);
     }
 }
 
+/**
+ * Logs an activity to the UI.
+ * @param {*} message 
+ */
 function logActivity(message) {
     activityLog.innerHTML = `${new Date().toISOString().slice(0, 19).replace("T", " ")} ${message}<br>` + activityLog.innerHTML;
 }
