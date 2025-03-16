@@ -80,7 +80,7 @@ The code for this app is public and free to copy and use, but
 - ChatGPT requests cost money (your money, via your API key) based on tokens. 
 - Be aware of your OpenAI balance ($).
 - Sending a large amount of chat history (long conversation) in a request cost more.
-- Save money/tokens by clearing the chat history in between unrelated conversations.
+- Save money/tokens by clearing the chat history in between unrelated conversations, because all previous messages are included in a chat request, to serve as a context in between requests.
 
 ## Instructions
 To get it up and running:
@@ -91,7 +91,7 @@ To get it up and running:
 - Have fun :)
 - Please share any [feedback and ideas here](https://github.com/RonniKahalani/good-evil-gpt/discussions/new?category=ideas)
 
-## Stuff left to do
+## Thoughts
 The code needs cleaning up and refactoring.
 
 ### Quality
