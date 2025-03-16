@@ -481,6 +481,15 @@ function createMessage(messageId, role, content, mood) {
 }
 
 /**
+ * Removes all messages related to a message id. (request + response).
+ * @param {*} messageId 
+ */
+function removeMessage(messageId) {
+    const toRemove = messageLog.filter(m => m.messageId === messageId);
+    toRemove.forEach( m => removeFromArray(messageLog, m));
+}
+
+/**
  * Adds a message to the message log.
  * @param {*} entry 
  */

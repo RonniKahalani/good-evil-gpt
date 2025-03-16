@@ -286,14 +286,14 @@ body, html {
     margin: 0;
     padding: 0;
 
-    background-image: url('../img/heaven-hell.png');
+    background-image: url(../img/heaven-hell.png);
+    /*background-image: url('../img/heaven-hell.png');*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 body{overflow:hidden;} 
-
 
 .message {
     margin: 5px;
